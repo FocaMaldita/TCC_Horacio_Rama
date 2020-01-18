@@ -30,7 +30,4 @@ public class InstructionButtonClick : MonoBehaviour {
     public void Start() {
         extAnim = extendable.GetComponent<Animator>();
     }
-    public void Update() {
-        Debug.Log("whoIsOpen:" + whoIsOpen);
-    }
 }

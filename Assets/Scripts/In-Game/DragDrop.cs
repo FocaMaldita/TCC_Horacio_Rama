@@ -2,18 +2,37 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 
 public class DragDrop : MonoBehaviour {
 
     public static GameObject currentDragItem = null;
 
+    public Utils.InstructionType instruction;
+
     [SerializeField]
     private GameObject dragItem;
 
+    [SerializeField]
+    private string dragItemIcon;
+
+    private Color color;
+
+    public void Start() {
+        color = GetComponent<Image>().color;
+        color.a = .5f;
+    }
+
     public void onStartDrag() {
-        currentDragItem = Instantiate(dragItem, transform);
-        Debug.Log("aaaa");
+        Canvas canvas = FindObjectOfType<Canvas>();
+        currentDragItem = Instantiate(dragItem,
+                                      transform.position,
+                                      Quaternion.identity,
+                                      canvas.transform
+                                      );
+        currentDragItem.GetComponent<Image>().color = color;
+        currentDragItem.GetComponentInChildren<Text>().text = dragItemIcon;
     }
 
     public void onFinishDrag() {
