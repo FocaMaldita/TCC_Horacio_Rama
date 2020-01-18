@@ -31,6 +31,7 @@ public class DragDrop : MonoBehaviour {
                                       Quaternion.identity,
                                       canvas.transform
                                       );
+        currentDragItem.GetComponent<DraggedInstruction>().type = instruction;
         currentDragItem.GetComponent<Image>().color = color;
         currentDragItem.GetComponentInChildren<Text>().text = dragItemIcon;
     }
