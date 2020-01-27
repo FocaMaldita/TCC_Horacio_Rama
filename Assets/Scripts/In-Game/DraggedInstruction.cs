@@ -11,4 +11,19 @@ public class DraggedInstruction : MonoBehaviour {
                                           Input.mousePosition,
                                           .6f);
     }
+
+    public void onStartDrag() {
+        Debug.Log("blah");
+        Canvas canvas = FindObjectOfType<Canvas>();
+        DragDropManager.currentDragItem = Instantiate(gameObject,
+                                      transform.position,
+                                      Quaternion.identity,
+                                      canvas.transform
+                                      );
+        Destroy(DragDropManager.currentDragItem.GetComponent<InstructionListNode>());
+
+        var list = transform.parent.parent.parent.GetComponent<InstructionList>();
+        list.list.Remove(gameObject);
+        Destroy(gameObject);
+    }
 }

@@ -1,26 +1,58 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class InstructionListNode : MonoBehaviour {
 
-    public int index;
+    [HideInInspector]
+    public int index = 0;
 
     public InstructionList instructionList;
-    
+
+    [SerializeField]
+    public Utils.InstructionType instructionType;
+
+    [SerializeField]
+    private GameObject dragItem;
+
+    [SerializeField]
+    public string dragItemIcon;
+
+    private Color color;
+
+    void Start() {
+        color = GetComponent<Image>().color;
+        color.a = .5f;
+    }
+
     void Update() {
         index = instructionList.list.FindIndex(obj => obj == gameObject);
-        Debug.Log(transform.parent.name);
-        Debug.Log("Node" + index);
-        Debug.Log(string.Compare(transform.parent.name, "Node" + index));
         if (string.Compare(transform.parent.name, "Node" + index) != 0) {
-            Debug.Log(transform.name + " (" + index + "): " + transform.parent.name);
             transform.parent = transform.parent.parent.Find("Node" + index);
-            Debug.Log(transform.name + " (" + index + "): " + transform.parent.name);
         }
         transform.position = Vector3.Lerp(transform.position,
                                           transform.parent.position,
                                           .4f
                                           );
+    }
+
+    public void onStartDrag() {
+        Canvas canvas = FindObjectOfType<Canvas>();
+        DragDropManager.currentDragItem = Instantiate(dragItem,
+                                      transform.position,
+                                      Quaternion.identity,
+                                      canvas.transform
+                                      );
+        DragDropManager.currentDragItem.GetComponent<DraggedInstruction>().type = instructionType;
+        DragDropManager.currentDragItem.GetComponent<Image>().color = color;
+        DragDropManager.currentDragItem.GetComponentInChildren<Text>().text = dragItemIcon;
+
+        instructionList.list.Remove(gameObject);
+        Destroy(gameObject);
+    }
+
+    public void onFinishDrag() {
+        FindObjectOfType<DragDropManager>().onFinishDrag();
     }
 }

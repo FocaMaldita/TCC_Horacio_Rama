@@ -1,13 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 
 public class DragDrop : MonoBehaviour {
-
-    public static GameObject currentDragItem = null;
 
     public Utils.InstructionType instruction;
 
@@ -26,20 +23,13 @@ public class DragDrop : MonoBehaviour {
 
     public void onStartDrag() {
         Canvas canvas = FindObjectOfType<Canvas>();
-        currentDragItem = Instantiate(dragItem,
+        DragDropManager.currentDragItem = Instantiate(dragItem,
                                       transform.position,
                                       Quaternion.identity,
                                       canvas.transform
                                       );
-        currentDragItem.GetComponent<DraggedInstruction>().type = instruction;
-        currentDragItem.GetComponent<Image>().color = color;
-        currentDragItem.GetComponentInChildren<Text>().text = dragItemIcon;
-    }
-
-    public void onFinishDrag() {
-        if (currentDragItem) {
-            Destroy(currentDragItem);
-            currentDragItem = null;
-        }
+        DragDropManager.currentDragItem.GetComponent<DraggedInstruction>().type = instruction;
+        DragDropManager.currentDragItem.GetComponent<Image>().color = color;
+        DragDropManager.currentDragItem.GetComponentInChildren<Text>().text = dragItemIcon;
     }
 }
