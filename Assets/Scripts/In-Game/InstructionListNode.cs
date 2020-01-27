@@ -19,10 +19,12 @@ public class InstructionListNode : MonoBehaviour {
     [SerializeField]
     public string dragItemIcon;
 
+    private Image img;
     private Color color;
 
     void Start() {
-        color = GetComponent<Image>().color;
+        img = GetComponent<Image>();
+        color = img.color;
         color.a = .5f;
     }
 
@@ -35,6 +37,11 @@ public class InstructionListNode : MonoBehaviour {
                                           transform.parent.position,
                                           .4f
                                           );
+        if (DragDropManager.currentDragItem && img.raycastTarget) {
+            img.raycastTarget = false;
+        } else if (!DragDropManager.currentDragItem && !img.raycastTarget) {
+            img.raycastTarget = true;
+        }
     }
 
     public void onStartDrag() {
