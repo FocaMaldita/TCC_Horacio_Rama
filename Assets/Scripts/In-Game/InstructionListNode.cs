@@ -31,7 +31,7 @@ public class InstructionListNode : MonoBehaviour {
     void Update() {
         index = instructionList.list.FindIndex(obj => obj == gameObject);
         if (string.Compare(transform.parent.name, "Node" + index) != 0) {
-            transform.parent = transform.parent.parent.Find("Node" + index);
+            transform.SetParent(transform.parent.parent.Find("Node" + index));
         }
         transform.position = Vector3.Lerp(transform.position,
                                           transform.parent.position,

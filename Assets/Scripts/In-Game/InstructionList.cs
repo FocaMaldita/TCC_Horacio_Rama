@@ -20,7 +20,7 @@ public class InstructionList : MonoBehaviour {
             var father = GameObject.Find("Node" + position).transform;
             if (father.childCount > 0) Destroy(father.GetChild(0));
             var go = Instantiate(instPrefab,
-                             GameObject.Find("Node" + position).transform
+                             Utils.findChild(gameObject, "Node" + position).transform
                              );
             var node = go.GetComponent<InstructionListNode>();
             node.instructionList = this;
