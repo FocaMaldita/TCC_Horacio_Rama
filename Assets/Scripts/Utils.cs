@@ -20,4 +20,13 @@ public class Utils {
         yield return new WaitForSeconds(duration);
         callback();
     }
+
+    public static GameObject findChild(GameObject go, string childName) {
+        foreach (Transform trans in go.GetComponentsInChildren<Transform>()) {
+            if (trans.name == childName) {
+                return trans.gameObject;
+            }
+        }
+        return null;
+    }
 }
