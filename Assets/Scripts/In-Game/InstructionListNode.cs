@@ -16,8 +16,8 @@ public class InstructionListNode : MonoBehaviour {
     [SerializeField]
     private GameObject dragItem;
 
-    [SerializeField]
-    public string dragItemIcon;
+    public Sprite dragItemIcon;
+    public float rotation;
 
     private Image img;
     private Color color;
@@ -52,8 +52,15 @@ public class InstructionListNode : MonoBehaviour {
                                       canvas.transform
                                       );
         DragDropManager.currentDragItem.GetComponent<DraggedInstruction>().type = instructionType;
-        DragDropManager.currentDragItem.GetComponent<Image>().color = color;
-        DragDropManager.currentDragItem.GetComponentInChildren<Text>().text = dragItemIcon;
+        var btnImg = DragDropManager.currentDragItem.GetComponent<Image>();
+        btnImg.color = color;
+        btnImg.sprite = img.sprite;
+        var icon = DragDropManager.currentDragItem.transform.GetChild(0).GetComponent<Image>();
+        icon.sprite = dragItemIcon;
+        icon.transform.rotation = Quaternion.Euler(0, 0, rotation);
+
+        // Make the list know the "toBeAdded"
+        //instructionList.hoverPositionEnter(index);
 
         instructionList.list.Remove(gameObject);
         Destroy(gameObject);

@@ -1132,7 +1132,8 @@ MonoBehaviour:
   instruction: 8
   dragItem: {fileID: 5088081091623422916, guid: e6998c88ebfa4fc43b69b0e1b6b12c2e,
     type: 3}
-  dragItemIcon: "\u270B\u270BE"
+  dragItemIcon: {fileID: 21300000, guid: cccb1fa3fa23e3a42880894ad3269a97, type: 3}
+  rotation: 0
 --- !u!114 &936312282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1251,6 +1252,7 @@ MonoBehaviour:
   list: []
   instPrefab: {fileID: 3904261112183599044, guid: c50f8e4de6677ec43bf5ca5fe0ef1887,
     type: 3}
+  toBeAdded: {fileID: 0}
 --- !u!1 &1179490324
 GameObject:
   m_ObjectHideFlags: 0
@@ -1893,6 +1895,12 @@ PrefabInstance:
       propertyPath: m_Color.b
       value: 0.2784314
       objectReference: {fileID: 0}
+    - target: {fileID: 5056662301492796903, guid: 898c7f26c96691b4e86ab00079180242,
+        type: 3}
+      propertyPath: dragItemIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 21be7a5d3d0f85e4eaef5a680e812c07,
+        type: 3}
     - target: {fileID: 5460322220560043470, guid: 898c7f26c96691b4e86ab00079180242,
         type: 3}
       propertyPath: m_IsActive

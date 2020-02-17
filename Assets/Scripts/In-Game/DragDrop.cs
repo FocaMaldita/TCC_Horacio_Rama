@@ -12,7 +12,9 @@ public class DragDrop : MonoBehaviour {
     private GameObject dragItem;
 
     [SerializeField]
-    private string dragItemIcon;
+    private Sprite dragItemIcon;
+    [SerializeField]
+    private float rotation;
 
     private Color color;
 
@@ -29,7 +31,11 @@ public class DragDrop : MonoBehaviour {
                                       canvas.transform
                                       );
         DragDropManager.currentDragItem.GetComponent<DraggedInstruction>().type = instruction;
-        DragDropManager.currentDragItem.GetComponent<Image>().color = color;
-        DragDropManager.currentDragItem.GetComponentInChildren<Text>().text = dragItemIcon;
+        var img = DragDropManager.currentDragItem.GetComponent<Image>();
+        img.color = color;
+        img.sprite = GetComponent<Image>().sprite;
+        var childImage = DragDropManager.currentDragItem.transform.GetChild(0).GetComponent<Image>();
+        childImage.sprite = dragItemIcon;
+        childImage.transform.rotation = Quaternion.Euler(0, 0, rotation);
     }
 }

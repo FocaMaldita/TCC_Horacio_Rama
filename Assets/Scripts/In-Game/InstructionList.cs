@@ -11,6 +11,7 @@ public class InstructionList : MonoBehaviour {
     [SerializeField]
     private GameObject instPrefab;
 
+    [SerializeField]
     private GameObject toBeAdded;
 
     public void insertAtPosition(int position) {
@@ -32,13 +33,16 @@ public class InstructionList : MonoBehaviour {
             var color = draggedImage.color;
             color.a = 1;
             image.color = color;
+            image.sprite = draggedImage.sprite;
 
-            var icon = go.transform.GetChild(0).GetComponent<Text>();
-            var draggedIcon = toBeAdded.transform.GetChild(0).GetComponent<Text>();
-            icon.text = draggedIcon.text;
-            node.dragItemIcon = icon.text;
+            var icon = go.transform.GetChild(0).GetComponent<Image>();
+            var draggedIcon = toBeAdded.transform.GetChild(0).GetComponent<Image>();
+            icon.sprite = draggedIcon.sprite;
+            icon.transform.rotation = draggedIcon.transform.rotation;
+            node.dragItemIcon = icon.sprite;
 
-            go.transform.GetChild(0).GetComponent<Text>().enabled = true;
+            node.rotation = draggedIcon.transform.eulerAngles.z;
+
             go.transform.localPosition = Vector2.zero;
 
             list.Insert(position, go);
