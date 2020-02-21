@@ -1,0 +1,73 @@
+﻿
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PuzzleManager : MonoBehaviour {
+
+    public float cellDistance = .5f;
+
+    public enum PuzzleObject {
+        NTH=0,
+        CAT=1,
+        DOG=2,
+        BIRD=11,
+        EGG=12,
+        KITTEN=13,
+        BASKET=31,
+        NEST=32,
+        TREE_LOWER=41,
+        TREE_UPPER=42,
+        ROCK=43,
+    }
+
+    [System.Serializable]
+    public struct PuzzleObjectPrefabMap{
+        public PuzzleObject puzzleObject;
+        public GameObject prefab;
+    }
+    
+    public PuzzleObjectPrefabMap[] prefabList;
+    private Dictionary<PuzzleObject, GameObject> prefabDict;
+
+    public List<List<GameObject>> objMatrix;
+
+    public PuzzleObject[,] kindMatrix;
+
+    void Start() {
+        { // Creating the dictionary of prefabs
+            prefabDict = new Dictionary<PuzzleObject, GameObject>();
+            foreach (var pair in prefabList) {
+                prefabDict[pair.puzzleObject] = pair.prefab;
+            }
+        }
+        { // Creating the level's matrix
+            kindMatrix = new PuzzleObject[9, 9];
+            kindMatrix[4, 4] = PuzzleObject.CAT;
+            kindMatrix[2, 4] = PuzzleObject.ROCK;
+            kindMatrix[2, 3] = PuzzleObject.ROCK;
+            kindMatrix[2, 5] = PuzzleObject.ROCK;
+            kindMatrix[0, 3] = PuzzleObject.BIRD;
+            kindMatrix[5, 6] = PuzzleObject.BIRD;
+        }
+
+        var rowCount = kindMatrix.GetLength(0);
+        var colCount = kindMatrix.GetLength(1);
+
+        { // Instantiating the level
+            for(var i=0; i < rowCount; i++) {
+                for (var j=0; j < colCount; j++) {
+                    if (prefabDict.ContainsKey(kindMatrix[i, j])) {
+                        Instantiate(
+                            prefabDict[kindMatrix[i, j]],
+                            new Vector3((i - rowCount/2) * cellDistance,
+                                (j - colCount / 2) * cellDistance,
+                                0),
+                            Quaternion.identity
+                        );
+                    }
+                }
+            }
+        }
+    }
+}
