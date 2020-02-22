@@ -339,5 +339,7 @@ public class Interpreter : MonoBehaviour {
         isInterpreting = true;
 
         StartCoroutine(interpretationEvent());
+
+        isInterpreting = false;
     }
 }

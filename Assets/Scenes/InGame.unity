@@ -343,7 +343,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 29289489}
-        m_MethodName: interpretate
+        m_MethodName: interpret
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -403,7 +403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   secondsPerMove: 0.1
   secondsBetweenMoves: 0.5
-  isInterpretating: 0
+  isInterpreting: 0
   puzzleManager: {fileID: 1272038543}
   instructionLists:
   - owner: 1
