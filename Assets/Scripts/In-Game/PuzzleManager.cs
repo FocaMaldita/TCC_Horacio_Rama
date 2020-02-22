@@ -30,6 +30,11 @@ public class PuzzleManager : MonoBehaviour {
     public PuzzleObjectPrefabMap[] prefabList;
     private Dictionary<PuzzleObject, GameObject> prefabDict;
 
+    [HideInInspector]
+    public int[] catPosition, dogPosition;
+    [HideInInspector]
+    public GameObject catReference, dogReference;
+
     public List<List<GameObject>> objMatrix;
 
     public PuzzleObject[,] kindMatrix;
@@ -43,7 +48,8 @@ public class PuzzleManager : MonoBehaviour {
         }
         { // Creating the level's matrix
             kindMatrix = new PuzzleObject[9, 9];
-            kindMatrix[4, 4] = PuzzleObject.CAT;
+            catPosition = new int[] { 4, 4 };
+            dogPosition = new int[] { 4, 3 };
             kindMatrix[2, 4] = PuzzleObject.ROCK;
             kindMatrix[2, 3] = PuzzleObject.ROCK;
             kindMatrix[2, 5] = PuzzleObject.ROCK;
@@ -55,7 +61,25 @@ public class PuzzleManager : MonoBehaviour {
         var colCount = kindMatrix.GetLength(1);
 
         { // Instantiating the level
-            for(var i=0; i < rowCount; i++) {
+            if (prefabDict.ContainsKey(PuzzleObject.CAT))
+                // Instantiates the cat
+                catReference = Instantiate(
+                    prefabDict[PuzzleObject.CAT],
+                    new Vector3((catPosition[0] - rowCount / 2) * cellDistance,
+                        (catPosition[1] - colCount / 2) * cellDistance,
+                        0),
+                    Quaternion.identity
+                );
+            if (prefabDict.ContainsKey(PuzzleObject.DOG))
+                // Instantiates the dog
+                dogReference = Instantiate(
+                    prefabDict[PuzzleObject.DOG],
+                    new Vector3((dogPosition[0] - rowCount / 2) * cellDistance,
+                        (dogPosition[1] - colCount / 2) * cellDistance,
+                        0),
+                    Quaternion.identity
+                );
+            for (var i=0; i < rowCount; i++) {
                 for (var j=0; j < colCount; j++) {
                     if (prefabDict.ContainsKey(kindMatrix[i, j])) {
                         Instantiate(
