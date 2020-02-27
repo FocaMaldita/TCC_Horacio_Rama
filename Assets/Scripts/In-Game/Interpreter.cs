@@ -75,7 +75,7 @@ public class Interpreter : MonoBehaviour {
 
         int[] pos = getCatDirection(direction);
 
-        if (Utils.IsCatInUpperCorner(puzzleManager)) {
+        if (Utils.IsCatInCorner(puzzleManager, direction)) {
             Debug.Log("Can't move cat");
             // Can't move cat
         } else {
@@ -111,7 +111,7 @@ public class Interpreter : MonoBehaviour {
 
         int[] pos = getDogDirection(direction);
 
-        if (Utils.IsDogInUpperCorner(puzzleManager)) {
+        if (Utils.IsDogInCorner(puzzleManager, direction)) {
             Debug.Log("Can't move dog");
             // Can't move dog
         } else {
@@ -148,7 +148,7 @@ public class Interpreter : MonoBehaviour {
         
         int[] pos = getCatDirection(direction);
 
-        if (Utils.IsCatInUpperCorner(puzzleManager)) {
+        if (Utils.IsCatInCorner(puzzleManager, direction)) {
             Debug.Log("Cat can't grab");
             // Cat can't grab
         } else {
@@ -181,7 +181,7 @@ public class Interpreter : MonoBehaviour {
 
         int[] pos = getDogDirection(direction);
 
-        if (Utils.IsDogInUpperCorner(puzzleManager)) {
+        if (Utils.IsDogInCorner(puzzleManager, direction)) {
             Debug.Log("Dog can't grab");
             // Dog can't grab
         } else {

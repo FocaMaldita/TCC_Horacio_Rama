@@ -100,36 +100,64 @@ public class Utils {
         return 'N';
     }
 
-    public static bool IsCatInUpperCorner(PuzzleManager puzzleManager) {
+    private static bool IsCatInUpperCorner(PuzzleManager puzzleManager) {
         return puzzleManager.catPosition[1] == puzzleManager.kindMatrix.GetLength(1) - 1;
     }
 
-    public static bool IsCatInLeftCorner(PuzzleManager puzzleManager) {
+    private static bool IsCatInLeftCorner(PuzzleManager puzzleManager) {
         return puzzleManager.catPosition[0] == 0;
     }
 
-    public static bool IsCatInRightCorner(PuzzleManager puzzleManager) {
+    private static bool IsCatInRightCorner(PuzzleManager puzzleManager) {
         return puzzleManager.catPosition[0] == puzzleManager.kindMatrix.GetLength(0) - 1;
     }
 
-    public static bool IsCatInBottomCorner(PuzzleManager puzzleManager) {
+    private static bool IsCatInBottomCorner(PuzzleManager puzzleManager) {
         return puzzleManager.catPosition[1] == 0;
     }
 
-    public static bool IsDogInUpperCorner(PuzzleManager puzzleManager) {
+    private static bool IsDogInUpperCorner(PuzzleManager puzzleManager) {
         return puzzleManager.dogPosition[1] == puzzleManager.kindMatrix.GetLength(1) - 1;
     }
 
-    public static bool IsDogInLeftCorner(PuzzleManager puzzleManager) {
+    private static bool IsDogInLeftCorner(PuzzleManager puzzleManager) {
         return puzzleManager.dogPosition[0] == 0;
     }
 
-    public static bool IsDogInRightCorner(PuzzleManager puzzleManager) {
+    private static bool IsDogInRightCorner(PuzzleManager puzzleManager) {
         return puzzleManager.dogPosition[0] == puzzleManager.kindMatrix.GetLength(0) - 1;
     }
 
-    public static bool IsDogInBottomCorner(PuzzleManager puzzleManager) {
+    private static bool IsDogInBottomCorner(PuzzleManager puzzleManager) {
         return puzzleManager.dogPosition[1] == 0;
+    }
+
+    public static bool IsCatInCorner(PuzzleManager puzzleManager, char direction) {
+        switch (direction) {
+            case 'U':
+                return IsCatInUpperCorner(puzzleManager);
+            case 'L':
+                return IsCatInLeftCorner(puzzleManager);
+            case 'R':
+                return IsCatInRightCorner(puzzleManager);
+            case 'D':
+                return IsCatInBottomCorner(puzzleManager);
+        }
+        return false;
+    }
+
+    public static bool IsDogInCorner(PuzzleManager puzzleManager, char direction) {
+        switch (direction) {
+            case 'U':
+                return IsDogInUpperCorner(puzzleManager);
+            case 'L':
+                return IsDogInLeftCorner(puzzleManager);
+            case 'R':
+                return IsDogInRightCorner(puzzleManager);
+            case 'D':
+                return IsDogInBottomCorner(puzzleManager);
+        }
+        return false;
     }
 
     public static IEnumerator cooldown (float duration, System.Action callback) {
