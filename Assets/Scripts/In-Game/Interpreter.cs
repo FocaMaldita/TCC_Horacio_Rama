@@ -29,7 +29,7 @@ public class Interpreter : MonoBehaviour {
     private GameObject dogIsHolding = null;
     private PuzzleManager.PuzzleObject dogIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
 
-    int[] getCatDirection(char direction) {
+    int[] getCatDestination(char direction) {
         int[] ret = new int[2] { 0, 0 };
 
         if (direction == 'U') {
@@ -50,7 +50,7 @@ public class Interpreter : MonoBehaviour {
         return ret;
     }
 
-    int[] getDogDirection(char direction) {
+    int[] getDogDestionation(char direction) {
         int[] ret = new int[2] { 0, 0 };
 
         if (direction == 'U') {
@@ -73,7 +73,7 @@ public class Interpreter : MonoBehaviour {
 
     void moveCat(char direction) {
 
-        int[] pos = getCatDirection(direction);
+        int[] pos = getCatDestination(direction);
 
         if (Utils.IsCatInCorner(puzzleManager, direction)) {
             Debug.Log("Can't move cat");
@@ -109,7 +109,7 @@ public class Interpreter : MonoBehaviour {
 
     void moveDog(char direction) {
 
-        int[] pos = getDogDirection(direction);
+        int[] pos = getDogDestionation(direction);
 
         if (Utils.IsDogInCorner(puzzleManager, direction)) {
             Debug.Log("Can't move dog");
@@ -137,6 +137,14 @@ public class Interpreter : MonoBehaviour {
                 StartCoroutine(moveDogTransition(direction));
             } else if (canMove == 'P') {
                 // Move dog up and push
+
+                if (Utils.IsThingPushedToCorner(puzzleManager, direction, pos[0], pos[1])) {
+                    // Dog is blocked
+                    Debug.Log("Dog is blocked");
+                } else {
+                    // Dog moves and pushes thing
+                }
+
             } else {
                 // Dog is blocked
                 Debug.Log("Dog is blocked");
@@ -146,7 +154,7 @@ public class Interpreter : MonoBehaviour {
 
     void grabCat(char direction) {
         
-        int[] pos = getCatDirection(direction);
+        int[] pos = getCatDestination(direction);
 
         if (Utils.IsCatInCorner(puzzleManager, direction)) {
             Debug.Log("Cat can't grab");
@@ -179,7 +187,7 @@ public class Interpreter : MonoBehaviour {
 
     void grabDog(char direction) {
 
-        int[] pos = getDogDirection(direction);
+        int[] pos = getDogDestionation(direction);
 
         if (Utils.IsDogInCorner(puzzleManager, direction)) {
             Debug.Log("Dog can't grab");

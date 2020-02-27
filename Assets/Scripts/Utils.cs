@@ -132,6 +132,22 @@ public class Utils {
         return puzzleManager.dogPosition[1] == 0;
     }
 
+    private static bool IsThingPushedToUpperCorner(PuzzleManager puzzleManager, int i, int j) {
+        return j == puzzleManager.kindMatrix.GetLength(1) - 1;
+    }
+
+    private static bool IsThingPushedToLeftCorner(PuzzleManager puzzleManager, int i, int j) {
+        return i == 0;
+    }
+
+    private static bool IsThingPushedToRightCorner(PuzzleManager puzzleManager, int i, int j) {
+        return i == puzzleManager.kindMatrix.GetLength(0) - 1;
+    }
+
+    private static bool IsThingPushedToBottomCorner(PuzzleManager puzzleManager, int i, int j) {
+        return j == 0;
+    }
+
     public static bool IsCatInCorner(PuzzleManager puzzleManager, char direction) {
         switch (direction) {
             case 'U':
@@ -156,6 +172,20 @@ public class Utils {
                 return IsDogInRightCorner(puzzleManager);
             case 'D':
                 return IsDogInBottomCorner(puzzleManager);
+        }
+        return false;
+    }
+
+    public static bool IsThingPushedToCorner(PuzzleManager puzzleManager, char direction, int i, int j) {
+        switch (direction) {
+            case 'U':
+                return IsThingPushedToUpperCorner(puzzleManager, i, j);
+            case 'L':
+                return IsThingPushedToLeftCorner(puzzleManager, i, j);
+            case 'R':
+                return IsThingPushedToRightCorner(puzzleManager, i, j);
+            case 'D':
+                return IsThingPushedToBottomCorner(puzzleManager, i, j);
         }
         return false;
     }
