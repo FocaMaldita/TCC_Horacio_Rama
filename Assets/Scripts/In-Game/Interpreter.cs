@@ -29,17 +29,75 @@ public class Interpreter : MonoBehaviour {
     private GameObject dogIsHolding = null;
     private PuzzleManager.PuzzleObject dogIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
 
-    void moveCatUp() {
+    int[] getCatDirection(char direction) {
+        int[] ret = new int[2] { 0, 0 };
+
+        if (direction == 'U') {
+            ret[0] = puzzleManager.catPosition[0];
+            ret[1] = puzzleManager.catPosition[1] + 1;
+        } else if (direction == 'L') {
+            ret[0] = puzzleManager.catPosition[0] - 1;
+            ret[1] = puzzleManager.catPosition[1];
+        } else if (direction == 'R') {
+            ret[0] = puzzleManager.catPosition[0] + 1;
+            ret[1] = puzzleManager.catPosition[1];
+        } else if (direction == 'D') {
+            ret[0] = puzzleManager.catPosition[0];
+            ret[1] = puzzleManager.catPosition[1] - 1;
+        } else {
+            Debug.Log("getCatDirection received invalid parameter: " + direction);
+        }
+        return ret;
+    }
+
+    int[] getDogDirection(char direction) {
+        int[] ret = new int[2] { 0, 0 };
+
+        if (direction == 'U') {
+            ret[0] = puzzleManager.dogPosition[0];
+            ret[1] = puzzleManager.dogPosition[1] + 1;
+        } else if (direction == 'L') {
+            ret[0] = puzzleManager.dogPosition[0] - 1;
+            ret[1] = puzzleManager.dogPosition[1];
+        } else if (direction == 'R') {
+            ret[0] = puzzleManager.dogPosition[0] + 1;
+            ret[1] = puzzleManager.dogPosition[1];
+        } else if (direction == 'D') {
+            ret[0] = puzzleManager.dogPosition[0];
+            ret[1] = puzzleManager.dogPosition[1] - 1;
+        } else {
+            Debug.Log("getDogDirection received invalid parameter: " + direction);
+        }
+        return ret;
+    }
+
+    void moveCat(char direction) {
+
+        int[] pos = getCatDirection(direction);
+
         if (Utils.IsCatInUpperCorner(puzzleManager)) {
             Debug.Log("Can't move cat");
-            // Can't move
+            // Can't move cat
         } else {
-            var obstacle = puzzleManager.kindMatrix[puzzleManager.catPosition[0], puzzleManager.catPosition[1] + 1];
+            var obstacle = puzzleManager.kindMatrix[pos[0], pos[1]];
             var canMove = Utils.CanCatMove(obstacle);
             if (canMove == 'Y') {
-                Debug.Log("Move cat up");
-                puzzleManager.catPosition[1]++;
-                StartCoroutine(moveCat('U'));
+                Debug.Log("Move cat " + direction);
+                switch (direction) {
+                    case 'U':
+                        puzzleManager.catPosition[1]++;
+                        break;
+                    case 'L':
+                        puzzleManager.catPosition[0]--;
+                        break;
+                    case 'R':
+                        puzzleManager.catPosition[0]++;
+                        break;
+                    case 'D':
+                        puzzleManager.catPosition[1]--;
+                        break;
+                }
+                StartCoroutine(moveCatTransition(direction));
             } else if (canMove == 'P') {
                 // Move cat up and push
             } else {
@@ -49,77 +107,34 @@ public class Interpreter : MonoBehaviour {
         }
     }
 
-    void moveCatLeft() {
-        if (Utils.IsCatInLeftCorner(puzzleManager)) {
-            Debug.Log("Can't move cat");
-            // Can't move
-        } else {
-            var obstacle = puzzleManager.kindMatrix[puzzleManager.catPosition[0] - 1, puzzleManager.catPosition[1]];
-            var canMove = Utils.CanCatMove(obstacle);
-            if (canMove == 'Y') {
-                Debug.Log("Move cat left");
-                puzzleManager.catPosition[0]--;
-                StartCoroutine(moveCat('L'));
-            } else if (canMove == 'P') {
-                // Move cat left and push
-            } else {
-                // Cat is blocked
-                Debug.Log("Cat is blocked");
-            }
-        }
-    }
+    void moveDog(char direction) {
 
-    void moveCatRight() {
-        if (Utils.IsCatInRightCorner(puzzleManager)) {
-            Debug.Log("Can't move cat");
-            // Can't move
-        } else {
-            var obstacle = puzzleManager.kindMatrix[puzzleManager.catPosition[0] + 1, puzzleManager.catPosition[1]];
-            var canMove = Utils.CanCatMove(obstacle);
-            if (canMove == 'Y') {
-                Debug.Log("Move cat right");
-                puzzleManager.catPosition[0]++;
-                StartCoroutine(moveCat('R'));
-            } else if (canMove == 'P') {
-                // Move cat right and push
-            } else {
-                // Cat is blocked
-                Debug.Log("Cat is blocked");
-            }
-        }
-    }
+        int[] pos = getDogDirection(direction);
 
-    void moveCatDown() {
-        if (Utils.IsCatInBottomCorner(puzzleManager)) {
-            Debug.Log("Can't move cat");
-            // Can't move
-        } else {
-            var obstacle = puzzleManager.kindMatrix[puzzleManager.catPosition[0], puzzleManager.catPosition[1] - 1];
-            var canMove = Utils.CanCatMove(obstacle);
-            if (canMove == 'Y') {
-                Debug.Log("Move cat down");
-                puzzleManager.catPosition[1]--;
-                StartCoroutine(moveCat('D'));
-            } else if (canMove == 'P') {
-                // Move cat down and push
-            } else {
-                // Cat is blocked
-                Debug.Log("Cat is blocked");
-            }
-        }
-    }
-
-    void moveDogUp() {
         if (Utils.IsDogInUpperCorner(puzzleManager)) {
             Debug.Log("Can't move dog");
             // Can't move dog
         } else {
-            var obstacle = puzzleManager.kindMatrix[puzzleManager.dogPosition[0], puzzleManager.dogPosition[1] + 1];
+            var obstacle = puzzleManager.kindMatrix[pos[0], pos[1]];
             var canMove = Utils.CanDogMove(obstacle);
             if (canMove == 'Y') {
-                Debug.Log("Move dog up");
-                puzzleManager.dogPosition[1]++;
-                StartCoroutine(moveDog('U'));
+                Debug.Log("Move dog " + direction);
+                switch (direction) {
+                    case 'U':
+                        puzzleManager.dogPosition[1]++;
+                        break;
+                    case 'L':
+                        puzzleManager.dogPosition[0]--;
+                        break;
+                    case 'R':
+                        puzzleManager.dogPosition[0]++;
+                        break;
+                    case 'D':
+                        puzzleManager.dogPosition[1]--;
+                        break;
+                }
+
+                StartCoroutine(moveDogTransition(direction));
             } else if (canMove == 'P') {
                 // Move dog up and push
             } else {
@@ -129,108 +144,32 @@ public class Interpreter : MonoBehaviour {
         }
     }
 
-    void moveDogLeft() {
-        if (Utils.IsDogInLeftCorner(puzzleManager)) {
-            Debug.Log("Can't move dog");
-            // Can't move dog
-        } else {
-            var obstacle = puzzleManager.kindMatrix[puzzleManager.dogPosition[0] - 1, puzzleManager.dogPosition[1]];
-            var canMove = Utils.CanDogMove(obstacle);
-            if (canMove == 'Y') {
-                Debug.Log("Move dog left");
-                puzzleManager.dogPosition[0]--;
-                StartCoroutine(moveDog('L'));
-            } else if (canMove == 'P') {
-                // Move dog left and push
-            } else {
-                // Dog is blocked
-                Debug.Log("Dog is blocked");
-            }
-        }
-    }
-
-    void moveDogRight() {
-        if (Utils.IsDogInRightCorner(puzzleManager)) {
-            Debug.Log("Can't move dog");
-            // Can't move dog
-        } else {
-            var obstacle = puzzleManager.kindMatrix[puzzleManager.dogPosition[0] + 1, puzzleManager.dogPosition[1]];
-            var canMove = Utils.CanDogMove(obstacle);
-            if (canMove == 'Y') {
-                Debug.Log("Move dog right");
-                puzzleManager.dogPosition[0]++;
-                StartCoroutine(moveDog('R'));
-            } else if (canMove == 'P') {
-                // Move dog right and push
-            } else {
-                // Dog is blocked
-                Debug.Log("Dog is blocked");
-            }
-        }
-    }
-
-    void moveDogDown() {
-        if (Utils.IsDogInBottomCorner(puzzleManager)) {
-            Debug.Log("Can't move dog");
-            // Can't move dog
-        } else {
-            var obstacle = puzzleManager.kindMatrix[puzzleManager.dogPosition[0], puzzleManager.dogPosition[1] - 1];
-            var canMove = Utils.CanDogMove(obstacle);
-            if (canMove == 'Y') {
-                Debug.Log("Move dog down");
-                puzzleManager.dogPosition[1]--;
-                StartCoroutine(moveDog('D'));
-            } else if (canMove == 'P') {
-                // Move dog down and push
-            } else {
-                // Dog is blocked
-                Debug.Log("Dog is blocked");
-            }
-        }
-    }
-
     void grabCat(char direction) {
-
-        int pos_x, pos_y;
-        if (direction == 'U') {
-            pos_x = puzzleManager.catPosition[0];
-            pos_y = puzzleManager.catPosition[1] + 1;
-        } else if (direction == 'L') {
-            pos_x = puzzleManager.catPosition[0] - 1;
-            pos_y = puzzleManager.catPosition[1];
-        } else if (direction == 'R') {
-            pos_x = puzzleManager.catPosition[0] + 1;
-            pos_y = puzzleManager.catPosition[1];
-        } else if (direction == 'D') {
-            pos_x = puzzleManager.catPosition[0];
-            pos_y = puzzleManager.catPosition[1] - 1;
-        } else {
-            return;
-        }
+        
+        int[] pos = getCatDirection(direction);
 
         if (Utils.IsCatInUpperCorner(puzzleManager)) {
             Debug.Log("Cat can't grab");
             // Cat can't grab
         } else {
-            Debug.Log(catIsHolding);
             if (catIsHolding == null) {
-                var obstacle = puzzleManager.kindMatrix[pos_x, pos_y];
-                var obstacleObj = puzzleManager.objMatrix[pos_x, pos_y];
+                var obstacle = puzzleManager.kindMatrix[pos[0], pos[1]];
+                var obstacleObj = puzzleManager.objMatrix[pos[0], pos[1]];
                 var canGrab = Utils.CanCatGrab(obstacle);
                 if (canGrab == 'Y') {
                     Debug.Log("Cat grab up");
                     catIsHolding = Instantiate(obstacleObj, new Vector3(100, 100, 100), Quaternion.identity);
                     catIsHoldingKind = obstacle;
-                    puzzleManager.kindMatrix[pos_x, pos_y] = PuzzleManager.PuzzleObject.NTH;
+                    puzzleManager.kindMatrix[pos[0], pos[1]] = PuzzleManager.PuzzleObject.NTH;
                     Destroy(obstacleObj);
                 } else {
                     // Cat can't grab this
                     Debug.Log("Cat can't grab this");
                 }
             } else {
-                if (Utils.CanPlaceObject(puzzleManager.kindMatrix[pos_x, pos_y]) == 'Y') {
-                    puzzleManager.kindMatrix[pos_x, pos_y] = catIsHoldingKind;
-                    puzzleManager.instantiateObject(catIsHolding, pos_x, pos_y);
+                if (Utils.CanPlaceObject(puzzleManager.kindMatrix[pos[0], pos[1]]) == 'Y') {
+                    puzzleManager.kindMatrix[pos[0], pos[1]] = catIsHoldingKind;
+                    puzzleManager.instantiateObject(catIsHolding, pos[0], pos[1]);
                     Destroy(catIsHolding);
                     catIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
                 }
@@ -238,7 +177,40 @@ public class Interpreter : MonoBehaviour {
         }
     }
 
-    IEnumerator moveCat(char direction) {
+    void grabDog(char direction) {
+
+        int[] pos = getDogDirection(direction);
+
+        if (Utils.IsDogInUpperCorner(puzzleManager)) {
+            Debug.Log("Dog can't grab");
+            // Dog can't grab
+        } else {
+            if (dogIsHolding == null) {
+                var obstacle = puzzleManager.kindMatrix[pos[0], pos[1]];
+                var obstacleObj = puzzleManager.objMatrix[pos[0], pos[1]];
+                var canGrab = Utils.CanDogGrab(obstacle);
+                if (canGrab == 'Y') {
+                    Debug.Log("Dog grab up");
+                    dogIsHolding = Instantiate(obstacleObj, new Vector3(100, 100, 100), Quaternion.identity);
+                    dogIsHoldingKind = obstacle;
+                    puzzleManager.kindMatrix[pos[0], pos[1]] = PuzzleManager.PuzzleObject.NTH;
+                    Destroy(obstacleObj);
+                } else {
+                    // Dog can't grab this
+                    Debug.Log("Dog can't grab this");
+                }
+            } else {
+                if (Utils.CanPlaceObject(puzzleManager.kindMatrix[pos[0], pos[1]]) == 'Y') {
+                    puzzleManager.kindMatrix[pos[0], pos[1]] = dogIsHoldingKind;
+                    puzzleManager.instantiateObject(dogIsHolding, pos[0], pos[1]);
+                    Destroy(dogIsHolding);
+                    dogIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
+                }
+            }
+        }
+    }
+
+    IEnumerator moveCatTransition(char direction) {
         var oldPos = puzzleManager.catReference.transform.position;
         switch (direction) {
             case 'U':
@@ -286,7 +258,7 @@ public class Interpreter : MonoBehaviour {
         yield break;
     }
 
-    IEnumerator moveDog(char direction) {
+    IEnumerator moveDogTransition(char direction) {
         var oldPos = puzzleManager.dogReference.transform.position;
         switch (direction) {
             case 'U':
@@ -350,33 +322,33 @@ public class Interpreter : MonoBehaviour {
 
                         case Utils.InstructionType.MOVE_U:
                             if (character.owner == PuzzleManager.PuzzleObject.CAT) {
-                                moveCatUp();
+                                moveCat('U');
                             } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
-                                moveDogUp();
+                                moveDog('U');
                             }
                             break;
 
                         case Utils.InstructionType.MOVE_L:
                             if (character.owner == PuzzleManager.PuzzleObject.CAT) {
-                                moveCatLeft();
+                                moveCat('L');
                             } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
-                                moveDogLeft();
+                                moveDog('L');
                             }
                             break;
 
                         case Utils.InstructionType.MOVE_R:
                             if (character.owner == PuzzleManager.PuzzleObject.CAT) {
-                                moveCatRight();
+                                moveCat('R');
                             } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
-                                moveDogRight();
+                                moveDog('R');
                             }
                             break;
 
                         case Utils.InstructionType.MOVE_D:
                             if (character.owner == PuzzleManager.PuzzleObject.CAT) {
-                                moveCatDown();
+                                moveCat('D');
                             } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
-                                moveDogDown();
+                                moveDog('D');
                             }
                             break;
 
@@ -384,7 +356,7 @@ public class Interpreter : MonoBehaviour {
                             if (character.owner == PuzzleManager.PuzzleObject.CAT) {
                                 grabCat('U');
                             } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
-                                //grabDog('U');
+                                grabDog('U');
                             }
                             break;
 
@@ -392,7 +364,7 @@ public class Interpreter : MonoBehaviour {
                             if (character.owner == PuzzleManager.PuzzleObject.CAT) {
                                 grabCat('L');
                             } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
-                                //grabDog('L');
+                                grabDog('L');
                             }
                             break;
 
@@ -400,7 +372,7 @@ public class Interpreter : MonoBehaviour {
                             if (character.owner == PuzzleManager.PuzzleObject.CAT) {
                                 grabCat('R');
                             } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
-                                //grabDog('R');
+                                grabDog('R');
                             }
                             break;
 
@@ -408,7 +380,7 @@ public class Interpreter : MonoBehaviour {
                             if (character.owner == PuzzleManager.PuzzleObject.CAT) {
                                 grabCat('D');
                             } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
-                                //grabDog('D');
+                                grabDog('D');
                             }
                             break;
                     }
