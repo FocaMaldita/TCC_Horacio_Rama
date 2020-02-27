@@ -24,6 +24,11 @@ public class Interpreter : MonoBehaviour {
     [SerializeField]
     private InstructionListOwner[] instructionLists;
 
+    private GameObject catIsHolding = null;
+    private PuzzleManager.PuzzleObject catIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
+    private GameObject dogIsHolding = null;
+    private PuzzleManager.PuzzleObject dogIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
+
     void moveCatUp() {
         if (Utils.IsCatInUpperCorner(puzzleManager)) {
             Debug.Log("Can't move cat");
@@ -184,6 +189,55 @@ public class Interpreter : MonoBehaviour {
         }
     }
 
+    void grabCat(char direction) {
+
+        int pos_x, pos_y;
+        if (direction == 'U') {
+            pos_x = puzzleManager.catPosition[0];
+            pos_y = puzzleManager.catPosition[1] + 1;
+        } else if (direction == 'L') {
+            pos_x = puzzleManager.catPosition[0] - 1;
+            pos_y = puzzleManager.catPosition[1];
+        } else if (direction == 'R') {
+            pos_x = puzzleManager.catPosition[0] + 1;
+            pos_y = puzzleManager.catPosition[1];
+        } else if (direction == 'D') {
+            pos_x = puzzleManager.catPosition[0];
+            pos_y = puzzleManager.catPosition[1] - 1;
+        } else {
+            return;
+        }
+
+        if (Utils.IsCatInUpperCorner(puzzleManager)) {
+            Debug.Log("Cat can't grab");
+            // Cat can't grab
+        } else {
+            Debug.Log(catIsHolding);
+            if (catIsHolding == null) {
+                var obstacle = puzzleManager.kindMatrix[pos_x, pos_y];
+                var obstacleObj = puzzleManager.objMatrix[pos_x, pos_y];
+                var canGrab = Utils.CanCatGrab(obstacle);
+                if (canGrab == 'Y') {
+                    Debug.Log("Cat grab up");
+                    catIsHolding = Instantiate(obstacleObj, new Vector3(100, 100, 100), Quaternion.identity);
+                    catIsHoldingKind = obstacle;
+                    puzzleManager.kindMatrix[pos_x, pos_y] = PuzzleManager.PuzzleObject.NTH;
+                    Destroy(obstacleObj);
+                } else {
+                    // Cat can't grab this
+                    Debug.Log("Cat can't grab this");
+                }
+            } else {
+                if (Utils.CanPlaceObject(puzzleManager.kindMatrix[pos_x, pos_y]) == 'Y') {
+                    puzzleManager.kindMatrix[pos_x, pos_y] = catIsHoldingKind;
+                    puzzleManager.instantiateObject(catIsHolding, pos_x, pos_y);
+                    Destroy(catIsHolding);
+                    catIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
+                }
+            }
+        }
+    }
+
     IEnumerator moveCat(char direction) {
         var oldPos = puzzleManager.catReference.transform.position;
         switch (direction) {
@@ -282,8 +336,6 @@ public class Interpreter : MonoBehaviour {
 
     IEnumerator interpretationEvent() {
         var largestList = 0;
-        GameObject catIsHolding = null;
-        GameObject dogIsHolding = null;
         foreach (var character in instructionLists) {
             if (character.instList.list.Count > largestList) {
                 largestList = character.instList.list.Count;
@@ -325,6 +377,38 @@ public class Interpreter : MonoBehaviour {
                                 moveCatDown();
                             } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
                                 moveDogDown();
+                            }
+                            break;
+
+                        case Utils.InstructionType.GRAB_U:
+                            if (character.owner == PuzzleManager.PuzzleObject.CAT) {
+                                grabCat('U');
+                            } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
+                                //grabDog('U');
+                            }
+                            break;
+
+                        case Utils.InstructionType.GRAB_L:
+                            if (character.owner == PuzzleManager.PuzzleObject.CAT) {
+                                grabCat('L');
+                            } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
+                                //grabDog('L');
+                            }
+                            break;
+
+                        case Utils.InstructionType.GRAB_R:
+                            if (character.owner == PuzzleManager.PuzzleObject.CAT) {
+                                grabCat('R');
+                            } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
+                                //grabDog('R');
+                            }
+                            break;
+
+                        case Utils.InstructionType.GRAB_D:
+                            if (character.owner == PuzzleManager.PuzzleObject.CAT) {
+                                grabCat('D');
+                            } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
+                                //grabDog('D');
                             }
                             break;
                     }

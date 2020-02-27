@@ -87,6 +87,19 @@ public class Utils {
         return 'N';
     }
 
+    public static char CanPlaceObject(PuzzleManager.PuzzleObject obj) {
+        // Can place
+        if ((new List<PuzzleManager.PuzzleObject> {
+            PuzzleManager.PuzzleObject.NTH,
+            // TODO
+        }).Contains(obj)) {
+            return 'Y';
+        }
+
+        // Can't place
+        return 'N';
+    }
+
     public static bool IsCatInUpperCorner(PuzzleManager puzzleManager) {
         return puzzleManager.catPosition[1] == puzzleManager.kindMatrix.GetLength(1) - 1;
     }

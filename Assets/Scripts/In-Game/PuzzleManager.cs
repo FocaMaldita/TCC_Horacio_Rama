@@ -35,9 +35,19 @@ public class PuzzleManager : MonoBehaviour {
     [HideInInspector]
     public GameObject catReference, dogReference;
 
-    public List<List<GameObject>> objMatrix;
-
     public PuzzleObject[,] kindMatrix;
+    public GameObject[,] objMatrix;
+    private int rowCount, colCount;
+
+    public void instantiateObject(GameObject obj, int i, int j) {
+        objMatrix[i, j] = Instantiate(
+            obj,
+            new Vector3((i - rowCount / 2) * cellDistance,
+                (j - colCount / 2) * cellDistance,
+                0),
+            Quaternion.identity
+        );
+    }
 
     void Start() {
         { // Creating the dictionary of prefabs
@@ -57,8 +67,8 @@ public class PuzzleManager : MonoBehaviour {
             kindMatrix[5, 6] = PuzzleObject.BIRD;
         }
 
-        var rowCount = kindMatrix.GetLength(0);
-        var colCount = kindMatrix.GetLength(1);
+        rowCount = kindMatrix.GetLength(0);
+        colCount = kindMatrix.GetLength(1);
 
         { // Instantiating the level
             if (prefabDict.ContainsKey(PuzzleObject.CAT))
@@ -79,16 +89,13 @@ public class PuzzleManager : MonoBehaviour {
                         0),
                     Quaternion.identity
                 );
+
+            objMatrix = new GameObject[rowCount, colCount];
+
             for (var i=0; i < rowCount; i++) {
                 for (var j=0; j < colCount; j++) {
                     if (prefabDict.ContainsKey(kindMatrix[i, j])) {
-                        Instantiate(
-                            prefabDict[kindMatrix[i, j]],
-                            new Vector3((i - rowCount/2) * cellDistance,
-                                (j - colCount / 2) * cellDistance,
-                                0),
-                            Quaternion.identity
-                        );
+                        instantiateObject(prefabDict[kindMatrix[i, j]], i, j);
                     }
                 }
             }
