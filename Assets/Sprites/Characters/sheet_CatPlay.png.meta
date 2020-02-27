@@ -1,28 +1,22 @@
 fileFormatVersion: 2
-guid: ea26839579185e749aa174025e17704b
+guid: 80d36466e0cff974898543729a9f1f22
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4815142171563463551
-    second: sidewalks_0
+      213: 4238415134477215154
+    second: sheet_CatPlay_0
   - first:
-      213: -5304268467926423473
-    second: sidewalks_1
+      213: 5868008265237497990
+    second: sheet_CatPlay_1
   - first:
-      213: -8024702068288022240
-    second: sidewalks_2
+      213: -7472658612224820803
+    second: sheet_CatPlay_2
   - first:
-      213: 4760178045556666507
-    second: sidewalks_3
+      213: -6814048058499534707
+    second: sheet_CatPlay_3
   - first:
-      213: 7302134198625029937
-    second: sidewalks_4
-  - first:
-      213: -7294601962826745149
-    second: sidewalks_5
-  - first:
-      213: -5970527575050121190
-    second: sidewalks_6
+      213: 3895194022820673254
+    second: sheet_CatPlay_4
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -66,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 64
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -119,7 +113,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sidewalks_0
+      name: sheet_CatPlay_0
       rect:
         serializedVersion: 2
         x: 0
@@ -133,14 +127,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 755d5ec084b05554e91b02c5514103b9
-      internalID: 4815142171563463551
+      spriteID: 50ea01b6a7f958348b488e7c3c3fadba
+      internalID: 4238415134477215154
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sidewalks_1
+      name: sheet_CatPlay_1
       rect:
         serializedVersion: 2
         x: 64
@@ -154,14 +148,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6cdf27d6471b97042a38d3e091cb9721
-      internalID: -5304268467926423473
+      spriteID: e0f0b71d509ec6343bec75d9c3818ca5
+      internalID: 5868008265237497990
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sidewalks_2
+      name: sheet_CatPlay_2
       rect:
         serializedVersion: 2
         x: 128
@@ -175,35 +169,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b4dd81fe73a2a684ea3607ef0584cf2b
-      internalID: -8024702068288022240
+      spriteID: 1f6e705d380b31d4e8de7da3bb15c29d
+      internalID: -7472658612224820803
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sidewalks_3
-      rect:
-        serializedVersion: 2
-        x: 192
-        y: 64
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 238581f05ea50dd48b65941247a30c09
-      internalID: 4760178045556666507
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sidewalks_4
+      name: sheet_CatPlay_3
       rect:
         serializedVersion: 2
         x: 0
@@ -217,14 +190,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3749d738e2233244480f9f717359314d
-      internalID: 7302134198625029937
+      spriteID: decfc58172d60ad4ab760bff4bbedc8a
+      internalID: -6814048058499534707
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sidewalks_5
+      name: sheet_CatPlay_4
       rect:
         serializedVersion: 2
         x: 64
@@ -238,29 +211,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 203b69d56706aeb479efb7a2fad72248
-      internalID: -7294601962826745149
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: sidewalks_6
-      rect:
-        serializedVersion: 2
-        x: 128
-        y: 0
-        width: 64
-        height: 64
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6fcfc91ce60978043acd726bddb30d59
-      internalID: -5970527575050121190
+      spriteID: 8cd76d04ad174b141a629fb20da2d28a
+      internalID: 3895194022820673254
       vertices: []
       indices: 
       edges: []
