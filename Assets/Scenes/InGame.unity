@@ -2336,6 +2336,12 @@ MonoBehaviour:
   - puzzleObject: 2
     prefab: {fileID: 5681685101602031358, guid: d3c08c83e5b2eea4bb3bb2141bb3d05f,
       type: 3}
+  - puzzleObject: 13
+    prefab: {fileID: 4751446235232804326, guid: 367d283522c556e4a8533df18478157e,
+      type: 3}
+  - puzzleObject: 14
+    prefab: {fileID: 4751446235232804326, guid: dc8339d0f15f5fb47b053ea7f78e9150,
+      type: 3}
   catPosition: 
   dogPosition: 
   catReference: {fileID: 0}
