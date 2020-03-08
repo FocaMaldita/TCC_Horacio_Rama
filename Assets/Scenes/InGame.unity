@@ -2323,7 +2323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4a8c62406f390b419c8e845aad667b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cellDistance: 1.8
+  cellDistance: 0.6
   prefabList:
   - puzzleObject: 1
     prefab: {fileID: 3680564540559331872, guid: 4b2db1cf15e44f340a27f824e7a0b988,
