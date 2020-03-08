@@ -133,19 +133,23 @@ public class Utils {
     }
 
     private static bool IsThingPushedToUpperCorner(PuzzleManager puzzleManager, int i, int j) {
-        return j == puzzleManager.kindMatrix.GetLength(1) - 1;
+        return j == puzzleManager.kindMatrix.GetLength(1) - 1
+                || puzzleManager.kindMatrix[i, j + 1] != PuzzleManager.PuzzleObject.NTH;
     }
 
     private static bool IsThingPushedToLeftCorner(PuzzleManager puzzleManager, int i, int j) {
-        return i == 0;
+        return i == 0
+                || puzzleManager.kindMatrix[i - 1, j] != PuzzleManager.PuzzleObject.NTH;
     }
 
     private static bool IsThingPushedToRightCorner(PuzzleManager puzzleManager, int i, int j) {
-        return i == puzzleManager.kindMatrix.GetLength(0) - 1;
+        return i == puzzleManager.kindMatrix.GetLength(0) - 1
+                || puzzleManager.kindMatrix[i + 1, j] != PuzzleManager.PuzzleObject.NTH;
     }
 
     private static bool IsThingPushedToBottomCorner(PuzzleManager puzzleManager, int i, int j) {
-        return j == 0;
+        return j == 0
+                || puzzleManager.kindMatrix[i, j - 1] != PuzzleManager.PuzzleObject.NTH;
     }
 
     public static bool IsCatInCorner(PuzzleManager puzzleManager, char direction) {

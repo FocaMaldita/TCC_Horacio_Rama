@@ -50,7 +50,7 @@ public class Interpreter : MonoBehaviour {
         return ret;
     }
 
-    int[] getDogDestionation(char direction) {
+    int[] getDogDestination(char direction) {
         int[] ret = new int[2] { 0, 0 };
 
         if (direction == 'U') {
@@ -109,7 +109,7 @@ public class Interpreter : MonoBehaviour {
 
     void moveDog(char direction) {
 
-        int[] pos = getDogDestionation(direction);
+        int[] pos = getDogDestination(direction);
 
         if (Utils.IsDogInCorner(puzzleManager, direction)) {
             Debug.Log("Can't move dog");
@@ -143,6 +143,28 @@ public class Interpreter : MonoBehaviour {
                     Debug.Log("Dog is blocked");
                 } else {
                     // Dog moves and pushes thing
+                    var obstacleObj = puzzleManager.objMatrix[pos[0], pos[1]];
+                    switch (direction) {
+                        case 'U':
+                            puzzleManager.dogPosition[1]++;
+                            puzzleManager.moveObject(pos[0], pos[1], pos[0], pos[1] + 1);
+                            break;
+                        case 'L':
+                            puzzleManager.dogPosition[0]--;
+                            puzzleManager.moveObject(pos[0], pos[1], pos[0] - 1, pos[1]);
+                            break;
+                        case 'R':
+                            puzzleManager.dogPosition[0]++;
+                            puzzleManager.moveObject(pos[0], pos[1], pos[0] + 1, pos[1]);
+                            break;
+                        case 'D':
+                            puzzleManager.dogPosition[1]--;
+                            puzzleManager.moveObject(pos[0], pos[1], pos[0], pos[1] - 1);
+                            break;
+                    }
+
+                    StartCoroutine(moveThingTransition(obstacleObj.transform, direction));
+                    StartCoroutine(moveDogTransition(direction));
                 }
 
             } else {
@@ -187,7 +209,7 @@ public class Interpreter : MonoBehaviour {
 
     void grabDog(char direction) {
 
-        int[] pos = getDogDestionation(direction);
+        int[] pos = getDogDestination(direction);
 
         if (Utils.IsDogInCorner(puzzleManager, direction)) {
             Debug.Log("Dog can't grab");
@@ -302,6 +324,54 @@ public class Interpreter : MonoBehaviour {
             case 'D':
                 for (var i = 0; i < 10; i++) {
                     puzzleManager.dogReference.transform.position = new Vector3(
+                        oldPos.x,
+                        oldPos.y - (i + 1) / 10f * puzzleManager.cellDistance,
+                        oldPos.z
+                    );
+                    yield return new WaitForSeconds(secondsPerMove / 10);
+                }
+                break;
+
+        }
+        yield break;
+    }
+
+    IEnumerator moveThingTransition(Transform thing, char direction) {
+        var oldPos = thing.position;
+        switch (direction) {
+            case 'U':
+                for (var i = 0; i < 10; i++) {
+                    thing.position = new Vector3(
+                        oldPos.x,
+                        oldPos.y + (i + 1) / 10f * puzzleManager.cellDistance,
+                        oldPos.z
+                    );
+                    yield return new WaitForSeconds(secondsPerMove / 10f);
+                }
+                break;
+            case 'L':
+                for (var i = 0; i < 10; i++) {
+                    thing.position = new Vector3(
+                        oldPos.x - (i + 1) / 10f * puzzleManager.cellDistance,
+                        oldPos.y,
+                        oldPos.z
+                    );
+                    yield return new WaitForSeconds(secondsPerMove / 10);
+                }
+                break;
+            case 'R':
+                for (var i = 0; i < 10; i++) {
+                    thing.position = new Vector3(
+                        oldPos.x + (i + 1) / 10f * puzzleManager.cellDistance,
+                        oldPos.y,
+                        oldPos.z
+                    );
+                    yield return new WaitForSeconds(secondsPerMove / 10);
+                }
+                break;
+            case 'D':
+                for (var i = 0; i < 10; i++) {
+                    thing.position = new Vector3(
                         oldPos.x,
                         oldPos.y - (i + 1) / 10f * puzzleManager.cellDistance,
                         oldPos.z

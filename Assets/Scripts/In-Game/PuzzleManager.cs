@@ -40,6 +40,17 @@ public class PuzzleManager : MonoBehaviour {
     public GameObject[,] objMatrix;
     private int rowCount, colCount;
 
+    public void moveObject(int old_x, int old_y, int new_x, int new_y) {
+        var oldKind = kindMatrix[old_x, old_y];
+        var oldObj = objMatrix[old_x, old_y];
+
+        kindMatrix[old_x, old_y] = PuzzleObject.NTH;
+        kindMatrix[new_x, new_y] = oldKind;
+
+        objMatrix[old_x, old_y] = null;
+        objMatrix[new_x, new_y] = oldObj;
+    }
+
     public void instantiateObject(GameObject obj, int i, int j) {
         objMatrix[i, j] = Instantiate(
             obj,
