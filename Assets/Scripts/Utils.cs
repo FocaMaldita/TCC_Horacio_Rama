@@ -23,6 +23,8 @@ public class Utils {
             PuzzleManager.PuzzleObject.ROCK,
             PuzzleManager.PuzzleObject.DOG,
             PuzzleManager.PuzzleObject.BIRD,
+            PuzzleManager.PuzzleObject.SQUIRREL,
+            PuzzleManager.PuzzleObject.PUPPER,
             // TODO
         }).Contains(obstacle)) {
             return 'N';
@@ -43,6 +45,8 @@ public class Utils {
         // Can grab
         if ((new List<PuzzleManager.PuzzleObject> {
             PuzzleManager.PuzzleObject.BIRD,
+            PuzzleManager.PuzzleObject.SQUIRREL,
+            PuzzleManager.PuzzleObject.PUPPER,
             // TODO
         }).Contains(obstacle)) {
             return 'Y';
@@ -57,6 +61,8 @@ public class Utils {
         if ((new List<PuzzleManager.PuzzleObject> {
             PuzzleManager.PuzzleObject.CAT,
             PuzzleManager.PuzzleObject.BIRD,
+            PuzzleManager.PuzzleObject.SQUIRREL,
+            PuzzleManager.PuzzleObject.PUPPER,
             // TODO
         }).Contains(obstacle)) {
             return 'N';
@@ -79,6 +85,8 @@ public class Utils {
         if ((new List<PuzzleManager.PuzzleObject> {
             PuzzleManager.PuzzleObject.BIRD,
             PuzzleManager.PuzzleObject.CAT,
+            PuzzleManager.PuzzleObject.SQUIRREL,
+            PuzzleManager.PuzzleObject.PUPPER,
             // TODO
         }).Contains(obstacle)) {
             return 'Y';
