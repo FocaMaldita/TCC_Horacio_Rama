@@ -17,4 +17,8 @@ public class DebugScript : MonoBehaviour {
             Utils.loadPuzzle("PuzzleStage4");
         }
     }
+
+    public void loadPuzzle(int a) {
+        Utils.loadPuzzle("PuzzleStage" + a);
+    }
 }
