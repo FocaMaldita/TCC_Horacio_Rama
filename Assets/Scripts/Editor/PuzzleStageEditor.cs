@@ -24,6 +24,10 @@ public class PuzzleStageEditor : Editor {
             }
             GUILayout.EndHorizontal();
         }
+
+        if (GUILayout.Button("Set dirty")) {
+            EditorUtility.SetDirty(ps);
+        }
     }
 
     void resize(PuzzleStageScriptableObject ps) {
