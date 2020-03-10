@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Interpreter : MonoBehaviour {
 
@@ -28,6 +29,9 @@ public class Interpreter : MonoBehaviour {
     private PuzzleManager.PuzzleObject catIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
     private GameObject dogIsHolding = null;
     private PuzzleManager.PuzzleObject dogIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
+
+    [SerializeField]
+    private Image catHolding, dogHolding;
 
     int[] getCatDestination(char direction) {
         int[] ret = new int[2] { 0, 0 };
@@ -191,6 +195,8 @@ public class Interpreter : MonoBehaviour {
                     catIsHolding = Instantiate(obstacleObj, new Vector3(100, 100, 100), Quaternion.identity);
                     catIsHoldingKind = obstacle;
                     puzzleManager.kindMatrix[pos[0], pos[1]] = PuzzleManager.PuzzleObject.NTH;
+                    catHolding.color = new Color(1, 1, 1, .5f);
+                    catHolding.sprite = obstacleObj.GetComponent<SpriteRenderer>().sprite;
                     Destroy(obstacleObj);
                 } else {
                     // Cat can't grab this
@@ -202,6 +208,7 @@ public class Interpreter : MonoBehaviour {
                     puzzleManager.instantiateObject(catIsHolding, pos[0], pos[1]);
                     Destroy(catIsHolding);
                     catIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
+                    catHolding.color = new Color(1, 1, 1, 0);
                 }
             }
         }
@@ -224,6 +231,8 @@ public class Interpreter : MonoBehaviour {
                     dogIsHolding = Instantiate(obstacleObj, new Vector3(100, 100, 100), Quaternion.identity);
                     dogIsHoldingKind = obstacle;
                     puzzleManager.kindMatrix[pos[0], pos[1]] = PuzzleManager.PuzzleObject.NTH;
+                    dogHolding.color = new Color(1, 1, 1, .5f);
+                    dogHolding.sprite = obstacleObj.GetComponent<SpriteRenderer>().sprite;
                     Destroy(obstacleObj);
                 } else {
                     // Dog can't grab this
@@ -235,6 +244,7 @@ public class Interpreter : MonoBehaviour {
                     puzzleManager.instantiateObject(dogIsHolding, pos[0], pos[1]);
                     Destroy(dogIsHolding);
                     dogIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
+                    dogHolding.color = new Color(1, 1, 1, 0);
                 }
             }
         }
