@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour {
 
+    public static PuzzleStageScriptableObject stageInfo;
+
     public float cellDistance = .5f;
 
     public enum PuzzleObject {
@@ -40,6 +42,9 @@ public class PuzzleManager : MonoBehaviour {
     public GameObject[,] objMatrix;
     private int rowCount, colCount;
 
+    [SerializeField]
+    private GameObject catList, dogList;
+
     public void moveObject(int old_x, int old_y, int new_x, int new_y) {
         var oldKind = kindMatrix[old_x, old_y];
         var oldObj = objMatrix[old_x, old_y];
@@ -54,8 +59,8 @@ public class PuzzleManager : MonoBehaviour {
     public void instantiateObject(GameObject obj, int i, int j) {
         objMatrix[i, j] = Instantiate(
             obj,
-            new Vector3((i - rowCount / 2) * cellDistance,
-                (j - colCount / 2) * cellDistance,
+            new Vector3((i - colCount / 2) * cellDistance,
+                (j - rowCount / 2) * cellDistance,
                 0),
             Quaternion.identity
         );
@@ -68,44 +73,56 @@ public class PuzzleManager : MonoBehaviour {
                 prefabDict[pair.puzzleObject] = pair.prefab;
             }
         }
-        { // Creating the level's matrix
-            kindMatrix = new PuzzleObject[9, 9];
-            catPosition = new int[] { 4, 4 };
-            dogPosition = new int[] { 4, 3 };
-            kindMatrix[2, 4] = PuzzleObject.ROCK;
-            kindMatrix[2, 3] = PuzzleObject.ROCK;
-            kindMatrix[2, 5] = PuzzleObject.ROCK;
-            kindMatrix[0, 3] = PuzzleObject.BIRD;
-            kindMatrix[5, 6] = PuzzleObject.BIRD;
+
+        if (stageInfo == null) {
+            Utils.loadPuzzle("PuzzleStage1");
         }
 
-        rowCount = kindMatrix.GetLength(0);
-        colCount = kindMatrix.GetLength(1);
+        if (!stageInfo.hasCat) {
+            Destroy(catList);
+        }
+        if (!stageInfo.hasDog) {
+            Destroy(dogList);
+        }
+
+        rowCount = stageInfo.rowCount;
+        colCount = stageInfo.colCount;
+
+        { // Creating the level's matrix
+            catPosition = new int[] { stageInfo.catPositionX, stageInfo.catPositionY };
+            dogPosition = new int[] { stageInfo.dogPositionX, stageInfo.dogPositionY };
+            kindMatrix = new PuzzleObject[colCount, rowCount];
+            for (int i = 0; i < colCount; i++) {
+                for (int j = 0; j < rowCount; j++) {
+                    kindMatrix[i, j] = stageInfo.matrix[i].entries[j];
+                }
+            }
+        }
 
         { // Instantiating the level
-            if (prefabDict.ContainsKey(PuzzleObject.CAT))
+            if (stageInfo.hasCat)
                 // Instantiates the cat
                 catReference = Instantiate(
                     prefabDict[PuzzleObject.CAT],
-                    new Vector3((catPosition[0] - rowCount / 2) * cellDistance,
-                        (catPosition[1] - colCount / 2) * cellDistance,
+                    new Vector3((catPosition[0] - colCount / 2) * cellDistance,
+                        (catPosition[1] - rowCount / 2) * cellDistance,
                         0),
                     Quaternion.identity
                 );
-            if (prefabDict.ContainsKey(PuzzleObject.DOG))
+            if (stageInfo.hasDog)
                 // Instantiates the dog
                 dogReference = Instantiate(
                     prefabDict[PuzzleObject.DOG],
-                    new Vector3((dogPosition[0] - rowCount / 2) * cellDistance,
-                        (dogPosition[1] - colCount / 2) * cellDistance,
+                    new Vector3((dogPosition[0] - colCount / 2) * cellDistance,
+                        (dogPosition[1] - rowCount / 2) * cellDistance,
                         0),
                     Quaternion.identity
                 );
 
-            objMatrix = new GameObject[rowCount, colCount];
+            objMatrix = new GameObject[colCount, rowCount];
 
-            for (var i=0; i < rowCount; i++) {
-                for (var j=0; j < colCount; j++) {
+            for (var i = 0; i < colCount; i++) {
+                for (var j = 0; j < rowCount; j++) {
                     if (prefabDict.ContainsKey(kindMatrix[i, j])) {
                         instantiateObject(prefabDict[kindMatrix[i, j]], i, j);
                     }

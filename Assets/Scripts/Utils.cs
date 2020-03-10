@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Utils {
 
@@ -206,5 +207,10 @@ public class Utils {
             }
         }
         return null;
+    }
+
+    public static void loadPuzzle(string name) {
+        PuzzleManager.stageInfo = Resources.Load<PuzzleStageScriptableObject>("ScriptObjects/Puzzles/" + name);
+        SceneManager.LoadScene("Scenes/InGame");
     }
 }
