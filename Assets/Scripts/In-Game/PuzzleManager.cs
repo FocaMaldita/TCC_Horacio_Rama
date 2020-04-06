@@ -66,7 +66,7 @@ public class PuzzleManager : MonoBehaviour {
         );
     }
 
-    void Start() {
+    void Awake() {
         { // Creating the dictionary of prefabs
             prefabDict = new Dictionary<PuzzleObject, GameObject>();
             foreach (var pair in prefabList) {
