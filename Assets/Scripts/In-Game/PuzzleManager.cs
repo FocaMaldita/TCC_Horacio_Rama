@@ -44,6 +44,8 @@ public class PuzzleManager : MonoBehaviour {
 
     [SerializeField]
     private GameObject catList, dogList;
+    [SerializeField]
+    private GameObject moveButton, grabButton, waitButton;
 
     public void moveObject(int old_x, int old_y, int new_x, int new_y) {
         var oldKind = kindMatrix[old_x, old_y];
@@ -78,11 +80,22 @@ public class PuzzleManager : MonoBehaviour {
             Utils.loadPuzzle("PuzzleStage1");
         }
 
+        // Destroys UI elements unused by this puzzle
         if (!stageInfo.hasCat) {
             Destroy(catList);
         }
         if (!stageInfo.hasDog) {
             Destroy(dogList);
+        }
+
+        if (!stageInfo.hasMove) {
+            Destroy(moveButton);
+        }
+        if (!stageInfo.hasGrab) {
+            Destroy(grabButton);
+        }
+        if (!stageInfo.hasWait) {
+            Destroy(waitButton);
         }
 
         rowCount = stageInfo.rowCount;
