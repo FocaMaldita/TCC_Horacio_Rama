@@ -58,14 +58,23 @@ public class PuzzleManager : MonoBehaviour {
         objMatrix[new_x, new_y] = oldObj;
     }
 
-    public void instantiateObject(GameObject obj, int i, int j) {
+    public GameObject instantiateObject(GameObject obj, int i, int j) {
+        float new_i = (i - colCount / 2f);
+        float new_j = (j - rowCount / 2f);
+        if (colCount % 2 == 0) {
+            new_i += .5f;
+        }
+        if (rowCount % 2 == 0) {
+            new_j += .5f;
+        }
         objMatrix[i, j] = Instantiate(
             obj,
-            new Vector3((i - colCount / 2) * cellDistance,
-                (j - rowCount / 2) * cellDistance,
+            new Vector3(new_i * cellDistance,
+                new_j * cellDistance,
                 0),
             Quaternion.identity
         );
+        return objMatrix[i, j];
     }
 
     void Awake() {
@@ -113,24 +122,6 @@ public class PuzzleManager : MonoBehaviour {
         }
 
         { // Instantiating the level
-            if (stageInfo.hasCat)
-                // Instantiates the cat
-                catReference = Instantiate(
-                    prefabDict[PuzzleObject.CAT],
-                    new Vector3((catPosition[0] - colCount / 2) * cellDistance,
-                        (catPosition[1] - rowCount / 2) * cellDistance,
-                        0),
-                    Quaternion.identity
-                );
-            if (stageInfo.hasDog)
-                // Instantiates the dog
-                dogReference = Instantiate(
-                    prefabDict[PuzzleObject.DOG],
-                    new Vector3((dogPosition[0] - colCount / 2) * cellDistance,
-                        (dogPosition[1] - rowCount / 2) * cellDistance,
-                        0),
-                    Quaternion.identity
-                );
 
             objMatrix = new GameObject[colCount, rowCount];
 
@@ -141,6 +132,21 @@ public class PuzzleManager : MonoBehaviour {
                     }
                 }
             }
+
+            if (stageInfo.hasCat)
+                // Instantiates the cat
+                catReference = instantiateObject(
+                    prefabDict[PuzzleObject.CAT],
+                    catPosition[0],
+                    catPosition[1]
+                );
+            if (stageInfo.hasDog)
+                // Instantiates the dog
+                dogReference = instantiateObject(
+                    prefabDict[PuzzleObject.DOG],
+                    dogPosition[0],
+                    dogPosition[1]
+                );
         }
     }
 }
