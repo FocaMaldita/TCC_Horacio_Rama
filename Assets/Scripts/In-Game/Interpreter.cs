@@ -33,6 +33,9 @@ public class Interpreter : MonoBehaviour {
     [SerializeField]
     private Image catHolding, dogHolding;
 
+    [SerializeField]
+    private GameObject endMenu;
+
     int[] getCatDestination(char direction) {
         int[] ret = new int[2] { 0, 0 };
 
@@ -483,7 +486,8 @@ public class Interpreter : MonoBehaviour {
             yield return new WaitForSeconds(secondsPerMove + secondsBetweenMoves);
         }
 
-        isInterpreting = false;
+        yield return new WaitForSeconds(1f);
+        endMenu.SetActive(true);
         yield break;
     }
 
