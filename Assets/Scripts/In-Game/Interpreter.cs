@@ -195,8 +195,9 @@ public class Interpreter : MonoBehaviour {
                     catIsHolding = Instantiate(obstacleObj, new Vector3(100, 100, 100), Quaternion.identity);
                     catIsHoldingKind = obstacle;
                     puzzleManager.kindMatrix[pos[0], pos[1]] = PuzzleManager.PuzzleObject.NTH;
-                    catHolding.color = new Color(1, 1, 1, .5f);
-                    catHolding.sprite = obstacleObj.GetComponent<SpriteRenderer>().sprite;
+                    var obstacleSprite = obstacleObj.GetComponent<SpriteRenderer>();
+                    catHolding.color = new Color(obstacleSprite.color.r, obstacleSprite.color.g, obstacleSprite.color.b, .5f);
+                    catHolding.sprite = obstacleSprite.sprite;
                     Destroy(obstacleObj);
                 } else {
                     // Cat can't grab this
@@ -233,8 +234,9 @@ public class Interpreter : MonoBehaviour {
                     dogIsHolding = Instantiate(obstacleObj, new Vector3(100, 100, 100), Quaternion.identity);
                     dogIsHoldingKind = obstacle;
                     puzzleManager.kindMatrix[pos[0], pos[1]] = PuzzleManager.PuzzleObject.NTH;
-                    dogHolding.color = new Color(1, 1, 1, .5f);
-                    dogHolding.sprite = obstacleObj.GetComponent<SpriteRenderer>().sprite;
+                    var obstacleSprite = obstacleObj.GetComponent<SpriteRenderer>();
+                    dogHolding.color = new Color(obstacleSprite.color.r, obstacleSprite.color.g, obstacleSprite.color.b, .5f);
+                    dogHolding.sprite = obstacleSprite.sprite;
                     Destroy(obstacleObj);
                 } else {
                     // Dog can't grab this

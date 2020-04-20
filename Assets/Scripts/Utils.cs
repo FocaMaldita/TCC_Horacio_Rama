@@ -49,7 +49,7 @@ public class Utils {
         if ((new List<PuzzleManager.PuzzleObject> {
             PuzzleManager.PuzzleObject.BIRD,
             PuzzleManager.PuzzleObject.SQUIRREL,
-            PuzzleManager.PuzzleObject.PUPPER,
+            PuzzleManager.PuzzleObject.EGG,
             // TODO
         }).Contains(obstacle)) {
             return 'Y';
@@ -90,9 +90,8 @@ public class Utils {
         // Can grab
         if ((new List<PuzzleManager.PuzzleObject> {
             PuzzleManager.PuzzleObject.BIRD,
-            PuzzleManager.PuzzleObject.CAT,
             PuzzleManager.PuzzleObject.SQUIRREL,
-            PuzzleManager.PuzzleObject.PUPPER,
+            PuzzleManager.PuzzleObject.EGG,
             // TODO
         }).Contains(obstacle)) {
             return 'Y';
@@ -103,13 +102,14 @@ public class Utils {
     }
 
     public static PuzzleManager.PuzzleObject CanPlaceObject(PuzzleManager.PuzzleObject obj, PuzzleManager.PuzzleObject target) {
-        // Can place
+        // Can place on floor
         if ((new List<PuzzleManager.PuzzleObject> {
             PuzzleManager.PuzzleObject.NTH,
             // TODO
         }).Contains(target)) {
             return obj;
         }
+        // Can place on Animal Delivery Point
         if (target == PuzzleManager.PuzzleObject.ANIMAL_POINT) {
             if (obj == PuzzleManager.PuzzleObject.SQUIRREL) {
                 return PuzzleManager.PuzzleObject.ANIMAL_POINT_SQUIRREL;
@@ -123,6 +123,18 @@ public class Utils {
         }
         if (target == PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD_X2 && obj == PuzzleManager.PuzzleObject.BIRD) {
             return PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD_X3;
+        }
+        // Can place on Item Delivery Point
+        if (target == PuzzleManager.PuzzleObject.ITEM_POINT) {
+            if (obj == PuzzleManager.PuzzleObject.EGG) {
+                return PuzzleManager.PuzzleObject.ITEM_POINT_EGG;
+            }
+        }
+        if (target == PuzzleManager.PuzzleObject.ITEM_POINT_EGG && obj == PuzzleManager.PuzzleObject.EGG) {
+            return PuzzleManager.PuzzleObject.ITEM_POINT_EGG_X2;
+        }
+        if (target == PuzzleManager.PuzzleObject.ITEM_POINT_EGG_X2 && obj == PuzzleManager.PuzzleObject.EGG) {
+            return PuzzleManager.PuzzleObject.ITEM_POINT_EGG_X3;
         }
 
         // Can't place

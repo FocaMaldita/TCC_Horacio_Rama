@@ -30,6 +30,9 @@ public class PuzzleManager : MonoBehaviour {
         ANIMAL_POINT_BIRD=62,
         ANIMAL_POINT_BIRD_X2=63,
         ANIMAL_POINT_BIRD_X3=64,
+        ITEM_POINT_EGG=71,
+        ITEM_POINT_EGG_X2=72,
+        ITEM_POINT_EGG_X3=73,
     }
 
     [System.Serializable]
