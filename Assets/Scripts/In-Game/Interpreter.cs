@@ -11,7 +11,7 @@ public class Interpreter : MonoBehaviour {
     public float secondsBetweenMoves = .5f;
 
     [HideInInspector]
-    public bool isInterpreting = false;
+    public static bool isInterpreting = false;
 
     [SerializeField]
     private PuzzleManager puzzleManager;
@@ -482,6 +482,8 @@ public class Interpreter : MonoBehaviour {
             }
             yield return new WaitForSeconds(secondsPerMove + secondsBetweenMoves);
         }
+
+        isInterpreting = false;
         yield break;
     }
 
@@ -489,7 +491,9 @@ public class Interpreter : MonoBehaviour {
         isInterpreting = true;
 
         StartCoroutine(interpretationEvent());
+    }
 
+    private void Start() {
         isInterpreting = false;
     }
 }

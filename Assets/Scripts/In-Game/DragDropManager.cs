@@ -13,9 +13,11 @@ public class DragDropManager : MonoBehaviour {
     }
 
     public void onFinishDrag() {
-        if (currentDragItem) {
-            Destroy(currentDragItem);
-            currentDragItem = null;
+        if (!Interpreter.isInterpreting) {
+            if (currentDragItem) {
+                Destroy(currentDragItem);
+                currentDragItem = null;
+            }
         }
     }
 

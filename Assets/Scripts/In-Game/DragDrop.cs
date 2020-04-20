@@ -24,18 +24,20 @@ public class DragDrop : MonoBehaviour {
     }
 
     public void onStartDrag() {
-        Canvas canvas = FindObjectOfType<Canvas>();
-        DragDropManager.currentDragItem = Instantiate(dragItem,
-                                      transform.position,
-                                      Quaternion.identity,
-                                      canvas.transform
-                                      );
-        DragDropManager.currentDragItem.GetComponent<DraggedInstruction>().type = instruction;
-        var img = DragDropManager.currentDragItem.GetComponent<Image>();
-        img.color = color;
-        img.sprite = GetComponent<Image>().sprite;
-        var childImage = DragDropManager.currentDragItem.transform.GetChild(0).GetComponent<Image>();
-        childImage.sprite = dragItemIcon;
-        childImage.transform.rotation = Quaternion.Euler(0, 0, rotation);
+        if (!Interpreter.isInterpreting) {
+            Canvas canvas = FindObjectOfType<Canvas>();
+            DragDropManager.currentDragItem = Instantiate(dragItem,
+                                          transform.position,
+                                          Quaternion.identity,
+                                          canvas.transform
+                                          );
+            DragDropManager.currentDragItem.GetComponent<DraggedInstruction>().type = instruction;
+            var img = DragDropManager.currentDragItem.GetComponent<Image>();
+            img.color = color;
+            img.sprite = GetComponent<Image>().sprite;
+            var childImage = DragDropManager.currentDragItem.transform.GetChild(0).GetComponent<Image>();
+            childImage.sprite = dragItemIcon;
+            childImage.transform.rotation = Quaternion.Euler(0, 0, rotation);
+        }
     }
 }

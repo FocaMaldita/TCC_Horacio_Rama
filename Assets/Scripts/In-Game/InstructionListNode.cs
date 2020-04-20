@@ -45,28 +45,32 @@ public class InstructionListNode : MonoBehaviour {
     }
 
     public void onStartDrag() {
-        Canvas canvas = FindObjectOfType<Canvas>();
-        DragDropManager.currentDragItem = Instantiate(dragItem,
-                                      transform.position,
-                                      Quaternion.identity,
-                                      canvas.transform
-                                      );
-        DragDropManager.currentDragItem.GetComponent<DraggedInstruction>().type = instructionType;
-        var btnImg = DragDropManager.currentDragItem.GetComponent<Image>();
-        btnImg.color = color;
-        btnImg.sprite = img.sprite;
-        var icon = DragDropManager.currentDragItem.transform.GetChild(0).GetComponent<Image>();
-        icon.sprite = dragItemIcon;
-        icon.transform.rotation = Quaternion.Euler(0, 0, rotation);
+        if (!Interpreter.isInterpreting) {
+            Canvas canvas = FindObjectOfType<Canvas>();
+            DragDropManager.currentDragItem = Instantiate(dragItem,
+                                          transform.position,
+                                          Quaternion.identity,
+                                          canvas.transform
+                                          );
+            DragDropManager.currentDragItem.GetComponent<DraggedInstruction>().type = instructionType;
+            var btnImg = DragDropManager.currentDragItem.GetComponent<Image>();
+            btnImg.color = color;
+            btnImg.sprite = img.sprite;
+            var icon = DragDropManager.currentDragItem.transform.GetChild(0).GetComponent<Image>();
+            icon.sprite = dragItemIcon;
+            icon.transform.rotation = Quaternion.Euler(0, 0, rotation);
 
-        // Make the list know the "toBeAdded"
-        //instructionList.hoverPositionEnter(index);
+            // Make the list know the "toBeAdded"
+            //instructionList.hoverPositionEnter(index);
 
-        instructionList.list.Remove(gameObject);
-        Destroy(gameObject);
+            instructionList.list.Remove(gameObject);
+            Destroy(gameObject);
+        }
     }
 
     public void onFinishDrag() {
-        FindObjectOfType<DragDropManager>().onFinishDrag();
+        if (!Interpreter.isInterpreting) {
+            FindObjectOfType<DragDropManager>().onFinishDrag();
+        }
     }
 }
