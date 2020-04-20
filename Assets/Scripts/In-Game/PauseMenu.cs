@@ -21,4 +21,14 @@ public class PauseMenu : MonoBehaviour {
         Time.timeScale = 1;
         SceneManager.LoadScene("Scenes/PuzzleMenu");
     }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if (menu.activeSelf) {
+                closePauseMenu();
+            } else {
+                openPauseMenu();
+            }
+        }
+    }
 }
