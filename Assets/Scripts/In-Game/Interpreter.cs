@@ -244,7 +244,6 @@ public class Interpreter : MonoBehaviour {
                 }
             } else {
                 var canPlace = Utils.CanPlaceObject(dogIsHoldingKind, puzzleManager.kindMatrix[pos[0], pos[1]]);
-                Debug.Log(canPlace);
                 if (canPlace != PuzzleManager.PuzzleObject.NTH) {
                     Destroy(puzzleManager.objMatrix[pos[0], pos[1]]);
                     puzzleManager.kindMatrix[pos[0], pos[1]] = canPlace;
