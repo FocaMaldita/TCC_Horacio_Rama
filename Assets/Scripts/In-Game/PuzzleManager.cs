@@ -98,7 +98,7 @@ public class PuzzleManager : MonoBehaviour {
         }
 
         if (stageInfo == null) {
-            Utils.loadPuzzle("PuzzleStage1");
+            Utils.loadPuzzle("PuzzleStage1-1");
         }
 
         // Destroys UI elements unused by this puzzle

@@ -580,7 +580,7 @@ PrefabInstance:
     - target: {fileID: 5460322220560043470, guid: 898c7f26c96691b4e86ab00079180242,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6169621919099506504, guid: 898c7f26c96691b4e86ab00079180242,
         type: 3}
@@ -595,7 +595,7 @@ PrefabInstance:
     - target: {fileID: 7642319301035693070, guid: 898c7f26c96691b4e86ab00079180242,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8813890181676635796, guid: 898c7f26c96691b4e86ab00079180242,
         type: 3}
@@ -785,7 +785,7 @@ PrefabInstance:
     - target: {fileID: 8813890183026096309, guid: 898c7f26c96691b4e86ab00079180242,
         type: 3}
       propertyPath: m_FillAmount
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 8813890183026096310, guid: 898c7f26c96691b4e86ab00079180242,
         type: 3}
@@ -1573,13 +1573,13 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 718892885}
         m_MethodName: loadPuzzle
-        m_Mode: 3
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 10
+          m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: 1-1
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &407243987
@@ -2031,7 +2031,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &583725988
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2493,13 +2493,13 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 718892885}
         m_MethodName: loadPuzzle
-        m_Mode: 3
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 3
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: 1-3
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &846934937
@@ -2695,13 +2695,13 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 718892885}
         m_MethodName: loadPuzzle
-        m_Mode: 3
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 4
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: 1-4
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &911923679
@@ -2945,13 +2945,13 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 718892885}
         m_MethodName: loadPuzzle
-        m_Mode: 3
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 2
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: 1-2
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &946993699
@@ -3345,7 +3345,7 @@ MonoBehaviour:
     prefab: {fileID: 3680564540559331872, guid: 4b2db1cf15e44f340a27f824e7a0b988,
       type: 3}
   - puzzleObject: 43
-    prefab: {fileID: 4986771085619916294, guid: 93a1ee62984b7e44b9e219400582a48c,
+    prefab: {fileID: 1739724333078548495, guid: b554501561a52314683f7ca7059e22fe,
       type: 3}
   - puzzleObject: 11
     prefab: {fileID: 4751446235232804326, guid: 6dce41a60038a774a8a8d82a2147ca59,
@@ -3358,6 +3358,29 @@ MonoBehaviour:
       type: 3}
   - puzzleObject: 14
     prefab: {fileID: 4751446235232804326, guid: dc8339d0f15f5fb47b053ea7f78e9150,
+      type: 3}
+  - puzzleObject: 51
+    prefab: {fileID: 1571465304898288285, guid: 9e126799c3f359e4988784c321b65973,
+      type: 3}
+  - puzzleObject: 52
+    prefab: {fileID: 4614754647959008277, guid: 5a0e43c4c401d8a448fbac322a07d7ac,
+      type: 3}
+  - puzzleObject: 53
+    prefab: {fileID: 7259237753223735052, guid: c34f5240cb5532347b3b94242869a50d,
+      type: 3}
+  - puzzleObject: 44
+    prefab: {fileID: 8579554524565649021, guid: 773bed31148fd31478deb20ab72b9a6c,
+      type: 3}
+  - puzzleObject: 61
+    prefab: {fileID: 304792827055364298, guid: 1ad3652395e581f4aa47792c58f94c70, type: 3}
+  - puzzleObject: 62
+    prefab: {fileID: 3217148458795804088, guid: 13ca77721a624104e8c9221d08eb1547,
+      type: 3}
+  - puzzleObject: 63
+    prefab: {fileID: 5705849093292958732, guid: bb470730f1a2ee6489c3066c6bb4fb82,
+      type: 3}
+  - puzzleObject: 64
+    prefab: {fileID: 1035697207549597942, guid: 23f22d1d7743b8d4aa490c74ec697df5,
       type: 3}
   catPosition: 
   dogPosition: 
@@ -3454,7 +3477,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: -1
+  m_SortingOrder: -10
   m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0.54806775, g: 0.7830189, b: 0.4764596, a: 1}
   m_FlipX: 0
@@ -4288,7 +4311,7 @@ PrefabInstance:
     - target: {fileID: 5498140262985084327, guid: 898c7f26c96691b4e86ab00079180242,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6548433074443209007, guid: 898c7f26c96691b4e86ab00079180242,
         type: 3}
@@ -4303,7 +4326,7 @@ PrefabInstance:
     - target: {fileID: 7150784406287829567, guid: 898c7f26c96691b4e86ab00079180242,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7642319301035693070, guid: 898c7f26c96691b4e86ab00079180242,
         type: 3}
