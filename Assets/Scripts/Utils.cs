@@ -20,7 +20,10 @@ public class Utils {
     public static char CanCatMove(PuzzleManager.PuzzleObject obstacle) {
         // Is blocked by
         if ((new List<PuzzleManager.PuzzleObject> {
-            PuzzleManager.PuzzleObject.ROCK,
+            PuzzleManager.PuzzleObject.BLOCK,
+            PuzzleManager.PuzzleObject.PUSHABLE,
+            PuzzleManager.PuzzleObject.ANIMAL_POINT,
+            PuzzleManager.PuzzleObject.ITEM_POINT,
             PuzzleManager.PuzzleObject.DOG,
             PuzzleManager.PuzzleObject.BIRD,
             PuzzleManager.PuzzleObject.SQUIRREL,
@@ -59,6 +62,9 @@ public class Utils {
     public static char CanDogMove(PuzzleManager.PuzzleObject obstacle) {
         // Is blocked by
         if ((new List<PuzzleManager.PuzzleObject> {
+            PuzzleManager.PuzzleObject.BLOCK,
+            PuzzleManager.PuzzleObject.ANIMAL_POINT,
+            PuzzleManager.PuzzleObject.ITEM_POINT,
             PuzzleManager.PuzzleObject.CAT,
             PuzzleManager.PuzzleObject.BIRD,
             PuzzleManager.PuzzleObject.SQUIRREL,
@@ -70,7 +76,7 @@ public class Utils {
 
         // Can push
         if ((new List<PuzzleManager.PuzzleObject> {
-            PuzzleManager.PuzzleObject.ROCK,
+            PuzzleManager.PuzzleObject.PUSHABLE,
             // TODO
         }).Contains(obstacle)) {
             return 'P';
@@ -96,17 +102,31 @@ public class Utils {
         return 'N';
     }
 
-    public static char CanPlaceObject(PuzzleManager.PuzzleObject obj) {
+    public static PuzzleManager.PuzzleObject CanPlaceObject(PuzzleManager.PuzzleObject obj, PuzzleManager.PuzzleObject target) {
         // Can place
         if ((new List<PuzzleManager.PuzzleObject> {
             PuzzleManager.PuzzleObject.NTH,
             // TODO
-        }).Contains(obj)) {
-            return 'Y';
+        }).Contains(target)) {
+            return obj;
+        }
+        if (target == PuzzleManager.PuzzleObject.ANIMAL_POINT) {
+            if (obj == PuzzleManager.PuzzleObject.SQUIRREL) {
+                return PuzzleManager.PuzzleObject.ANIMAL_POINT_SQUIRREL;
+            }
+            if (obj == PuzzleManager.PuzzleObject.BIRD) {
+                return PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD;
+            }
+        }
+        if (target == PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD && obj == PuzzleManager.PuzzleObject.BIRD) {
+            return PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD_X2;
+        }
+        if (target == PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD_X2 && obj == PuzzleManager.PuzzleObject.BIRD) {
+            return PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD_X3;
         }
 
         // Can't place
-        return 'N';
+        return PuzzleManager.PuzzleObject.NTH;
     }
 
     private static bool IsCatInUpperCorner(PuzzleManager puzzleManager) {

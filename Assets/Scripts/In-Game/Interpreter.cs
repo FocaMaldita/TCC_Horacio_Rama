@@ -203,9 +203,11 @@ public class Interpreter : MonoBehaviour {
                     Debug.Log("Cat can't grab this");
                 }
             } else {
-                if (Utils.CanPlaceObject(puzzleManager.kindMatrix[pos[0], pos[1]]) == 'Y') {
-                    puzzleManager.kindMatrix[pos[0], pos[1]] = catIsHoldingKind;
-                    puzzleManager.instantiateObject(catIsHolding, pos[0], pos[1]);
+                var canPlace = Utils.CanPlaceObject(catIsHoldingKind, puzzleManager.kindMatrix[pos[0], pos[1]]);
+                if (canPlace != PuzzleManager.PuzzleObject.NTH) {
+                    Destroy(puzzleManager.objMatrix[pos[0], pos[1]]);
+                    puzzleManager.kindMatrix[pos[0], pos[1]] = canPlace;
+                    puzzleManager.instantiateObjectFromKind(canPlace, pos[0], pos[1]);
                     Destroy(catIsHolding);
                     catIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
                     catHolding.color = new Color(1, 1, 1, 0);
@@ -239,9 +241,12 @@ public class Interpreter : MonoBehaviour {
                     Debug.Log("Dog can't grab this");
                 }
             } else {
-                if (Utils.CanPlaceObject(puzzleManager.kindMatrix[pos[0], pos[1]]) == 'Y') {
-                    puzzleManager.kindMatrix[pos[0], pos[1]] = dogIsHoldingKind;
-                    puzzleManager.instantiateObject(dogIsHolding, pos[0], pos[1]);
+                var canPlace = Utils.CanPlaceObject(dogIsHoldingKind, puzzleManager.kindMatrix[pos[0], pos[1]]);
+                Debug.Log(canPlace);
+                if (canPlace != PuzzleManager.PuzzleObject.NTH) {
+                    Destroy(puzzleManager.objMatrix[pos[0], pos[1]]);
+                    puzzleManager.kindMatrix[pos[0], pos[1]] = canPlace;
+                    puzzleManager.instantiateObjectFromKind(canPlace, pos[0], pos[1]);
                     Destroy(dogIsHolding);
                     dogIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
                     dogHolding.color = new Color(1, 1, 1, 0);

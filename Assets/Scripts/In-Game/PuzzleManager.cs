@@ -21,7 +21,15 @@ public class PuzzleManager : MonoBehaviour {
         NEST=32,
         TREE_LOWER=41,
         TREE_UPPER=42,
-        ROCK=43,
+        BLOCK=43,
+        PUSHABLE=44,
+        GOAL=51,
+        ANIMAL_POINT=52,
+        ITEM_POINT=53,
+        ANIMAL_POINT_SQUIRREL=61,
+        ANIMAL_POINT_BIRD=62,
+        ANIMAL_POINT_BIRD_X2=63,
+        ANIMAL_POINT_BIRD_X3=64,
     }
 
     [System.Serializable]
@@ -75,6 +83,10 @@ public class PuzzleManager : MonoBehaviour {
             Quaternion.identity
         );
         return objMatrix[i, j];
+    }
+
+    public GameObject instantiateObjectFromKind(PuzzleManager.PuzzleObject obj, int i, int j) {
+        return instantiateObject(prefabDict[obj], i, j);
     }
 
     void Awake() {
