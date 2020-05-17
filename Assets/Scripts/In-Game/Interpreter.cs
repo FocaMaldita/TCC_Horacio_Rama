@@ -16,14 +16,8 @@ public class Interpreter : MonoBehaviour {
     [SerializeField]
     private PuzzleManager puzzleManager;
 
-    [System.Serializable]
-    public struct InstructionListOwner {
-        public PuzzleManager.PuzzleObject owner;
-        public InstructionList instList;
-    }
-
     [SerializeField]
-    private InstructionListOwner[] instructionLists;
+    private InstructionList catInstructionList, dogInstructionList;
 
     private GameObject catIsHolding = null;
     private PuzzleManager.PuzzleObject catIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
@@ -181,14 +175,59 @@ public class Interpreter : MonoBehaviour {
         }
     }
 
-    void grabCat(char direction) {
+    IEnumerator grabCat(char direction) {
         
         int[] pos = getCatDestination(direction);
 
         if (Utils.IsCatInCorner(puzzleManager, direction)) {
             Debug.Log("Cat can't grab");
+            yield break;
             // Cat can't grab
         } else {
+            var oldPos = puzzleManager.catReference.transform.position;
+            switch (direction) {
+                case 'U':
+                    for (var i = 0; i < 5; i++) {
+                        puzzleManager.catReference.transform.position = new Vector3(
+                            oldPos.x,
+                            oldPos.y + i / 10f * puzzleManager.cellDistance,
+                            oldPos.z
+                        );
+                        yield return new WaitForSeconds(secondsPerMove / 10f);
+                    }
+                    break;
+                case 'L':
+                    for (var i = 0; i < 5; i++) {
+                        puzzleManager.catReference.transform.position = new Vector3(
+                            oldPos.x - i / 10f * puzzleManager.cellDistance,
+                            oldPos.y,
+                            oldPos.z
+                        );
+                        yield return new WaitForSeconds(secondsPerMove / 10);
+                    }
+                    break;
+                case 'R':
+                    for (var i = 0; i < 5; i++) {
+                        puzzleManager.catReference.transform.position = new Vector3(
+                            oldPos.x + i / 10f * puzzleManager.cellDistance,
+                            oldPos.y,
+                            oldPos.z
+                        );
+                        yield return new WaitForSeconds(secondsPerMove / 10);
+                    }
+                    break;
+                case 'D':
+                    for (var i = 0; i < 5; i++) {
+                        puzzleManager.catReference.transform.position = new Vector3(
+                            oldPos.x,
+                            oldPos.y - i / 10f * puzzleManager.cellDistance,
+                            oldPos.z
+                        );
+                        yield return new WaitForSeconds(secondsPerMove / 10);
+                    }
+                    break;
+
+            }
             if (catIsHolding == null) {
                 var obstacle = puzzleManager.kindMatrix[pos[0], pos[1]];
                 var obstacleObj = puzzleManager.objMatrix[pos[0], pos[1]];
@@ -217,10 +256,53 @@ public class Interpreter : MonoBehaviour {
                     catHolding.color = new Color(1, 1, 1, 0);
                 }
             }
+            switch (direction) {
+                case 'U':
+                    for (var i = 4; i >= 0; i--) {
+                        puzzleManager.catReference.transform.position = new Vector3(
+                            oldPos.x,
+                            oldPos.y + i / 10f * puzzleManager.cellDistance,
+                            oldPos.z
+                        );
+                        yield return new WaitForSeconds(secondsPerMove / 10f);
+                    }
+                    break;
+                case 'L':
+                    for (var i = 4; i >= 0; i--) {
+                        puzzleManager.catReference.transform.position = new Vector3(
+                            oldPos.x - i / 10f * puzzleManager.cellDistance,
+                            oldPos.y,
+                            oldPos.z
+                        );
+                        yield return new WaitForSeconds(secondsPerMove / 10);
+                    }
+                    break;
+                case 'R':
+                    for (var i = 4; i >= 0; i--) {
+                        puzzleManager.catReference.transform.position = new Vector3(
+                            oldPos.x + i / 10f * puzzleManager.cellDistance,
+                            oldPos.y,
+                            oldPos.z
+                        );
+                        yield return new WaitForSeconds(secondsPerMove / 10);
+                    }
+                    break;
+                case 'D':
+                    for (var i = 4; i >= 0; i--) {
+                        puzzleManager.catReference.transform.position = new Vector3(
+                            oldPos.x,
+                            oldPos.y - i / 10f * puzzleManager.cellDistance,
+                            oldPos.z
+                        );
+                        yield return new WaitForSeconds(secondsPerMove / 10);
+                    }
+                    break;
+
+            }
         }
     }
 
-    void grabDog(char direction) {
+    IEnumerator grabDog(char direction) {
 
         int[] pos = getDogDestination(direction);
 
@@ -228,6 +310,50 @@ public class Interpreter : MonoBehaviour {
             Debug.Log("Dog can't grab");
             // Dog can't grab
         } else {
+            var oldPos = puzzleManager.dogReference.transform.position;
+            switch (direction) {
+                case 'U':
+                    for (var i = 0; i < 5; i++) {
+                        puzzleManager.dogReference.transform.position = new Vector3(
+                            oldPos.x,
+                            oldPos.y + i / 10f * puzzleManager.cellDistance,
+                            oldPos.z
+                        );
+                        yield return new WaitForSeconds(secondsPerMove / 10f);
+                    }
+                    break;
+                case 'L':
+                    for (var i = 0; i < 5; i++) {
+                        puzzleManager.dogReference.transform.position = new Vector3(
+                            oldPos.x - i / 10f * puzzleManager.cellDistance,
+                            oldPos.y,
+                            oldPos.z
+                        );
+                        yield return new WaitForSeconds(secondsPerMove / 10);
+                    }
+                    break;
+                case 'R':
+                    for (var i = 0; i < 5; i++) {
+                        puzzleManager.dogReference.transform.position = new Vector3(
+                            oldPos.x + i / 10f * puzzleManager.cellDistance,
+                            oldPos.y,
+                            oldPos.z
+                        );
+                        yield return new WaitForSeconds(secondsPerMove / 10);
+                    }
+                    break;
+                case 'D':
+                    for (var i = 0; i < 5; i++) {
+                        puzzleManager.dogReference.transform.position = new Vector3(
+                            oldPos.x,
+                            oldPos.y - i / 10f * puzzleManager.cellDistance,
+                            oldPos.z
+                        );
+                        yield return new WaitForSeconds(secondsPerMove / 10);
+                    }
+                    break;
+
+            }
             if (dogIsHolding == null) {
                 var obstacle = puzzleManager.kindMatrix[pos[0], pos[1]];
                 var obstacleObj = puzzleManager.objMatrix[pos[0], pos[1]];
@@ -255,6 +381,49 @@ public class Interpreter : MonoBehaviour {
                     dogIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
                     dogHolding.color = new Color(1, 1, 1, 0);
                 }
+            }
+            switch (direction) {
+                case 'U':
+                    for (var i = 4; i >= 0; i--) {
+                        puzzleManager.dogReference.transform.position = new Vector3(
+                            oldPos.x,
+                            oldPos.y + i / 10f * puzzleManager.cellDistance,
+                            oldPos.z
+                        );
+                        yield return new WaitForSeconds(secondsPerMove / 10f);
+                    }
+                    break;
+                case 'L':
+                    for (var i = 4; i >= 0; i--) {
+                        puzzleManager.dogReference.transform.position = new Vector3(
+                            oldPos.x - i / 10f * puzzleManager.cellDistance,
+                            oldPos.y,
+                            oldPos.z
+                        );
+                        yield return new WaitForSeconds(secondsPerMove / 10);
+                    }
+                    break;
+                case 'R':
+                    for (var i = 4; i >= 0; i--) {
+                        puzzleManager.dogReference.transform.position = new Vector3(
+                            oldPos.x + i / 10f * puzzleManager.cellDistance,
+                            oldPos.y,
+                            oldPos.z
+                        );
+                        yield return new WaitForSeconds(secondsPerMove / 10);
+                    }
+                    break;
+                case 'D':
+                    for (var i = 4; i >= 0; i--) {
+                        puzzleManager.dogReference.transform.position = new Vector3(
+                            oldPos.x,
+                            oldPos.y - i / 10f * puzzleManager.cellDistance,
+                            oldPos.z
+                        );
+                        yield return new WaitForSeconds(secondsPerMove / 10);
+                    }
+                    break;
+
             }
         }
     }
@@ -404,84 +573,82 @@ public class Interpreter : MonoBehaviour {
     }
 
     IEnumerator interpretationEvent() {
-        var largestList = 0;
-        foreach (var character in instructionLists) {
-            if (character.instList.list.Count > largestList) {
-                largestList = character.instList.list.Count;
-            }
-        }
 
-        for (var i=0; i < largestList; i++) {
-            foreach (var character in instructionLists) {
-                if (i < character.instList.list.Count) {
-                    var action = character.instList.list[i].GetComponent<InstructionListNode>().instructionType;
-                    switch (action) {
+        int catIndex = 0, dogIndex = 0;
+        while(catIndex < catInstructionList.list.Count || dogIndex < dogInstructionList.list.Count) {
+            if (catIndex < catInstructionList.list.Count) {
+                var action = catInstructionList.list[catIndex].GetComponent<InstructionListNode>().instructionType;
+                switch (action) {
+                    case Utils.InstructionType.MOVE_U:
+                        moveCat('U');
+                        break;
 
-                        case Utils.InstructionType.MOVE_U:
-                            if (character.owner == PuzzleManager.PuzzleObject.CAT) {
-                                moveCat('U');
-                            } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
-                                moveDog('U');
-                            }
-                            break;
+                    case Utils.InstructionType.MOVE_L:
+                        moveCat('L');
+                        break;
 
-                        case Utils.InstructionType.MOVE_L:
-                            if (character.owner == PuzzleManager.PuzzleObject.CAT) {
-                                moveCat('L');
-                            } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
-                                moveDog('L');
-                            }
-                            break;
+                    case Utils.InstructionType.MOVE_R:
+                        moveCat('R');
+                        break;
 
-                        case Utils.InstructionType.MOVE_R:
-                            if (character.owner == PuzzleManager.PuzzleObject.CAT) {
-                                moveCat('R');
-                            } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
-                                moveDog('R');
-                            }
-                            break;
+                    case Utils.InstructionType.MOVE_D:
+                        moveCat('D');
+                        break;
 
-                        case Utils.InstructionType.MOVE_D:
-                            if (character.owner == PuzzleManager.PuzzleObject.CAT) {
-                                moveCat('D');
-                            } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
-                                moveDog('D');
-                            }
-                            break;
+                    case Utils.InstructionType.GRAB_U:
+                        StartCoroutine(grabCat('U'));
+                        break;
 
-                        case Utils.InstructionType.GRAB_U:
-                            if (character.owner == PuzzleManager.PuzzleObject.CAT) {
-                                grabCat('U');
-                            } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
-                                grabDog('U');
-                            }
-                            break;
+                    case Utils.InstructionType.GRAB_L:
+                        StartCoroutine(grabCat('L'));
+                        break;
 
-                        case Utils.InstructionType.GRAB_L:
-                            if (character.owner == PuzzleManager.PuzzleObject.CAT) {
-                                grabCat('L');
-                            } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
-                                grabDog('L');
-                            }
-                            break;
+                    case Utils.InstructionType.GRAB_R:
+                        StartCoroutine(grabCat('R'));
+                        break;
 
-                        case Utils.InstructionType.GRAB_R:
-                            if (character.owner == PuzzleManager.PuzzleObject.CAT) {
-                                grabCat('R');
-                            } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
-                                grabDog('R');
-                            }
-                            break;
-
-                        case Utils.InstructionType.GRAB_D:
-                            if (character.owner == PuzzleManager.PuzzleObject.CAT) {
-                                grabCat('D');
-                            } else if (character.owner == PuzzleManager.PuzzleObject.DOG) {
-                                grabDog('D');
-                            }
-                            break;
-                    }
+                    case Utils.InstructionType.GRAB_D:
+                        StartCoroutine(grabCat('D'));
+                        break;
                 }
+                catIndex++;
+            }
+            if (dogIndex < dogInstructionList.list.Count) {
+                var action = dogInstructionList.list[dogIndex].GetComponent<InstructionListNode>().instructionType;
+                switch (action) {
+                    case Utils.InstructionType.MOVE_U:
+                        moveDog('U');
+                        break;
+
+                    case Utils.InstructionType.MOVE_L:
+                        moveDog('L');
+                        break;
+
+                    case Utils.InstructionType.MOVE_R:
+                        moveDog('R');
+                        break;
+
+                    case Utils.InstructionType.MOVE_D:
+                        moveDog('D');
+                        break;
+
+                    case Utils.InstructionType.GRAB_U:
+                        StartCoroutine(grabDog('U'));
+                        break;
+
+                    case Utils.InstructionType.GRAB_L:
+                        StartCoroutine(grabDog('L'));
+                        break;
+
+                    case Utils.InstructionType.GRAB_R:
+                        StartCoroutine(grabDog('R'));
+                        break;
+
+                    case Utils.InstructionType.GRAB_D:
+                        StartCoroutine(grabDog('D'));
+                        break;
+                }
+                dogIndex++;
             }
             yield return new WaitForSeconds(secondsPerMove + secondsBetweenMoves);
         }

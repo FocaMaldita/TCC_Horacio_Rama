@@ -404,11 +404,8 @@ MonoBehaviour:
   secondsPerMove: 0.1
   secondsBetweenMoves: 0.5
   puzzleManager: {fileID: 1272038543}
-  instructionLists:
-  - owner: 1
-    instList: {fileID: 1022342272}
-  - owner: 2
-    instList: {fileID: 449919686}
+  catInstructionList: {fileID: 1022342272}
+  dogInstructionList: {fileID: 449919686}
   catHolding: {fileID: 895663145}
   dogHolding: {fileID: 395956735}
   endMenu: {fileID: 1792902344}
