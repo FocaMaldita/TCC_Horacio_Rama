@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e85865a57d566bb4eaef2386913b39ae, type: 3}
-  m_Name: PuzzleStage1-4
+  m_Name: PuzzleStage2-1
   m_EditorClassIdentifier: 
   rowCount: 4
   colCount: 4
-  hasCat: 1
-  hasDog: 0
+  hasCat: 0
+  hasDog: 1
   hasMove: 1
   hasGrab: 0
   hasWait: 0
-  catPositionX: 1
+  catPositionX: 0
   catPositionY: 0
-  dogPositionX: 0
+  dogPositionX: 3
   dogPositionY: 0
   matrix:
   - entries: 00000000000000000000000000000000
-  - entries: 000000002b0000003300000000000000
   - entries: 00000000000000000000000000000000
-  - entries: 00000000000000000000000000000000
+  - entries: 2b0000002c0000000000000034000000
+  - entries: 000000002c0000000000000000000000

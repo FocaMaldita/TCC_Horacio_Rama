@@ -3411,10 +3411,10 @@ MonoBehaviour:
     prefab: {fileID: 1571465304898288285, guid: 9e126799c3f359e4988784c321b65973,
       type: 3}
   - puzzleObject: 52
-    prefab: {fileID: 4614754647959008277, guid: 5a0e43c4c401d8a448fbac322a07d7ac,
+    prefab: {fileID: 5125005942272495276, guid: 17d93083b377bb54fa5d26667e0bd42f,
       type: 3}
   - puzzleObject: 53
-    prefab: {fileID: 7259237753223735052, guid: c34f5240cb5532347b3b94242869a50d,
+    prefab: {fileID: 4614754647959008277, guid: 5a0e43c4c401d8a448fbac322a07d7ac,
       type: 3}
   - puzzleObject: 44
     prefab: {fileID: 8579554524565649021, guid: 773bed31148fd31478deb20ab72b9a6c,
@@ -3439,6 +3439,9 @@ MonoBehaviour:
     prefab: {fileID: 738513981080415075, guid: 46faf419ccf0f564f86a38d7141afdd2, type: 3}
   - puzzleObject: 73
     prefab: {fileID: 3983732160951711048, guid: ce87483df30024b4a9fbb9ddf2fc16ad,
+      type: 3}
+  - puzzleObject: 54
+    prefab: {fileID: 7259237753223735052, guid: c34f5240cb5532347b3b94242869a50d,
       type: 3}
   catPosition: 
   dogPosition: 
