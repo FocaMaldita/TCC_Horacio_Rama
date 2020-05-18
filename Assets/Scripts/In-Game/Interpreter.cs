@@ -835,6 +835,12 @@ public class Interpreter : MonoBehaviour {
         }
 
         yield return new WaitForSeconds(1f);
+        if (!missionFailed) {
+            missionResult = MissionResult.checkMissionResult(puzzleManager);
+            if (missionResult != MissionResult.Condition.SUCCESS) {
+                missionFailed = true;
+            }
+        }
         endMenu.SetActive(true);
         foreach (Text child in endMenu.GetComponentsInChildren<Text>()) {
             if (child.name == "ResultText") {
