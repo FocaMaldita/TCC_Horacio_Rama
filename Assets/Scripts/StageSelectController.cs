@@ -11,17 +11,20 @@ public class StageSelectController : MonoBehaviour {
 
     public float transitionDuration = 1;
 
-    private int currentGroup = 0;
+    private static int currentGroup = 0;
 
     void Start() {
-        disableButton(leftButton);
-        if (groups.Length < 2) {
+        if (currentGroup == 0) {
+            disableButton(leftButton);
+        }
+        if (currentGroup >= groups.Length - 1) {
             disableButton(rightButton);
         }
 
-        for (int i = 1; i < groups.Length; i++) {
+        for (int i = 0; i < groups.Length; i++) {
             groups[i].SetActive(false);
         }
+        groups[currentGroup].SetActive(true);
     }
 
     void enableButton(Button button) {
