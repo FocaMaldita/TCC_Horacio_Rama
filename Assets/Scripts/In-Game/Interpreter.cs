@@ -190,6 +190,10 @@ public class Interpreter : MonoBehaviour {
 
     bool willCollide(Utils.InstructionType catAction, Utils.InstructionType dogAction) {
 
+        if (!PuzzleManager.stageInfo.hasCat || !PuzzleManager.stageInfo.hasDog) {
+            return false;
+        }
+
         int cat_x = puzzleManager.catPosition[0];
         int cat_y = puzzleManager.catPosition[1];
         int dog_x = puzzleManager.dogPosition[0];
