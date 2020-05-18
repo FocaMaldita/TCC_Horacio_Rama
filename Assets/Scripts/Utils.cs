@@ -17,6 +17,26 @@ public class Utils {
         WAIT
     };
 
+    public static bool IsMovementType(InstructionType instruction) {
+        var types = new List<InstructionType> {
+                InstructionType.MOVE_U,
+                InstructionType.MOVE_L,
+                InstructionType.MOVE_R,
+                InstructionType.MOVE_D,
+        };
+        return types.Contains(instruction);
+    }
+
+    public static bool IsGrabType(InstructionType instruction) {
+        var types = new List<InstructionType> {
+                InstructionType.GRAB_U,
+                InstructionType.GRAB_L,
+                InstructionType.GRAB_R,
+                InstructionType.GRAB_D,
+        };
+        return types.Contains(instruction);
+    }
+
     public static char CanCatMove(PuzzleManager.PuzzleObject obstacle) {
         // Is blocked by
         if ((new List<PuzzleManager.PuzzleObject> {

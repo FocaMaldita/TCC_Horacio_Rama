@@ -175,6 +175,150 @@ public class Interpreter : MonoBehaviour {
         }
     }
 
+    bool willCollide(Utils.InstructionType catAction, Utils.InstructionType dogAction) {
+
+        int cat_x = puzzleManager.catPosition[0];
+        int cat_y = puzzleManager.catPosition[1];
+        int dog_x = puzzleManager.dogPosition[0];
+        int dog_y = puzzleManager.dogPosition[1];
+
+        int[] cat_dest = { 0, 0 }, dog_dest = { 0, 0 };
+        switch (catAction) {
+            case Utils.InstructionType.MOVE_U:
+                cat_dest = getCatDestination('U');
+                break;
+
+            case Utils.InstructionType.MOVE_L:
+                cat_dest = getCatDestination('L');
+                break;
+
+            case Utils.InstructionType.MOVE_R:
+                cat_dest = getCatDestination('R');
+                break;
+
+            case Utils.InstructionType.MOVE_D:
+                cat_dest = getCatDestination('D');
+                break;
+
+            case Utils.InstructionType.GRAB_U:
+                cat_dest = getCatDestination('U');
+                break;
+
+            case Utils.InstructionType.GRAB_L:
+                cat_dest = getCatDestination('L');
+                break;
+
+            case Utils.InstructionType.GRAB_R:
+                cat_dest = getCatDestination('R');
+                break;
+
+            case Utils.InstructionType.GRAB_D:
+                cat_dest = getCatDestination('D');
+                break;
+            default:
+                cat_dest = new int[] { -1, -1 };
+                break;
+        }
+        switch (dogAction) {
+            case Utils.InstructionType.MOVE_U:
+                dog_dest = getDogDestination('U');
+                break;
+
+            case Utils.InstructionType.MOVE_L:
+                dog_dest = getDogDestination('L');
+                break;
+
+            case Utils.InstructionType.MOVE_R:
+                dog_dest = getDogDestination('R');
+                break;
+
+            case Utils.InstructionType.MOVE_D:
+                dog_dest = getDogDestination('D');
+                break;
+
+            case Utils.InstructionType.GRAB_U:
+                dog_dest = getDogDestination('U');
+                break;
+
+            case Utils.InstructionType.GRAB_L:
+                dog_dest = getDogDestination('L');
+                break;
+
+            case Utils.InstructionType.GRAB_R:
+                dog_dest = getDogDestination('R');
+                break;
+
+            case Utils.InstructionType.GRAB_D:
+                dog_dest = getDogDestination('D');
+                break;
+            default:
+                dog_dest = new int[] { -2, -2 };
+                break;
+        }
+        int cat_dest_x = cat_dest[0];
+        int cat_dest_y = cat_dest[1];
+        int dog_dest_x = dog_dest[0];
+        int dog_dest_y = dog_dest[1];
+
+        // Both moving
+        if (Utils.IsMovementType(catAction) && Utils.IsMovementType(dogAction)) {
+            if (cat_dest_x == dog_dest_x && cat_dest_y == dog_dest_y) {
+                // They collided
+                Debug.Log("They collided");
+                return true;
+            }
+            if (cat_dest_x == dog_x && cat_dest_y == dog_y && cat_x == dog_dest_x && cat_y == dog_dest_y) {
+                // They went through each other
+                Debug.Log("They went through each other");
+                return true;
+            }
+        }
+        // Cat moving
+        if (Utils.IsMovementType(catAction)) {
+            if (cat_dest_x == dog_dest_x && cat_dest_y == dog_dest_y) {
+                // Cat ran into grab
+                Debug.Log("Cat ran into grab");
+                return true;
+            }
+            if (cat_dest_x == dog_x && cat_dest_y == dog_y) {
+                // Cat ran into dog
+                Debug.Log("Cat ran into dog");
+                return true;
+            }
+        }
+        // Dog moving
+        if (Utils.IsMovementType(dogAction)) {
+            if (cat_dest_x == dog_dest_x && cat_dest_y == dog_dest_y) {
+                // Dog ran into grab
+                Debug.Log("Dog ran into grab");
+                return true;
+            }
+            if (dog_dest_x == cat_x && dog_dest_y == cat_y) {
+                // Cat ran into dog
+                Debug.Log("Dog ran into cat");
+                return true;
+            }
+        }
+        // Grab
+        if (cat_dest_x == dog_x && cat_dest_y == dog_y) {
+            // Cat grabbed dog
+            Debug.Log("Cat grabbed dog");
+            return true;
+        }
+        if (cat_x == dog_dest_x && cat_y == dog_dest_y) {
+            // Dog grabbed cat
+            Debug.Log("Dog grabbed cat");
+            return true;
+        }
+        if (cat_dest_x == dog_dest_x && cat_dest_y == dog_dest_y) {
+            // Grabs clashed
+            Debug.Log("Grabs clashed");
+            return true;
+        }
+
+        return false;
+    }
+
     IEnumerator grabCat(char direction) {
         
         int[] pos = getCatDestination(direction);
@@ -576,9 +720,18 @@ public class Interpreter : MonoBehaviour {
 
         int catIndex = 0, dogIndex = 0;
         while(catIndex < catInstructionList.list.Count || dogIndex < dogInstructionList.list.Count) {
+            Utils.InstructionType catAction = Utils.InstructionType.WAIT, dogAction = Utils.InstructionType.WAIT;
             if (catIndex < catInstructionList.list.Count) {
-                var action = catInstructionList.list[catIndex].GetComponent<InstructionListNode>().instructionType;
-                switch (action) {
+                catAction = catInstructionList.list[catIndex].GetComponent<InstructionListNode>().instructionType;
+            }
+            if (dogIndex < dogInstructionList.list.Count) {
+                dogAction = dogInstructionList.list[dogIndex].GetComponent<InstructionListNode>().instructionType;
+            }
+            if (willCollide(catAction, dogAction)) {
+                break;
+            }
+            if (catIndex < catInstructionList.list.Count) {
+                switch (catAction) {
                     case Utils.InstructionType.MOVE_U:
                         moveCat('U');
                         break;
@@ -614,8 +767,7 @@ public class Interpreter : MonoBehaviour {
                 catIndex++;
             }
             if (dogIndex < dogInstructionList.list.Count) {
-                var action = dogInstructionList.list[dogIndex].GetComponent<InstructionListNode>().instructionType;
-                switch (action) {
+                switch (dogAction) {
                     case Utils.InstructionType.MOVE_U:
                         moveDog('U');
                         break;
