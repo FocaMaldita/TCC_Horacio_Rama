@@ -30,6 +30,8 @@ public class Interpreter : MonoBehaviour {
     [SerializeField]
     private GameObject endMenu;
 
+    private bool missionFailed = false;
+
     int[] getCatDestination(char direction) {
         int[] ret = new int[2] { 0, 0 };
 
@@ -78,6 +80,7 @@ public class Interpreter : MonoBehaviour {
 
         if (Utils.IsCatInCorner(puzzleManager, direction)) {
             Debug.Log("Can't move cat");
+            missionFailed = true;
             // Can't move cat
         } else {
             var obstacle = puzzleManager.kindMatrix[pos[0], pos[1]];
@@ -104,6 +107,7 @@ public class Interpreter : MonoBehaviour {
             } else {
                 // Cat is blocked
                 Debug.Log("Cat is blocked");
+                missionFailed = true;
             }
         }
     }
@@ -114,6 +118,7 @@ public class Interpreter : MonoBehaviour {
 
         if (Utils.IsDogInCorner(puzzleManager, direction)) {
             Debug.Log("Can't move dog");
+            missionFailed = true;
             // Can't move dog
         } else {
             var obstacle = puzzleManager.kindMatrix[pos[0], pos[1]];
@@ -142,6 +147,7 @@ public class Interpreter : MonoBehaviour {
                 if (Utils.IsThingPushedToCorner(puzzleManager, direction, pos[0], pos[1])) {
                     // Dog is blocked
                     Debug.Log("Dog is blocked");
+                    missionFailed = true;
                 } else {
                     // Dog moves and pushes thing
                     var obstacleObj = puzzleManager.objMatrix[pos[0], pos[1]];
@@ -171,6 +177,7 @@ public class Interpreter : MonoBehaviour {
             } else {
                 // Dog is blocked
                 Debug.Log("Dog is blocked");
+                missionFailed = true;
             }
         }
     }
@@ -325,6 +332,7 @@ public class Interpreter : MonoBehaviour {
 
         if (Utils.IsCatInCorner(puzzleManager, direction)) {
             Debug.Log("Cat can't grab");
+            missionFailed = true;
             yield break;
             // Cat can't grab
         } else {
@@ -388,6 +396,7 @@ public class Interpreter : MonoBehaviour {
                 } else {
                     // Cat can't grab this
                     Debug.Log("Cat can't grab this");
+                    missionFailed = true;
                 }
             } else {
                 var canPlace = Utils.CanPlaceObject(catIsHoldingKind, puzzleManager.kindMatrix[pos[0], pos[1]]);
@@ -452,6 +461,7 @@ public class Interpreter : MonoBehaviour {
 
         if (Utils.IsDogInCorner(puzzleManager, direction)) {
             Debug.Log("Dog can't grab");
+            missionFailed = true;
             // Dog can't grab
         } else {
             var oldPos = puzzleManager.dogReference.transform.position;
@@ -514,6 +524,7 @@ public class Interpreter : MonoBehaviour {
                 } else {
                     // Dog can't grab this
                     Debug.Log("Dog can't grab this");
+                    missionFailed = true;
                 }
             } else {
                 var canPlace = Utils.CanPlaceObject(dogIsHoldingKind, puzzleManager.kindMatrix[pos[0], pos[1]]);
@@ -728,6 +739,9 @@ public class Interpreter : MonoBehaviour {
                 dogAction = dogInstructionList.list[dogIndex].GetComponent<InstructionListNode>().instructionType;
             }
             if (willCollide(catAction, dogAction)) {
+                missionFailed = true;
+            }
+            if (missionFailed) {
                 break;
             }
             if (catIndex < catInstructionList.list.Count) {
