@@ -31,6 +31,7 @@ public class Interpreter : MonoBehaviour {
     private GameObject endMenu;
 
     private bool missionFailed = false;
+    private MissionResult.Condition missionResult = MissionResult.Condition.SUCCESS;
 
     int[] getCatDestination(char direction) {
         int[] ret = new int[2] { 0, 0 };
@@ -81,6 +82,7 @@ public class Interpreter : MonoBehaviour {
         if (Utils.IsCatInCorner(puzzleManager, direction)) {
             Debug.Log("Can't move cat");
             missionFailed = true;
+            missionResult = MissionResult.Condition.CAT_WALK_FAIL;
             // Can't move cat
         } else {
             var obstacle = puzzleManager.kindMatrix[pos[0], pos[1]];
@@ -108,6 +110,7 @@ public class Interpreter : MonoBehaviour {
                 // Cat is blocked
                 Debug.Log("Cat is blocked");
                 missionFailed = true;
+                missionResult = MissionResult.Condition.CAT_WALK_FAIL;
             }
         }
     }
@@ -119,6 +122,7 @@ public class Interpreter : MonoBehaviour {
         if (Utils.IsDogInCorner(puzzleManager, direction)) {
             Debug.Log("Can't move dog");
             missionFailed = true;
+            missionResult = MissionResult.Condition.DOG_WALK_FAIL;
             // Can't move dog
         } else {
             var obstacle = puzzleManager.kindMatrix[pos[0], pos[1]];
@@ -148,6 +152,7 @@ public class Interpreter : MonoBehaviour {
                     // Dog is blocked
                     Debug.Log("Dog is blocked");
                     missionFailed = true;
+                    missionResult = MissionResult.Condition.DOG_WALK_FAIL;
                 } else {
                     // Dog moves and pushes thing
                     var obstacleObj = puzzleManager.objMatrix[pos[0], pos[1]];
@@ -178,6 +183,7 @@ public class Interpreter : MonoBehaviour {
                 // Dog is blocked
                 Debug.Log("Dog is blocked");
                 missionFailed = true;
+                missionResult = MissionResult.Condition.DOG_WALK_FAIL;
             }
         }
     }
@@ -272,11 +278,13 @@ public class Interpreter : MonoBehaviour {
             if (cat_dest_x == dog_dest_x && cat_dest_y == dog_dest_y) {
                 // They collided
                 Debug.Log("They collided");
+                missionResult = MissionResult.Condition.CAT_DOG_WALK_INTO_EACH_OTHER_FAIL;
                 return true;
             }
             if (cat_dest_x == dog_x && cat_dest_y == dog_y && cat_x == dog_dest_x && cat_y == dog_dest_y) {
                 // They went through each other
                 Debug.Log("They went through each other");
+                missionResult = MissionResult.Condition.CAT_DOG_WALK_INTO_EACH_OTHER_FAIL;
                 return true;
             }
         }
@@ -285,11 +293,13 @@ public class Interpreter : MonoBehaviour {
             if (cat_dest_x == dog_dest_x && cat_dest_y == dog_dest_y) {
                 // Cat ran into grab
                 Debug.Log("Cat ran into grab");
+                missionResult = MissionResult.Condition.DOG_GRAB_FAIL;
                 return true;
             }
             if (cat_dest_x == dog_x && cat_dest_y == dog_y) {
                 // Cat ran into dog
                 Debug.Log("Cat ran into dog");
+                missionResult = MissionResult.Condition.CAT_WALK_FAIL;
                 return true;
             }
         }
@@ -298,11 +308,13 @@ public class Interpreter : MonoBehaviour {
             if (cat_dest_x == dog_dest_x && cat_dest_y == dog_dest_y) {
                 // Dog ran into grab
                 Debug.Log("Dog ran into grab");
+                missionResult = MissionResult.Condition.CAT_GRAB_FAIL;
                 return true;
             }
             if (dog_dest_x == cat_x && dog_dest_y == cat_y) {
                 // Cat ran into dog
                 Debug.Log("Dog ran into cat");
+                missionResult = MissionResult.Condition.DOG_WALK_FAIL;
                 return true;
             }
         }
@@ -310,16 +322,19 @@ public class Interpreter : MonoBehaviour {
         if (cat_dest_x == dog_x && cat_dest_y == dog_y) {
             // Cat grabbed dog
             Debug.Log("Cat grabbed dog");
+            missionResult = MissionResult.Condition.CAT_GRAB_FAIL;
             return true;
         }
         if (cat_x == dog_dest_x && cat_y == dog_dest_y) {
             // Dog grabbed cat
             Debug.Log("Dog grabbed cat");
+            missionResult = MissionResult.Condition.DOG_GRAB_FAIL;
             return true;
         }
         if (cat_dest_x == dog_dest_x && cat_dest_y == dog_dest_y) {
             // Grabs clashed
             Debug.Log("Grabs clashed");
+            missionResult = MissionResult.Condition.CAT_GRAB_FAIL;
             return true;
         }
 
@@ -821,6 +836,11 @@ public class Interpreter : MonoBehaviour {
 
         yield return new WaitForSeconds(1f);
         endMenu.SetActive(true);
+        foreach (Text child in endMenu.GetComponentsInChildren<Text>()) {
+            if (child.name == "ResultText") {
+                child.text = MissionResult.conditionNames[missionResult];
+            }
+        }
         yield break;
     }
 
