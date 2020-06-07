@@ -3518,6 +3518,21 @@ MonoBehaviour:
   - puzzleObject: 54
     prefab: {fileID: 7259237753223735052, guid: c34f5240cb5532347b3b94242869a50d,
       type: 3}
+  - puzzleObject: 41
+    prefab: {fileID: 2225208132599437675, guid: 2d7047a4cef0b624a94a811a66821a37,
+      type: 3}
+  - puzzleObject: 42
+    prefab: {fileID: 8582780586774217294, guid: f94500fab8b62ab4f9bd32845233ec93,
+      type: 3}
+  - puzzleObject: 81
+    prefab: {fileID: 5205814779900269853, guid: 53f70de14a03dfe45b04432a3bf1ea0b,
+      type: 3}
+  - puzzleObject: 82
+    prefab: {fileID: 3191921475213743656, guid: dd3a980262704464296ad6b40435de82,
+      type: 3}
+  - puzzleObject: 83
+    prefab: {fileID: 5401679863548941654, guid: 9e3b72345ae594f4e9a9ea23e2086786,
+      type: 3}
   catPosition: 
   dogPosition: 
   catReference: {fileID: 0}

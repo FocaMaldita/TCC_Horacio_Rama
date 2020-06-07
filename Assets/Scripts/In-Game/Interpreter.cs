@@ -401,17 +401,19 @@ public class Interpreter : MonoBehaviour {
             }
             if (catIsHolding == null) {
                 var obstacle = puzzleManager.kindMatrix[pos[0], pos[1]];
-                var obstacleObj = puzzleManager.objMatrix[pos[0], pos[1]];
                 var canGrab = Utils.CanCatGrab(obstacle);
-                if (canGrab == 'Y') {
+                if (canGrab != PuzzleManager.PuzzleObject.NTH) {
                     Debug.Log("Cat grab up");
-                    catIsHolding = Instantiate(obstacleObj, new Vector3(100, 100, 100), Quaternion.identity);
-                    catIsHoldingKind = obstacle;
-                    puzzleManager.kindMatrix[pos[0], pos[1]] = PuzzleManager.PuzzleObject.NTH;
+                    var obstacleObj = puzzleManager.prefabDict[canGrab];
                     var obstacleSprite = obstacleObj.GetComponent<SpriteRenderer>();
+                    var whatRemains = Utils.WhatRemainsAfterRemovingObject(obstacle);
+                    catIsHolding = Instantiate(obstacleObj, new Vector3(100, 100, 100), Quaternion.identity);
+                    catIsHoldingKind = canGrab;
+                    puzzleManager.kindMatrix[pos[0], pos[1]] = whatRemains;
                     catHolding.color = new Color(obstacleSprite.color.r, obstacleSprite.color.g, obstacleSprite.color.b, .5f);
                     catHolding.sprite = obstacleSprite.sprite;
-                    Destroy(obstacleObj);
+                    Destroy(puzzleManager.objMatrix[pos[0], pos[1]]);
+                    puzzleManager.instantiateObjectFromKind(whatRemains, pos[0], pos[1]);
                 } else {
                     // Cat can't grab this
                     Debug.Log("Cat can't grab this");
@@ -529,17 +531,18 @@ public class Interpreter : MonoBehaviour {
             }
             if (dogIsHolding == null) {
                 var obstacle = puzzleManager.kindMatrix[pos[0], pos[1]];
-                var obstacleObj = puzzleManager.objMatrix[pos[0], pos[1]];
                 var canGrab = Utils.CanDogGrab(obstacle);
-                if (canGrab == 'Y') {
-                    Debug.Log("Dog grab up");
-                    dogIsHolding = Instantiate(obstacleObj, new Vector3(100, 100, 100), Quaternion.identity);
-                    dogIsHoldingKind = obstacle;
-                    puzzleManager.kindMatrix[pos[0], pos[1]] = PuzzleManager.PuzzleObject.NTH;
+                if (canGrab != PuzzleManager.PuzzleObject.NTH) {
+                    var obstacleObj = puzzleManager.prefabDict[canGrab];
                     var obstacleSprite = obstacleObj.GetComponent<SpriteRenderer>();
+                    var whatRemains = Utils.WhatRemainsAfterRemovingObject(obstacle);
+                    dogIsHolding = Instantiate(obstacleObj, new Vector3(100, 100, 100), Quaternion.identity);
+                    dogIsHoldingKind = canGrab;
+                    puzzleManager.kindMatrix[pos[0], pos[1]] = whatRemains;
                     dogHolding.color = new Color(obstacleSprite.color.r, obstacleSprite.color.g, obstacleSprite.color.b, .5f);
                     dogHolding.sprite = obstacleSprite.sprite;
-                    Destroy(obstacleObj);
+                    Destroy(puzzleManager.objMatrix[pos[0], pos[1]]);
+                    puzzleManager.instantiateObjectFromKind(whatRemains, pos[0], pos[1]);
                 } else {
                     // Dog can't grab this
                     Debug.Log("Dog can't grab this");

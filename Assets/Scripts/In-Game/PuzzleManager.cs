@@ -34,6 +34,9 @@ public class PuzzleManager : MonoBehaviour {
         ITEM_POINT_EGG=71,
         ITEM_POINT_EGG_X2=72,
         ITEM_POINT_EGG_X3=73,
+        TREE_WITH_BIRD=81,
+        TREE_WITH_BIRD_X2=82,
+        TREE_WITH_BIRD_X3=83,
     }
 
     [System.Serializable]
@@ -43,7 +46,8 @@ public class PuzzleManager : MonoBehaviour {
     }
     
     public PuzzleObjectPrefabMap[] prefabList;
-    private Dictionary<PuzzleObject, GameObject> prefabDict;
+    [HideInInspector]
+    public Dictionary<PuzzleObject, GameObject> prefabDict;
 
     [HideInInspector]
     public int[] catPosition, dogPosition;
@@ -89,8 +93,10 @@ public class PuzzleManager : MonoBehaviour {
         return objMatrix[i, j];
     }
 
-    public GameObject instantiateObjectFromKind(PuzzleManager.PuzzleObject obj, int i, int j) {
-        return instantiateObject(prefabDict[obj], i, j);
+    public void instantiateObjectFromKind(PuzzleManager.PuzzleObject obj, int i, int j) {
+        if (prefabDict.ContainsKey(obj)) {
+            instantiateObject(prefabDict[obj], i, j);
+        }
     }
 
     void Awake() {

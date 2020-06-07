@@ -43,11 +43,22 @@ public class Utils {
             PuzzleManager.PuzzleObject.BLOCK,
             PuzzleManager.PuzzleObject.PUSHABLE,
             PuzzleManager.PuzzleObject.ANIMAL_POINT,
+            PuzzleManager.PuzzleObject.ANIMAL_POINT_SQUIRREL,
+            PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD,
+            PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD_X2,
+            PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD_X3,
             PuzzleManager.PuzzleObject.ITEM_POINT,
+            PuzzleManager.PuzzleObject.ITEM_POINT_EGG,
+            PuzzleManager.PuzzleObject.ITEM_POINT_EGG_X2,
+            PuzzleManager.PuzzleObject.ITEM_POINT_EGG_X3,
             PuzzleManager.PuzzleObject.DOG,
             PuzzleManager.PuzzleObject.BIRD,
             PuzzleManager.PuzzleObject.SQUIRREL,
             PuzzleManager.PuzzleObject.PUPPER,
+            PuzzleManager.PuzzleObject.TREE_UPPER,
+            PuzzleManager.PuzzleObject.TREE_WITH_BIRD,
+            PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X2,
+            PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X3,
             // TODO
         }).Contains(obstacle)) {
             return 'N';
@@ -64,19 +75,47 @@ public class Utils {
         return 'Y';
     }
 
-    public static char CanCatGrab(PuzzleManager.PuzzleObject obstacle) {
-        // Can grab
+    public static PuzzleManager.PuzzleObject CanCatGrab(PuzzleManager.PuzzleObject obstacle) {
+        // Can grab from floor
         if ((new List<PuzzleManager.PuzzleObject> {
             PuzzleManager.PuzzleObject.BIRD,
             PuzzleManager.PuzzleObject.SQUIRREL,
             PuzzleManager.PuzzleObject.EGG,
             // TODO
         }).Contains(obstacle)) {
-            return 'Y';
+            return obstacle;
+        }
+        // Can grab bird from place
+        if ((new List<PuzzleManager.PuzzleObject> {
+            PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD,
+            PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD_X2,
+            PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD_X3,
+            PuzzleManager.PuzzleObject.TREE_WITH_BIRD,
+            PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X2,
+            PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X3,
+            // TODO
+        }).Contains(obstacle)) {
+            return PuzzleManager.PuzzleObject.BIRD;
+        }
+        // Can grab squirrel from place
+        if ((new List<PuzzleManager.PuzzleObject> {
+            PuzzleManager.PuzzleObject.ANIMAL_POINT_SQUIRREL,
+            // TODO
+        }).Contains(obstacle)) {
+            return PuzzleManager.PuzzleObject.SQUIRREL;
+        }
+        // Can grab egg from place
+        if ((new List<PuzzleManager.PuzzleObject> {
+            PuzzleManager.PuzzleObject.ITEM_POINT_EGG,
+            PuzzleManager.PuzzleObject.ITEM_POINT_EGG_X2,
+            PuzzleManager.PuzzleObject.ITEM_POINT_EGG_X3,
+            // TODO
+        }).Contains(obstacle)) {
+            return PuzzleManager.PuzzleObject.EGG;
         }
 
         // Can't grab
-        return 'N';
+        return PuzzleManager.PuzzleObject.NTH;
     }
 
     public static char CanDogMove(PuzzleManager.PuzzleObject obstacle) {
@@ -84,11 +123,23 @@ public class Utils {
         if ((new List<PuzzleManager.PuzzleObject> {
             PuzzleManager.PuzzleObject.BLOCK,
             PuzzleManager.PuzzleObject.ANIMAL_POINT,
+            PuzzleManager.PuzzleObject.ANIMAL_POINT_SQUIRREL,
+            PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD,
+            PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD_X2,
+            PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD_X3,
             PuzzleManager.PuzzleObject.ITEM_POINT,
+            PuzzleManager.PuzzleObject.ITEM_POINT_EGG,
+            PuzzleManager.PuzzleObject.ITEM_POINT_EGG_X2,
+            PuzzleManager.PuzzleObject.ITEM_POINT_EGG_X3,
             PuzzleManager.PuzzleObject.CAT,
             PuzzleManager.PuzzleObject.BIRD,
             PuzzleManager.PuzzleObject.SQUIRREL,
             PuzzleManager.PuzzleObject.PUPPER,
+            PuzzleManager.PuzzleObject.TREE_LOWER,
+            PuzzleManager.PuzzleObject.TREE_UPPER,
+            PuzzleManager.PuzzleObject.TREE_WITH_BIRD,
+            PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X2,
+            PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X3,
             // TODO
         }).Contains(obstacle)) {
             return 'N';
@@ -106,19 +157,44 @@ public class Utils {
         return 'Y';
     }
 
-    public static char CanDogGrab(PuzzleManager.PuzzleObject obstacle) {
-        // Can grab
+    public static PuzzleManager.PuzzleObject CanDogGrab(PuzzleManager.PuzzleObject obstacle) {
+        // Can grab from floor
         if ((new List<PuzzleManager.PuzzleObject> {
             PuzzleManager.PuzzleObject.BIRD,
             PuzzleManager.PuzzleObject.SQUIRREL,
             PuzzleManager.PuzzleObject.EGG,
             // TODO
         }).Contains(obstacle)) {
-            return 'Y';
+            return obstacle;
+        }
+        // Can grab bird from place
+        if ((new List<PuzzleManager.PuzzleObject> {
+            PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD,
+            PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD_X2,
+            PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD_X3,
+            // TODO
+        }).Contains(obstacle)) {
+            return PuzzleManager.PuzzleObject.BIRD;
+        }
+        // Can grab squirrel from place
+        if ((new List<PuzzleManager.PuzzleObject> {
+            PuzzleManager.PuzzleObject.ANIMAL_POINT_SQUIRREL,
+            // TODO
+        }).Contains(obstacle)) {
+            return PuzzleManager.PuzzleObject.SQUIRREL;
+        }
+        // Can grab egg from place
+        if ((new List<PuzzleManager.PuzzleObject> {
+            PuzzleManager.PuzzleObject.ITEM_POINT_EGG,
+            PuzzleManager.PuzzleObject.ITEM_POINT_EGG_X2,
+            PuzzleManager.PuzzleObject.ITEM_POINT_EGG_X3,
+            // TODO
+        }).Contains(obstacle)) {
+            return PuzzleManager.PuzzleObject.EGG;
         }
 
         // Can't grab
-        return 'N';
+        return PuzzleManager.PuzzleObject.NTH;
     }
 
     public static PuzzleManager.PuzzleObject CanPlaceObject(PuzzleManager.PuzzleObject obj, PuzzleManager.PuzzleObject target) {
@@ -158,6 +234,44 @@ public class Utils {
         }
 
         // Can't place
+        return PuzzleManager.PuzzleObject.NTH;
+    }
+
+    public static PuzzleManager.PuzzleObject WhatRemainsAfterRemovingObject(PuzzleManager.PuzzleObject obj) {
+        // Can remove from Animal Delivery Point
+        if (obj == PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD_X3) {
+            return PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD_X2;
+        }
+        if (obj == PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD_X2) {
+            return PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD;
+        }
+        if (obj == PuzzleManager.PuzzleObject.ANIMAL_POINT_BIRD) {
+            return PuzzleManager.PuzzleObject.ANIMAL_POINT;
+        }
+        if (obj == PuzzleManager.PuzzleObject.ANIMAL_POINT_SQUIRREL) {
+            return PuzzleManager.PuzzleObject.ANIMAL_POINT;
+        }
+        // Can remove from Item Delivery Point
+        if (obj == PuzzleManager.PuzzleObject.ITEM_POINT_EGG_X3) {
+            return PuzzleManager.PuzzleObject.ITEM_POINT_EGG_X2;
+        }
+        if (obj == PuzzleManager.PuzzleObject.ITEM_POINT_EGG_X2) {
+            return PuzzleManager.PuzzleObject.ITEM_POINT_EGG;
+        }
+        if (obj == PuzzleManager.PuzzleObject.ITEM_POINT_EGG) {
+            return PuzzleManager.PuzzleObject.ITEM_POINT;
+        }
+        // Can remove from Tree
+        if (obj == PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X3) {
+            return PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X2;
+        }
+        if (obj == PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X2) {
+            return PuzzleManager.PuzzleObject.TREE_WITH_BIRD;
+        }
+        if (obj == PuzzleManager.PuzzleObject.TREE_WITH_BIRD) {
+            return PuzzleManager.PuzzleObject.TREE_UPPER;
+        }
+        // Can remove from floor
         return PuzzleManager.PuzzleObject.NTH;
     }
 
