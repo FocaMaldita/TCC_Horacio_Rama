@@ -232,6 +232,16 @@ public class Utils {
         if (target == PuzzleManager.PuzzleObject.ITEM_POINT_EGG_X2 && obj == PuzzleManager.PuzzleObject.EGG) {
             return PuzzleManager.PuzzleObject.ITEM_POINT_EGG_X3;
         }
+        // Can place on tree
+        if (target == PuzzleManager.PuzzleObject.TREE_UPPER && obj == PuzzleManager.PuzzleObject.BIRD) {
+            return PuzzleManager.PuzzleObject.TREE_WITH_BIRD;
+        }
+        if (target == PuzzleManager.PuzzleObject.TREE_WITH_BIRD && obj == PuzzleManager.PuzzleObject.BIRD) {
+            return PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X2;
+        }
+        if (target == PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X2 && obj == PuzzleManager.PuzzleObject.BIRD) {
+            return PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X3;
+        }
 
         // Can't place
         return PuzzleManager.PuzzleObject.NTH;

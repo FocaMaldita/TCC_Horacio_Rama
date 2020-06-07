@@ -402,8 +402,16 @@ public class Interpreter : MonoBehaviour {
             if (catIsHolding == null) {
                 var obstacle = puzzleManager.kindMatrix[pos[0], pos[1]];
                 var canGrab = Utils.CanCatGrab(obstacle);
+                // Cannot grab treeUpper if not below it
+                if (direction != 'U' && (new List<PuzzleManager.PuzzleObject> {
+                    PuzzleManager.PuzzleObject.TREE_UPPER,
+                    PuzzleManager.PuzzleObject.TREE_WITH_BIRD,
+                    PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X2,
+                    PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X3,
+                }).Contains(obstacle)) {
+                    canGrab = PuzzleManager.PuzzleObject.NTH;
+                }
                 if (canGrab != PuzzleManager.PuzzleObject.NTH) {
-                    Debug.Log("Cat grab up");
                     var obstacleObj = puzzleManager.prefabDict[canGrab];
                     var obstacleSprite = obstacleObj.GetComponent<SpriteRenderer>();
                     var whatRemains = Utils.WhatRemainsAfterRemovingObject(obstacle);
@@ -421,6 +429,15 @@ public class Interpreter : MonoBehaviour {
                 }
             } else {
                 var canPlace = Utils.CanPlaceObject(catIsHoldingKind, puzzleManager.kindMatrix[pos[0], pos[1]]);
+                // Cannot grab treeUpper if not below it
+                if (direction != 'U' && (new List<PuzzleManager.PuzzleObject> {
+                    PuzzleManager.PuzzleObject.TREE_UPPER,
+                    PuzzleManager.PuzzleObject.TREE_WITH_BIRD,
+                    PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X2,
+                    PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X3,
+                }).Contains(canPlace)) {
+                    canPlace = PuzzleManager.PuzzleObject.NTH;
+                }
                 if (canPlace != PuzzleManager.PuzzleObject.NTH) {
                     Destroy(puzzleManager.objMatrix[pos[0], pos[1]]);
                     puzzleManager.kindMatrix[pos[0], pos[1]] = canPlace;
