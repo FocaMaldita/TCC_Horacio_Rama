@@ -297,7 +297,11 @@ public class Interpreter : MonoBehaviour {
             if (cat_dest_x == dog_dest_x && cat_dest_y == dog_dest_y) {
                 // Cat ran into grab
                 Debug.Log("Cat ran into grab");
-                missionResult = MissionResult.Condition.DOG_GRAB_FAIL;
+                if (dogIsHoldingKind == PuzzleManager.PuzzleObject.NTH) {
+                    missionResult = MissionResult.Condition.DOG_GRAB_FAIL;
+                } else {
+                    missionResult = MissionResult.Condition.DOG_PLACE_FAIL;
+                }
                 return true;
             }
             if (cat_dest_x == dog_x && cat_dest_y == dog_y) {
@@ -312,7 +316,11 @@ public class Interpreter : MonoBehaviour {
             if (cat_dest_x == dog_dest_x && cat_dest_y == dog_dest_y) {
                 // Dog ran into grab
                 Debug.Log("Dog ran into grab");
-                missionResult = MissionResult.Condition.CAT_GRAB_FAIL;
+                if (catIsHoldingKind == PuzzleManager.PuzzleObject.NTH) {
+                    missionResult = MissionResult.Condition.CAT_GRAB_FAIL;
+                } else {
+                    missionResult = MissionResult.Condition.CAT_PLACE_FAIL;
+                }
                 return true;
             }
             if (dog_dest_x == cat_x && dog_dest_y == cat_y) {
@@ -326,19 +334,31 @@ public class Interpreter : MonoBehaviour {
         if (cat_dest_x == dog_x && cat_dest_y == dog_y) {
             // Cat grabbed dog
             Debug.Log("Cat grabbed dog");
-            missionResult = MissionResult.Condition.CAT_GRAB_FAIL;
+            if (catIsHoldingKind == PuzzleManager.PuzzleObject.NTH) {
+                missionResult = MissionResult.Condition.CAT_GRAB_FAIL;
+            } else {
+                missionResult = MissionResult.Condition.CAT_PLACE_FAIL;
+            }
             return true;
         }
         if (cat_x == dog_dest_x && cat_y == dog_dest_y) {
             // Dog grabbed cat
             Debug.Log("Dog grabbed cat");
-            missionResult = MissionResult.Condition.DOG_GRAB_FAIL;
+            if (dogIsHoldingKind == PuzzleManager.PuzzleObject.NTH) {
+                missionResult = MissionResult.Condition.DOG_GRAB_FAIL;
+            } else {
+                missionResult = MissionResult.Condition.DOG_PLACE_FAIL;
+            }
             return true;
         }
         if (cat_dest_x == dog_dest_x && cat_dest_y == dog_dest_y) {
             // Grabs clashed
             Debug.Log("Grabs clashed");
-            missionResult = MissionResult.Condition.CAT_GRAB_FAIL;
+            if (catIsHoldingKind == PuzzleManager.PuzzleObject.NTH) {
+                missionResult = MissionResult.Condition.CAT_GRAB_FAIL;
+            } else {
+                missionResult = MissionResult.Condition.CAT_PLACE_FAIL;
+            }
             return true;
         }
 
@@ -426,6 +446,7 @@ public class Interpreter : MonoBehaviour {
                     // Cat can't grab this
                     Debug.Log("Cat can't grab this");
                     missionFailed = true;
+                    missionResult = MissionResult.Condition.CAT_GRAB_FAIL;
                 }
             } else {
                 var canPlace = Utils.CanPlaceObject(catIsHoldingKind, puzzleManager.kindMatrix[pos[0], pos[1]]);
@@ -445,6 +466,11 @@ public class Interpreter : MonoBehaviour {
                     Destroy(catIsHolding);
                     catIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
                     catHolding.color = new Color(1, 1, 1, 0);
+                } else {
+                    // Cat can't place here
+                    Debug.Log("Cat can't place here");
+                    missionFailed = true;
+                    missionResult = MissionResult.Condition.CAT_PLACE_FAIL;
                 }
             }
             switch (direction) {
@@ -564,6 +590,7 @@ public class Interpreter : MonoBehaviour {
                     // Dog can't grab this
                     Debug.Log("Dog can't grab this");
                     missionFailed = true;
+                    missionResult = MissionResult.Condition.DOG_GRAB_FAIL;
                 }
             } else {
                 var canPlace = Utils.CanPlaceObject(dogIsHoldingKind, puzzleManager.kindMatrix[pos[0], pos[1]]);
@@ -574,6 +601,11 @@ public class Interpreter : MonoBehaviour {
                     Destroy(dogIsHolding);
                     dogIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
                     dogHolding.color = new Color(1, 1, 1, 0);
+                } else {
+                    // Dog can't place here
+                    Debug.Log("Dog can't place here");
+                    missionFailed = true;
+                    missionResult = MissionResult.Condition.DOG_PLACE_FAIL;
                 }
             }
             switch (direction) {
@@ -860,7 +892,7 @@ public class Interpreter : MonoBehaviour {
 
         yield return new WaitForSeconds(1f);
         if (!missionFailed) {
-            missionResult = MissionResult.checkMissionResult(puzzleManager);
+            missionResult = MissionResult.checkMissionResult(puzzleManager, catIsHoldingKind, dogIsHoldingKind);
             if (missionResult != MissionResult.Condition.SUCCESS) {
                 missionFailed = true;
             }
