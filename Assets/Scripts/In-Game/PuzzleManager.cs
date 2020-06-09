@@ -63,6 +63,9 @@ public class PuzzleManager : MonoBehaviour {
     [SerializeField]
     private GameObject moveButton, grabButton, waitButton;
 
+    [SerializeField]
+    private Transform puzzleObjects;
+
     public void moveObject(int old_x, int old_y, int new_x, int new_y) {
         var oldKind = kindMatrix[old_x, old_y];
         var oldObj = objMatrix[old_x, old_y];
@@ -90,6 +93,7 @@ public class PuzzleManager : MonoBehaviour {
                 0),
             Quaternion.identity
         );
+        objMatrix[i, j].transform.parent = puzzleObjects;
         return objMatrix[i, j];
     }
 
@@ -99,38 +103,14 @@ public class PuzzleManager : MonoBehaviour {
         }
     }
 
-    void Awake() {
-        { // Creating the dictionary of prefabs
-            prefabDict = new Dictionary<PuzzleObject, GameObject>();
-            foreach (var pair in prefabList) {
-                prefabDict[pair.puzzleObject] = pair.prefab;
+    public void instantiatePuzzleMatrix() {
+
+        foreach (Transform t in puzzleObjects.GetComponentsInChildren<Transform>()) {
+            if (t != puzzleObjects) {
+                Debug.Log(t.gameObject);
+                Destroy(t.gameObject);
             }
         }
-
-        if (stageInfo == null) {
-            Utils.loadPuzzle("PuzzleStage1-1");
-        }
-
-        // Destroys UI elements unused by this puzzle
-        if (!stageInfo.hasCat) {
-            Destroy(catList);
-        }
-        if (!stageInfo.hasDog) {
-            Destroy(dogList);
-        }
-
-        if (!stageInfo.hasMove) {
-            Destroy(moveButton);
-        }
-        if (!stageInfo.hasGrab) {
-            Destroy(grabButton);
-        }
-        if (!stageInfo.hasWait) {
-            Destroy(waitButton);
-        }
-
-        rowCount = stageInfo.rowCount;
-        colCount = stageInfo.colCount;
 
         { // Creating the level's matrix
             catPosition = new int[] { stageInfo.catPositionX, stageInfo.catPositionY };
@@ -170,5 +150,41 @@ public class PuzzleManager : MonoBehaviour {
                     dogPosition[1]
                 );
         }
+    }
+
+    private void Awake() {
+        { // Creating the dictionary of prefabs
+            prefabDict = new Dictionary<PuzzleObject, GameObject>();
+            foreach (var pair in prefabList) {
+                prefabDict[pair.puzzleObject] = pair.prefab;
+            }
+        }
+
+        if (stageInfo == null) {
+            Utils.loadPuzzle("PuzzleStage1-1");
+        }
+
+        // Destroys UI elements unused by this puzzle
+        if (catList && !stageInfo.hasCat) {
+            Destroy(catList);
+        }
+        if (dogList && !stageInfo.hasDog) {
+            Destroy(dogList);
+        }
+
+        if (moveButton && !stageInfo.hasMove) {
+            Destroy(moveButton);
+        }
+        if (grabButton && !stageInfo.hasGrab) {
+            Destroy(grabButton);
+        }
+        if (waitButton && !stageInfo.hasWait) {
+            Destroy(waitButton);
+        }
+
+        rowCount = stageInfo.rowCount;
+        colCount = stageInfo.colCount;
+
+        instantiatePuzzleMatrix();
     }
 }

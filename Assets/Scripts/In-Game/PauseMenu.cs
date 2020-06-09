@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour {
     [SerializeField]
-    private GameObject menu;
+    private GameObject menu, endMenu;
+    [SerializeField]
+    private Interpreter interpreter;
 
     public void openPauseMenu() {
         Time.timeScale = 0;
@@ -20,6 +22,12 @@ public class PauseMenu : MonoBehaviour {
     public void toMainMenu() {
         Time.timeScale = 1;
         SceneManager.LoadScene("Scenes/PuzzleMenu");
+    }
+
+    public void restart(PuzzleManager puzzleManager) {
+        puzzleManager.instantiatePuzzleMatrix();
+        interpreter.resetMissionState();
+        endMenu.SetActive(false);
     }
 
     private void Update() {

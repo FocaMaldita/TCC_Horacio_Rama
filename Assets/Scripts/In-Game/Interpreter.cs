@@ -799,7 +799,6 @@ public class Interpreter : MonoBehaviour {
     }
 
     IEnumerator interpretationEvent() {
-
         int catIndex = 0, dogIndex = 0;
         while(catIndex < catInstructionList.list.Count || dogIndex < dogInstructionList.list.Count) {
             Utils.InstructionType catAction = Utils.InstructionType.WAIT, dogAction = Utils.InstructionType.WAIT;
@@ -903,7 +902,18 @@ public class Interpreter : MonoBehaviour {
                 child.text = MissionResult.conditionNames[missionResult];
             }
         }
+        isInterpreting = false;
         yield break;
+    }
+
+    public void resetMissionState() {
+        missionFailed = false;
+        Destroy(catIsHolding);
+        catIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
+        catHolding.color = new Color(1, 1, 1, 0);
+        Destroy(dogIsHolding);
+        dogIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
+        dogHolding.color = new Color(1, 1, 1, 0);
     }
 
     public void interpret() {
