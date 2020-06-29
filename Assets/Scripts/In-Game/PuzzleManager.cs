@@ -107,7 +107,6 @@ public class PuzzleManager : MonoBehaviour {
 
         foreach (Transform t in puzzleObjects.GetComponentsInChildren<Transform>()) {
             if (t != puzzleObjects) {
-                Debug.Log(t.gameObject);
                 Destroy(t.gameObject);
             }
         }

@@ -937,9 +937,11 @@ public class Interpreter : MonoBehaviour {
     }
 
     public void interpret() {
-        isInterpreting = true;
+        if (!isInterpreting) {
+            isInterpreting = true;
 
-        StartCoroutine(interpretationEvent());
+            StartCoroutine(interpretationEvent());
+        }
     }
 
     private void Start() {
