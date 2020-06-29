@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/InGame.unity
     guid: d01b99e33599541488ec37e35b397fe9
+  - enabled: 1
+    path: Assets/Scenes/Tutorials/TutorialDrag.unity
+    guid: 5087a354e3fc0984ca8171876cebd513
   m_configObjects: {}

@@ -397,4 +397,28 @@ public class Utils {
         PuzzleManager.stageInfo = Resources.Load<PuzzleStageScriptableObject>("ScriptObjects/Puzzles/" + name);
         SceneManager.LoadScene("Scenes/InGame");
     }
+
+    public static IEnumerator LerpObject(Transform obj, Vector3 from, Vector3 to, float duration) {
+        float currentTime = 0;
+        float normalizedValue = 0;
+        while (currentTime <= duration) {
+            currentTime += Time.deltaTime;
+            normalizedValue = currentTime / duration;
+
+            obj.position = Vector3.Lerp(from, to, normalizedValue);
+            yield return null;
+        }
+    }
+
+    public static IEnumerator LerpObject(RectTransform obj, Vector3 from, Vector3 to, float duration) {
+        float currentTime = 0;
+        float normalizedValue = 0;
+        while (currentTime <= duration) {
+            currentTime += Time.deltaTime;
+            normalizedValue = currentTime / duration;
+
+            obj.position = Vector3.Lerp(from, to, normalizedValue);
+            yield return null;
+        }
+    }
 }
