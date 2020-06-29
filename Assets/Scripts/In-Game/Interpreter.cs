@@ -812,10 +812,10 @@ public class Interpreter : MonoBehaviour {
         yield return new WaitForSeconds(catArrow.duration + secondsBetweenMoves);
         while (catIndex < catInstructionList.list.Count || dogIndex < dogInstructionList.list.Count) {
             Utils.InstructionType catAction = Utils.InstructionType.WAIT, dogAction = Utils.InstructionType.WAIT;
-            if (PuzzleManager.stageInfo.hasCat) {
+            if (PuzzleManager.stageInfo.hasCat && catIndex < catInstructionList.list.Count) {
                 catArrow.target = catIndex;
             }
-            if (PuzzleManager.stageInfo.hasDog) {
+            if (PuzzleManager.stageInfo.hasDog && dogIndex < dogInstructionList.list.Count) {
                 dogArrow.target = dogIndex;
             }
             if (catIndex < catInstructionList.list.Count) {
