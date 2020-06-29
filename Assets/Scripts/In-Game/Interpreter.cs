@@ -19,6 +19,9 @@ public class Interpreter : MonoBehaviour {
     [SerializeField]
     private InstructionList catInstructionList, dogInstructionList;
 
+    [SerializeField]
+    private CurrentInstructionArrow catArrow, dogArrow;
+
     private GameObject catIsHolding = null;
     private PuzzleManager.PuzzleObject catIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
     private GameObject dogIsHolding = null;
@@ -800,8 +803,21 @@ public class Interpreter : MonoBehaviour {
 
     IEnumerator interpretationEvent() {
         int catIndex = 0, dogIndex = 0;
-        while(catIndex < catInstructionList.list.Count || dogIndex < dogInstructionList.list.Count) {
+        if (PuzzleManager.stageInfo.hasCat) {
+            catArrow.gameObject.SetActive(true);
+        }
+        if (PuzzleManager.stageInfo.hasDog) {
+            dogArrow.gameObject.SetActive(true);
+        }
+        yield return new WaitForSeconds(catArrow.duration + secondsBetweenMoves);
+        while (catIndex < catInstructionList.list.Count || dogIndex < dogInstructionList.list.Count) {
             Utils.InstructionType catAction = Utils.InstructionType.WAIT, dogAction = Utils.InstructionType.WAIT;
+            if (PuzzleManager.stageInfo.hasCat) {
+                catArrow.target = catIndex;
+            }
+            if (PuzzleManager.stageInfo.hasDog) {
+                dogArrow.target = dogIndex;
+            }
             if (catIndex < catInstructionList.list.Count) {
                 catAction = catInstructionList.list[catIndex].GetComponent<InstructionListNode>().instructionType;
             }
@@ -914,6 +930,10 @@ public class Interpreter : MonoBehaviour {
         Destroy(dogIsHolding);
         dogIsHoldingKind = PuzzleManager.PuzzleObject.NTH;
         dogHolding.color = new Color(1, 1, 1, 0);
+        if (catArrow)
+            catArrow.gameObject.SetActive(false);
+        if (dogArrow)
+            dogArrow.gameObject.SetActive(false);
     }
 
     public void interpret() {
