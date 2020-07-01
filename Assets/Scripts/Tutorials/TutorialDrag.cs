@@ -15,6 +15,8 @@ public class TutorialDrag : MonoBehaviour {
     public Image fade;
     public EventSystem eventSystem;
 
+    public GameObject exitButton;
+
     IEnumerator upAndDown(int times) {
         for (int i = 0; i < times; i++) {
             arrow.position = arrow.position - new Vector3(0, 10, 0);
@@ -84,6 +86,9 @@ public class TutorialDrag : MonoBehaviour {
 
             yield return new WaitForSeconds(2f);
 
+            SaveManager.SetFinishedTutorial(1);
+            exitButton.SetActive(true);
+
             yield return fadeOut();
             Destroy(instance);
             catTransform.position -= new Vector3(0, 2, 0);
@@ -98,6 +103,9 @@ public class TutorialDrag : MonoBehaviour {
     }
 
     void Start() {
+        if (SaveManager.GetLastFinishedTutorial() < 1) {
+            exitButton.SetActive(false);
+        }
         StartCoroutine(tutorialEvent());
     }
 

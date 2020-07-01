@@ -435,6 +435,7 @@ MonoBehaviour:
   catTransform: {fileID: 1930031518}
   fade: {fileID: 1547277238}
   eventSystem: {fileID: 601941898}
+  exitButton: {fileID: 1913488971}
 --- !u!224 &504371739 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2135726650778287232, guid: bb945de9f237b09469cd8a69835a4b34,

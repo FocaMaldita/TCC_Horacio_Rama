@@ -918,6 +918,11 @@ public class Interpreter : MonoBehaviour {
                 child.text = MissionResult.conditionNames[missionResult];
             }
         }
+
+        if (missionResult == MissionResult.Condition.SUCCESS) {
+            SaveManager.SetFinishedMap(PuzzleManager.stageInfo.name.Substring("PuzzleStage".Length));
+        }
+
         isInterpreting = false;
         yield break;
     }
