@@ -44,6 +44,7 @@ public class SaveManager : MonoBehaviour {
     }
 
     private void Awake() {
+        PlayerPrefs.DeleteAll();
         SetFinishedMap(PlayerPrefs.GetString("CompletedMaps", "0-0"));
     }
 

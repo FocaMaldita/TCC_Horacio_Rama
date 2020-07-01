@@ -99,7 +99,11 @@ public class TutorialDrag : MonoBehaviour {
     }
 
     public void toMainMenu() {
-        SceneManager.LoadScene("Scenes/PuzzleMenu");
+        if (TutorialLoader.willReturnToMenu) {
+            SceneManager.LoadScene("Scenes/PuzzleMenu");
+        } else {
+            new PuzzleLoader().loadPuzzle("1-1");
+        }
     }
 
     void Start() {

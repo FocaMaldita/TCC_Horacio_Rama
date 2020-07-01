@@ -1832,6 +1832,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cb1d409f295eca4dbc81ee329d24103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tutorials:
+  - TutorialDrag
 --- !u!4 &418010146
 Transform:
   m_ObjectHideFlags: 0
@@ -4394,7 +4396,7 @@ GameObject:
   - component: {fileID: 1591485079}
   - component: {fileID: 1591485078}
   m_Layer: 0
-  m_Name: SceneLoader
+  m_Name: TutorialLoader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6599,7 +6601,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1591485078}
-        m_MethodName: LoadScene
+        m_MethodName: LoadTutorial
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
