@@ -16,6 +16,7 @@ public class SaveManager : MonoBehaviour {
             return;
         }
         PlayerPrefs.SetString("CompletedMaps", val);
+        PlayerPrefs.Save();
         completedMaps = val;
     }
 
@@ -28,7 +29,15 @@ public class SaveManager : MonoBehaviour {
             return;
         }
         PlayerPrefs.SetInt("CompletedTutorials", val);
+        PlayerPrefs.Save();
         completedTutorials = val;
+    }
+
+    public static void DeleteAll() {
+        completedMaps = "0-0";
+        completedTutorials = 0;
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
     }
 
     public static bool WasCompleted(string val) {
@@ -45,6 +54,7 @@ public class SaveManager : MonoBehaviour {
 
     private void Awake() {
         SetFinishedMap(PlayerPrefs.GetString("CompletedMaps", "0-0"));
+        SetFinishedTutorial(PlayerPrefs.GetInt("CompletedTutorials", 0));
     }
 
 }
