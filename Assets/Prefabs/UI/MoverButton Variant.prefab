@@ -130,11 +130,6 @@ PrefabInstance:
       propertyPath: m_Text
       value: Mover
       objectReference: {fileID: 0}
-    - target: {fileID: 8813890181676635796, guid: 898c7f26c96691b4e86ab00079180242,
-        type: 3}
-      propertyPath: m_FontData.m_FontSize
-      value: 44
-      objectReference: {fileID: 0}
     - target: {fileID: 8813890181774635949, guid: 898c7f26c96691b4e86ab00079180242,
         type: 3}
       propertyPath: m_LocalPosition.x
