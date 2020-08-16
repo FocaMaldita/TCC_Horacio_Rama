@@ -3071,7 +3071,7 @@ MonoBehaviour:
   - condition: Bird reach goal
     prefab: {fileID: 4128742476129931694, guid: 34c12316dbde09d4d924833ee65be0d5,
       type: 3}
-  - condition: Bird reach Tree
+  - condition: Bird reach tree
     prefab: {fileID: 3017511970688267603, guid: 37343f9092108e14fa60cc39e9d41966,
       type: 3}
   goalsMenu: {fileID: 838751758}

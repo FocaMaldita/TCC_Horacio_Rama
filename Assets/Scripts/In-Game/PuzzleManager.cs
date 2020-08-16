@@ -192,7 +192,10 @@ public class PuzzleManager : MonoBehaviour {
                         goals.Add(goalDict["Squirrel reach tree"]);
                     }
                 }
-                if (kindMatrix[i, j] == PuzzleManager.PuzzleObject.BIRD) {
+                if (kindMatrix[i, j] == PuzzleManager.PuzzleObject.BIRD ||
+                    kindMatrix[i, j] == PuzzleManager.PuzzleObject.TREE_WITH_BIRD ||
+                    kindMatrix[i, j] == PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X2 ||
+                    kindMatrix[i, j] == PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X3) {
                     if (hasAnimalGoal) {
                         goals.Add(goalDict["Bird reach goal"]);
                     } else {
