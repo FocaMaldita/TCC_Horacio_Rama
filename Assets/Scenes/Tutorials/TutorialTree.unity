@@ -895,8 +895,8 @@ MonoBehaviour:
   pages:
   - {fileID: 1481198531}
   - {fileID: 1931993652}
-  - {fileID: 1931993652}
-  - {fileID: 1931993652}
+  - {fileID: 586511557}
+  - {fileID: 1315964297}
   leftButton: {fileID: 10264724}
   rightButton: {fileID: 1074679627}
   closeButton: {fileID: 1913488971}
@@ -1062,7 +1062,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &586511558
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2198,7 +2198,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1315964298
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3819,7 +3819,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1931993653
 RectTransform:
   m_ObjectHideFlags: 0
