@@ -8,7 +8,7 @@ public class PuzzleStageScriptableObject : ScriptableObject {
     public int rowCount, colCount;
 
     public bool hasCat = true, hasDog = true;
-    public bool hasMove = true, hasGrab = true, hasWait = true;
+    public bool hasMove = true, hasGrab = true, hasWait = true, hasLoop = true;
 
     public int catPositionX, catPositionY;
     public int dogPositionX, dogPositionY;

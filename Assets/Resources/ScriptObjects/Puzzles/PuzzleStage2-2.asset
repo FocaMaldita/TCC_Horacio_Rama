@@ -19,6 +19,7 @@ MonoBehaviour:
   hasMove: 1
   hasGrab: 0
   hasWait: 0
+  hasLoop: 0
   catPositionX: 2
   catPositionY: 1
   dogPositionX: 3
