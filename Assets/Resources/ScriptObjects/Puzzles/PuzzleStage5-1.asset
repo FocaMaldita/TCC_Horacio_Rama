@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e85865a57d566bb4eaef2386913b39ae, type: 3}
+  m_Name: PuzzleStage5-1
+  m_EditorClassIdentifier: 
+  rowCount: 4
+  colCount: 4
+  hasCat: 0
+  hasDog: 1
+  hasMove: 1
+  hasGrab: 1
+  hasWait: 0
+  hasLoop: 1
+  catPositionX: 0
+  catPositionY: 0
+  dogPositionX: 1
+  dogPositionY: 0
+  matrix:
+  - entries: 00000000000000000000000000000000
+  - entries: 00000000000000000000000000000000
+  - entries: 2b0000002b0000002b00000000000000
+  - entries: 00000000000000003400000000000000
