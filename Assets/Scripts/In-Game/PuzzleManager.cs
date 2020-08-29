@@ -165,18 +165,18 @@ public class PuzzleManager : MonoBehaviour {
     }
 
     private void ShowGoals() {
-        var goals = new List<GameObject>();
+        var goals = new List<string>();
         bool hasAnimalGoal = false;
         for (int i = 0; i < stageInfo.colCount; i++) {
             for (int j = 0; j < stageInfo.rowCount; j++) {
-                if (kindMatrix[i, j] == PuzzleManager.PuzzleObject.GOAL_CAT) {
-                    goals.Add(goalDict["Cat reach goal"]);
+                if (kindMatrix[i, j] == PuzzleManager.PuzzleObject.GOAL_CAT && !goals.Contains("Cat reach goal")) {
+                    goals.Add("Cat reach goal");
                 }
-                if (kindMatrix[i, j] == PuzzleManager.PuzzleObject.GOAL_DOG) {
-                    goals.Add(goalDict["Dog reach goal"]);
+                if (kindMatrix[i, j] == PuzzleManager.PuzzleObject.GOAL_DOG && !goals.Contains("Dog reach goal")) {
+                    goals.Add("Dog reach goal");
                 }
-                if (kindMatrix[i, j] == PuzzleManager.PuzzleObject.EGG) {
-                    goals.Add(goalDict["Egg reach goal"]);
+                if (kindMatrix[i, j] == PuzzleManager.PuzzleObject.EGG && !goals.Contains("Egg reach goal")) {
+                    goals.Add("Egg reach goal");
                 }
                 if (kindMatrix[i, j] == PuzzleManager.PuzzleObject.ANIMAL_POINT) {
                     hasAnimalGoal = true;
@@ -187,9 +187,11 @@ public class PuzzleManager : MonoBehaviour {
             for (int j = 0; j < stageInfo.rowCount; j++) {
                 if (kindMatrix[i, j] == PuzzleManager.PuzzleObject.SQUIRREL) {
                     if (hasAnimalGoal) {
-                        goals.Add(goalDict["Squirrel reach goal"]);
+                        if (!goals.Contains("Squirrel reach goal"))
+                            goals.Add("Squirrel reach goal");
                     } else {
-                        goals.Add(goalDict["Squirrel reach tree"]);
+                        if (!goals.Contains("Squirrel reach tree"))
+                            goals.Add("Squirrel reach tree");
                     }
                 }
                 if (kindMatrix[i, j] == PuzzleManager.PuzzleObject.BIRD ||
@@ -197,18 +199,21 @@ public class PuzzleManager : MonoBehaviour {
                     kindMatrix[i, j] == PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X2 ||
                     kindMatrix[i, j] == PuzzleManager.PuzzleObject.TREE_WITH_BIRD_X3) {
                     if (hasAnimalGoal) {
-                        goals.Add(goalDict["Bird reach goal"]);
+                        if (!goals.Contains("Bird reach goal"))
+                            goals.Add("Bird reach goal");
                     } else {
-                        goals.Add(goalDict["Bird reach tree"]);
+                        if (!goals.Contains("Bird reach tree"))
+                            goals.Add("Bird reach tree");
                     }
                 }
             }
         }
         if (goals.Count == 1) {
-            Instantiate(goals[0], middleGoal.transform);
+            Instantiate(goalDict[goals[0]], middleGoal.transform);
         } else if (goals.Count == 2) {
-            Instantiate(goals[0], leftGoal.transform);
-            Instantiate(goals[1], rightGoal.transform);
+            goals.Sort();
+            Instantiate(goalDict[goals[0]], leftGoal.transform);
+            Instantiate(goalDict[goals[1]], rightGoal.transform);
         }
     }
 
