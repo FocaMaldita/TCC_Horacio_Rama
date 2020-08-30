@@ -12,17 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e85865a57d566bb4eaef2386913b39ae, type: 3}
   m_Name: PuzzleStage5-6
   m_EditorClassIdentifier: 
-  rowCount: 1
-  colCount: 1
+  rowCount: 4
+  colCount: 4
   hasCat: 1
   hasDog: 1
   hasMove: 1
   hasGrab: 1
-  hasWait: 1
+  hasWait: 0
   hasLoop: 1
   catPositionX: 0
   catPositionY: 0
-  dogPositionX: 0
-  dogPositionY: 0
+  dogPositionX: 3
+  dogPositionY: 1
   matrix:
-  - entries: 00000000
+  - entries: 00000000000000002900000052000000
+  - entries: 0b000000000000002b0000002b000000
+  - entries: 00000000000000000000000000000000
+  - entries: 00000000000000003500000000000000

@@ -20,12 +20,12 @@ MonoBehaviour:
   hasGrab: 1
   hasWait: 0
   hasLoop: 1
-  catPositionX: 0
+  catPositionX: 1
   catPositionY: 0
-  dogPositionX: 1
+  dogPositionX: 0
   dogPositionY: 0
   matrix:
   - entries: 00000000000000000000000000000000
-  - entries: 00000000000000000000000053000000
+  - entries: 00000000000000002900000053000000
   - entries: 35000000000000000000000000000000
   - entries: 00000000000000000000000000000000
