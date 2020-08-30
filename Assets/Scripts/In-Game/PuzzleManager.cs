@@ -110,6 +110,26 @@ public class PuzzleManager : MonoBehaviour {
         return objMatrix[i, j];
     }
 
+    public GameObject instantiatePlayerObject(GameObject obj, int i, int j) {
+        float new_i = (i - colCount / 2f);
+        float new_j = (j - rowCount / 2f);
+        if (colCount % 2 == 0) {
+            new_i += .5f;
+        }
+        if (rowCount % 2 == 0) {
+            new_j += .5f;
+        }
+        var new_obj = Instantiate(
+            obj,
+            new Vector3(new_i * cellDistance,
+                new_j * cellDistance,
+                0),
+            Quaternion.identity
+        );
+        new_obj.transform.parent = puzzleObjects;
+        return new_obj;
+    }
+
     public void instantiateObjectFromKind(PuzzleManager.PuzzleObject obj, int i, int j) {
         if (prefabDict.ContainsKey(obj)) {
             instantiateObject(prefabDict[obj], i, j);
@@ -149,14 +169,14 @@ public class PuzzleManager : MonoBehaviour {
 
             if (stageInfo.hasCat)
                 // Instantiates the cat
-                catReference = instantiateObject(
+                catReference = instantiatePlayerObject(
                     prefabDict[PuzzleObject.CAT],
                     catPosition[0],
                     catPosition[1]
                 );
             if (stageInfo.hasDog)
                 // Instantiates the dog
-                dogReference = instantiateObject(
+                dogReference = instantiatePlayerObject(
                     prefabDict[PuzzleObject.DOG],
                     dogPosition[0],
                     dogPosition[1]
