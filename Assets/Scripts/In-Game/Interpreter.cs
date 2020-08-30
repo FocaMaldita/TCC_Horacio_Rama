@@ -864,7 +864,14 @@ public class Interpreter : MonoBehaviour {
                         StartCoroutine(grabCat('D'));
                         break;
                 }
-                catIndex++;
+                // Check for loop
+                var catLoop = catInstructionList.transform.Find("Backdrop").Find("Node" + catIndex).gameObject.GetComponent<InstructionNodeLoop>();
+                if (catLoop.loopSize > 0) {
+                    catIndex = catLoop.origin;
+                    catLoop.loopSize--;
+                } else {
+                    catIndex++;
+                }
             }
             if (dogIndex < dogInstructionList.list.Count) {
                 switch (dogAction) {
@@ -900,7 +907,14 @@ public class Interpreter : MonoBehaviour {
                         StartCoroutine(grabDog('D'));
                         break;
                 }
-                dogIndex++;
+                // Check for loop
+                var dogLoop = dogInstructionList.transform.Find("Backdrop").Find("Node" + dogIndex).gameObject.GetComponent<InstructionNodeLoop>();
+                if (dogLoop.loopSize > 0) {
+                    dogIndex = dogLoop.origin;
+                    dogLoop.loopSize--;
+                } else {
+                    dogIndex++;
+                }
             }
             yield return new WaitForSeconds(secondsPerMove + secondsBetweenMoves);
         }

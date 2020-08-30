@@ -64,6 +64,9 @@ public class PuzzleManager : MonoBehaviour {
     private GameObject moveButton, grabButton, waitButton;
 
     [SerializeField]
+    private GameObject prevButton, nextButton, startButton;
+
+    [SerializeField]
     private Transform puzzleObjects;
 
     [System.Serializable]
@@ -79,6 +82,9 @@ public class PuzzleManager : MonoBehaviour {
     [SerializeField]
     private GameObject goalsMenu, leftGoal, middleGoal, rightGoal;
 
+    [HideInInspector]
+    public int phase = 0;
+
     public void moveObject(int old_x, int old_y, int new_x, int new_y) {
         var oldKind = kindMatrix[old_x, old_y];
         var oldObj = objMatrix[old_x, old_y];
@@ -88,6 +94,20 @@ public class PuzzleManager : MonoBehaviour {
 
         objMatrix[old_x, old_y] = null;
         objMatrix[new_x, new_y] = oldObj;
+    }
+
+    public void changePhase(int p) {
+        phase = p;
+
+        if (p == 0) {
+            prevButton.SetActive(false);
+            startButton.SetActive(false);
+            nextButton.SetActive(true);
+        } else if (p == 1) {
+            prevButton.SetActive(true);
+            startButton.SetActive(true);
+            nextButton.SetActive(false);
+        }
     }
 
     public GameObject instantiateObject(GameObject obj, int i, int j) {
@@ -273,6 +293,16 @@ public class PuzzleManager : MonoBehaviour {
         }
         if (waitButton && !stageInfo.hasWait) {
             Destroy(waitButton);
+        }
+        if (prevButton && !stageInfo.hasLoop) {
+            Destroy(prevButton);
+        }
+        if (nextButton && !stageInfo.hasLoop) {
+            Destroy(nextButton);
+        }
+
+        if (prevButton) {
+            prevButton.SetActive(false);
         }
 
         rowCount = stageInfo.rowCount;
