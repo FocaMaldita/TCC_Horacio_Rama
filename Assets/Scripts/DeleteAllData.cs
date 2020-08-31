@@ -11,6 +11,11 @@ public class DeleteAllData : MonoBehaviour {
         confirmationMenu.SetActive(true);
     }
 
+    public void UnlockAll() {
+        SaveManager.SetFinishedMap("6-3");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     public void Confirm() {
         SaveManager.DeleteAll();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
