@@ -17,4 +17,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tutorials/TutorialDrag.unity
     guid: 5087a354e3fc0984ca8171876cebd513
+  - enabled: 1
+    path: Assets/Scenes/Tutorials/TutorialPush.unity
+    guid: 595e3be08dcf5864798f7d396545a35e
+  - enabled: 1
+    path: Assets/Scenes/Tutorials/TutorialTree.unity
+    guid: 1118bac9ac977b049826509024c6225f
+  - enabled: 1
+    path: Assets/Scenes/Tutorials/TutorialGrab.unity
+    guid: dfe7ddc7ea0a971449bb358113855023
   m_configObjects: {}
