@@ -371,7 +371,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: CatActions
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4885760209897448615, guid: bb945de9f237b09469cd8a69835a4b34, type: 3}
+    - {fileID: 901912233700912515, guid: bb945de9f237b09469cd8a69835a4b34, type: 3}
+    - {fileID: 8611561771998297736, guid: bb945de9f237b09469cd8a69835a4b34, type: 3}
+    - {fileID: 7554144544814325916, guid: bb945de9f237b09469cd8a69835a4b34, type: 3}
+    - {fileID: 5375487653294624162, guid: bb945de9f237b09469cd8a69835a4b34, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: bb945de9f237b09469cd8a69835a4b34, type: 3}
 --- !u!224 &313011676 stripped
 RectTransform:
