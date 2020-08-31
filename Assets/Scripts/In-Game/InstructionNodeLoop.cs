@@ -12,6 +12,19 @@ public class InstructionNodeLoop : MonoBehaviour {
     private InputField destiny, amount;
     private GameObject destinyObj, amountObj;
 
+    public void recoverSize() {
+        int amount_text;
+        if (int.TryParse(amount.text, out amount_text)) {
+            if (amount_text > 1 && amount_text < 6) {
+                loopSize = amount_text - 1;
+            } else {
+                loopSize = 0;
+            }
+        } else {
+            loopSize = 0;
+        }
+    }
+
     private void Start() {
         destinyObj = transform.Find("OrigemInputField").gameObject;
         amountObj = transform.Find("QtdeInputField").gameObject;

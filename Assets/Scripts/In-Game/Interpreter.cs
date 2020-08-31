@@ -36,6 +36,9 @@ public class Interpreter : MonoBehaviour {
     private bool missionFailed = false;
     private MissionResult.Condition missionResult = MissionResult.Condition.SUCCESS;
 
+    private bool catIsWaiting = false, dogIsWaiting = false;
+    private int catIndex = 0, dogIndex = 0;
+
     int[] getCatDestination(char direction) {
         int[] ret = new int[2] { 0, 0 };
 
@@ -801,8 +804,53 @@ public class Interpreter : MonoBehaviour {
         yield break;
     }
 
+    void waitCat() {
+        if (dogIsWaiting) {
+            catIsWaiting = false;
+            dogIsWaiting = false;
+            catNextStep();
+            dogNextStep();
+        } else {
+            catIsWaiting = true;
+        }
+    }
+
+    void waitDog() {
+        if (catIsWaiting) {
+            dogIsWaiting = false;
+            catIsWaiting = false;
+            dogNextStep();
+            catNextStep();
+        } else {
+            dogIsWaiting = true;
+        }
+    }
+
+    void catNextStep() {
+        var catLoop = catInstructionList.transform.Find("Backdrop").Find("Node" + catIndex).gameObject.GetComponent<InstructionNodeLoop>();
+        if (catLoop.loopSize > 0) {
+            catIndex = catLoop.origin;
+            catLoop.loopSize--;
+        } else {
+            catLoop.recoverSize();
+            catIndex++;
+        }
+    }
+
+    void dogNextStep() {
+        var dogLoop = dogInstructionList.transform.Find("Backdrop").Find("Node" + dogIndex).gameObject.GetComponent<InstructionNodeLoop>();
+        if (dogLoop.loopSize > 0) {
+            dogIndex = dogLoop.origin;
+            dogLoop.loopSize--;
+        } else {
+            dogLoop.recoverSize();
+            dogIndex++;
+        }
+    }
+
     IEnumerator interpretationEvent() {
-        int catIndex = 0, dogIndex = 0;
+        catIndex = 0;
+        dogIndex = 0;
         if (PuzzleManager.stageInfo.hasCat) {
             catArrow.gameObject.SetActive(true);
         }
@@ -863,14 +911,14 @@ public class Interpreter : MonoBehaviour {
                     case Utils.InstructionType.GRAB_D:
                         StartCoroutine(grabCat('D'));
                         break;
+
+                    case Utils.InstructionType.WAIT:
+                        waitCat();
+                        if (!catIsWaiting) continue;
+                        break;
                 }
-                // Check for loop
-                var catLoop = catInstructionList.transform.Find("Backdrop").Find("Node" + catIndex).gameObject.GetComponent<InstructionNodeLoop>();
-                if (catLoop.loopSize > 0) {
-                    catIndex = catLoop.origin;
-                    catLoop.loopSize--;
-                } else {
-                    catIndex++;
+                if (!catIsWaiting) {
+                    catNextStep();
                 }
             }
             if (dogIndex < dogInstructionList.list.Count) {
@@ -906,14 +954,14 @@ public class Interpreter : MonoBehaviour {
                     case Utils.InstructionType.GRAB_D:
                         StartCoroutine(grabDog('D'));
                         break;
+
+                    case Utils.InstructionType.WAIT:
+                        waitDog();
+                        if (!dogIsWaiting) continue;
+                        break;
                 }
-                // Check for loop
-                var dogLoop = dogInstructionList.transform.Find("Backdrop").Find("Node" + dogIndex).gameObject.GetComponent<InstructionNodeLoop>();
-                if (dogLoop.loopSize > 0) {
-                    dogIndex = dogLoop.origin;
-                    dogLoop.loopSize--;
-                } else {
-                    dogIndex++;
+                if (!dogIsWaiting) {
+                    dogNextStep();
                 }
             }
             yield return new WaitForSeconds(secondsPerMove + secondsBetweenMoves);
