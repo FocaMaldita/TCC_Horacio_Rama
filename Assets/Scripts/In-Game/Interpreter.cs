@@ -964,6 +964,16 @@ public class Interpreter : MonoBehaviour {
                     dogNextStep();
                 }
             }
+            if (catIsWaiting && dogIndex >= dogInstructionList.list.Count) {
+                missionFailed = true;
+                missionResult = MissionResult.Condition.CAT_WAITING_FAIL;
+                break;
+            }
+            if (dogIsWaiting && catIndex >= catInstructionList.list.Count) {
+                missionFailed = true;
+                missionResult = MissionResult.Condition.DOG_WAITING_FAIL;
+                break;
+            }
             yield return new WaitForSeconds(secondsPerMove + secondsBetweenMoves);
         }
 
@@ -1001,6 +1011,8 @@ public class Interpreter : MonoBehaviour {
             catArrow.gameObject.SetActive(false);
         if (dogArrow)
             dogArrow.gameObject.SetActive(false);
+        catIsWaiting = false;
+        dogIsWaiting = false;
     }
 
     public void interpret() {

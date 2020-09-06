@@ -20,6 +20,9 @@ public class MissionResult {
         DOG_NOT_IN_GOAL_FAIL,
         ANIMAL_NOT_IN_GOAL_FAIL,
         ITEM_NOT_IN_GOAL_FAIL,
+
+        CAT_WAITING_FAIL,
+        DOG_WAITING_FAIL,
     };
 
     public static Dictionary<Condition, string> conditionNames = new Dictionary<Condition, string> {
@@ -38,6 +41,9 @@ public class MissionResult {
         { Condition.DOG_NOT_IN_GOAL_FAIL, "Cachorra não alcançou o objetivo!" },
         { Condition.ANIMAL_NOT_IN_GOAL_FAIL, "Há animal(is) não resgatado(s)!" },
         { Condition.ITEM_NOT_IN_GOAL_FAIL, "Há item(ns) não resgatado(s)!" },
+
+        { Condition.CAT_WAITING_FAIL, "Gato ficou esperando sinal da cachorra!" },
+        { Condition.DOG_WAITING_FAIL, "Cachorra ficou esperando sinal do gato!" },
     };
 
     public static Condition checkMissionResult(PuzzleManager puzzleManager, PuzzleManager.PuzzleObject catIsHolding, PuzzleManager.PuzzleObject dogIsHolding) {
