@@ -21,7 +21,7 @@ public class InstructionList : MonoBehaviour {
             if (position > list.Count) position = list.Count;
             if (toBeAdded != null) {
                 var father = GameObject.Find("Node" + position).transform;
-                if (father.childCount > 0) Destroy(father.GetChild(0));
+                // if (father.childCount > 0) Destroy(father.GetChild(0));
                 var go = Instantiate(instPrefab,
                                  Utils.findChild(gameObject, "Node" + position).transform
                                  );
