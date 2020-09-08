@@ -85,6 +85,8 @@ public class PuzzleManager : MonoBehaviour {
     [HideInInspector]
     public int phase = 0;
 
+    private GameObject[] loopCreators;
+
     public void moveObject(int old_x, int old_y, int new_x, int new_y) {
         var oldKind = kindMatrix[old_x, old_y];
         var oldObj = objMatrix[old_x, old_y];
@@ -103,10 +105,35 @@ public class PuzzleManager : MonoBehaviour {
             prevButton.SetActive(false);
             startButton.SetActive(false);
             nextButton.SetActive(true);
+            if (moveButton) moveButton.transform.position = new Vector3(
+                    moveButton.transform.position.x,
+                    moveButton.transform.position.y + 1000,
+                    moveButton.transform.position.z);
+            if (grabButton) grabButton.transform.position = new Vector3(
+                    grabButton.transform.position.x,
+                    grabButton.transform.position.y + 1000,
+                    grabButton.transform.position.z);
+            if (waitButton) waitButton.SetActive(true);
+            foreach (GameObject g in loopCreators) {
+                g.SetActive(false);
+            }
         } else if (p == 1) {
             prevButton.SetActive(true);
             startButton.SetActive(true);
             nextButton.SetActive(false);
+            if (moveButton) moveButton.transform.position = new Vector3(
+                    moveButton.transform.position.x,
+                    moveButton.transform.position.y - 1000,
+                    moveButton.transform.position.z);
+            if (grabButton) grabButton.transform.position = new Vector3(
+                    grabButton.transform.position.x,
+                    grabButton.transform.position.y - 1000,
+                    grabButton.transform.position.z);
+            if (waitButton) waitButton.SetActive(false);
+            foreach (GameObject g in loopCreators) {
+                g.SetActive(true);
+                g.transform.SetAsLastSibling();
+            }
         }
     }
 
@@ -303,6 +330,11 @@ public class PuzzleManager : MonoBehaviour {
 
         if (prevButton) {
             prevButton.SetActive(false);
+        }
+
+        loopCreators = GameObject.FindGameObjectsWithTag("LoopCreator");
+        foreach (GameObject g in loopCreators) {
+            g.SetActive(false);
         }
 
         rowCount = stageInfo.rowCount;

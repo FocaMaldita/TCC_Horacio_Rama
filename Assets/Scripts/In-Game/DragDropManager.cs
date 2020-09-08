@@ -5,6 +5,7 @@ using UnityEngine;
 public class DragDropManager : MonoBehaviour {
 
     public static GameObject currentDragItem = null;
+    public InstructionList catList, dogList;
 
     void Update() {
         if (Input.GetMouseButtonUp(0)) {
@@ -15,6 +16,18 @@ public class DragDropManager : MonoBehaviour {
     public void onFinishDrag() {
         if (!Interpreter.isInterpreting) {
             if (currentDragItem) {
+                if (catList) {
+                    var catIndex = Utils.ListContainsNull(catList.list);
+                    if (catIndex >= 0) {
+                        catList.insertAtPosition(catIndex);
+                    }
+                }
+                if (dogList) {
+                    var dogIndex = Utils.ListContainsNull(dogList.list);
+                    if (dogIndex >= 0) {
+                        dogList.insertAtPosition(dogIndex);
+                    }
+                }
                 Destroy(currentDragItem);
                 currentDragItem = null;
             }

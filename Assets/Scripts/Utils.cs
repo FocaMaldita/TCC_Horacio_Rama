@@ -421,4 +421,11 @@ public class Utils {
             yield return null;
         }
     }
+
+    public static int ListContainsNull<T>(List<T> lst) {
+        for (int i = 0; i < lst.Count; i++) {
+            if (EqualityComparer<T>.Default.Equals(lst[i], default(T))) return i;
+        }
+        return -1;
+    }
 }
