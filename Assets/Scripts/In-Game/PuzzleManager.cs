@@ -115,7 +115,9 @@ public class PuzzleManager : MonoBehaviour {
                     grabButton.transform.position.z);
             if (waitButton) waitButton.SetActive(true);
             foreach (GameObject g in loopCreators) {
-                g.SetActive(false);
+                if (g) {
+                    g.SetActive(false);
+                }
             }
         } else if (p == 1) {
             prevButton.SetActive(true);
@@ -131,8 +133,10 @@ public class PuzzleManager : MonoBehaviour {
                     grabButton.transform.position.z);
             if (waitButton) waitButton.SetActive(false);
             foreach (GameObject g in loopCreators) {
-                g.SetActive(true);
-                g.transform.SetAsLastSibling();
+                if (g) {
+                    g.SetActive(true);
+                    g.transform.SetAsLastSibling();
+                }
             }
         }
     }
