@@ -26,4 +26,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tutorials/TutorialGrab.unity
     guid: dfe7ddc7ea0a971449bb358113855023
+  - enabled: 1
+    path: Assets/Scenes/Tutorials/TutorialLoop.unity
+    guid: e0a574f7a3f6037498d8820441bcc8f6
+  - enabled: 1
+    path: Assets/Scenes/Tutorials/TutorialBarrier.unity
+    guid: 58be68c734c072e45bb48950c34955b4
   m_configObjects: {}
