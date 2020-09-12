@@ -11,6 +11,9 @@ public class DragDropManager : MonoBehaviour {
         if (Input.GetMouseButtonUp(0)) {
             onFinishDrag();
         }
+        if (Input.touchCount >= 1 && Input.touches[0].phase == TouchPhase.Ended) {
+            onFinishDrag();
+        }
     }
 
     public void onFinishDrag() {
