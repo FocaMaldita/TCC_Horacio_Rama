@@ -66,6 +66,12 @@ public class InstructionList : MonoBehaviour {
     }
 
     public void hoverPositionExit() {
+        // If player released touch, DO NOT remove nulls from list
+        for (int i = 0; i < Input.touches.Length; i++) {
+            if (Input.touches[i].phase == TouchPhase.Ended) {
+                return;
+            }
+        }
         list.Remove(null);
     }
 }
