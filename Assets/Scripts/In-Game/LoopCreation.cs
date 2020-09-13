@@ -14,6 +14,7 @@ public class LoopCreation : MonoBehaviour {
     private float topLocalPosition, initialTopLocalPosition;
     private float verticalStretchInitialHeight;
     private GameObject[] loops;
+    private LoopInfo[] loopInfos;
     private Image[] images;
 
     private bool isValid = true;
@@ -36,6 +37,28 @@ public class LoopCreation : MonoBehaviour {
 
         topLocalPosition = arrowTransform.localPosition.y;
         verticalStretchTransform.sizeDelta = new Vector2(verticalStretchTransform.rect.width, topLocalPosition - initialTopLocalPosition + 1f);
+    }
+
+    private bool loopCanBeCreated(int endingNode) {
+        if (topPosition < bottomPosition)
+            return false;
+        int attempted_origin = 0;
+        for (int i = 0; i < maximumHeights.Length; i++) {
+            if (topPosition > maximumHeights[i]) break;
+            attempted_origin = i;
+        }
+        if (attempted_origin == endingNode) { // loop of size 1 can't intertwine
+            return true;
+        }
+        for (int i = attempted_origin; i < endingNode; i++) { // check if there's any node inbetween pointing to before attempted_origin
+            if (loopInfos[i] && loopInfos[i].origin < attempted_origin)
+                return false;
+        }
+        for (int i = endingNode + 1; i < instructionSlots.Length; i++) { // check if there's any node starting after endingNode and pointing to something inbetween
+            if (loopInfos[i] && loopInfos[i].origin > attempted_origin && loopInfos[i].origin <= endingNode)
+                return false;
+        }
+        return true;
     }
 
     public void onStartDrag(int endingNode) {
@@ -68,7 +91,7 @@ public class LoopCreation : MonoBehaviour {
             topPosition = Mathf.Lerp(arrowTransform.position.y,
                             Input.mousePosition.y,
                             .6f);
-            if (topPosition < bottomPosition) {
+            if (!loopCanBeCreated(endingNode)) {
                 isValid = false;
                 foreach(Image image in images) {
                     image.color = new Color(
@@ -104,7 +127,8 @@ public class LoopCreation : MonoBehaviour {
         if (!isValid) {
             Destroy(loops[endingNode]);
         } else {
-            loopInfoBeingModified = loops[endingNode].GetComponent<LoopInfo>();
+            loopInfos[endingNode] = loops[endingNode].GetComponent<LoopInfo>();
+            loopInfoBeingModified = loopInfos[endingNode];
             loopInfoBeingModified.origin = 0;
             float willSnapTo = maximumHeights[0];
             for (int i = 0; i < maximumHeights.Length; i++) {
@@ -127,6 +151,7 @@ public class LoopCreation : MonoBehaviour {
     private void Start() {
         maximumHeights = new float[instructionSlots.Length];
         loops = new GameObject[instructionSlots.Length];
+        loopInfos = new LoopInfo[instructionSlots.Length];
         for (int i = 0; i < instructionSlots.Length; i++) {
             maximumHeights[i] = instructionSlots[i].position.y + instructionSlots[i].rect.height / 2;
         }
