@@ -9,10 +9,9 @@ public class LoopCreation : MonoBehaviour {
     public RectTransform[] instructionSlots;
     public GameObject loopSizeMenu;
 
-    private RectTransform arrowTransform, curveTransform, verticalStretchTransform;
+    private RectTransform arrowTransform, curveTransform, topStretchTransform, verticalStretchTransform;
     private float bottomPosition, topPosition, initialTopPosition;
     private float topLocalPosition, initialTopLocalPosition;
-    private float verticalStretchInitialHeight;
     private GameObject[] loops;
     private LoopInfo[] loopInfos;
     private Image[] images;
@@ -33,6 +32,11 @@ public class LoopCreation : MonoBehaviour {
                                     curveTransform.position.x,
                                     topPosition,
                                     curveTransform.position.z
+                                    );
+        topStretchTransform.position = new Vector3(
+                                    topStretchTransform.position.x,
+                                    topPosition,
+                                    topStretchTransform.position.z
                                     );
 
         topLocalPosition = arrowTransform.localPosition.y;
@@ -61,6 +65,75 @@ public class LoopCreation : MonoBehaviour {
         return true;
     }
 
+    private void resetAllCounts() {
+        for (int i = 0; i < loopInfos.Length; i++) {
+            if (loopInfos[i]) {
+                loopInfos[i].howManyAbove = 0;
+                loopInfos[i].howManyInside = 0;
+            }
+        }
+    }
+
+    private int countInnerLoops(int endingNode, int new_loop, int origin = -1) {
+        int inner_loops = 0;
+        int new_loop_origin = 0;
+        if (origin == -1) {
+            origin = 0;
+            for (int i = 0; i < maximumHeights.Length; i++) {
+                if (topPosition > maximumHeights[i]) break;
+                origin = i;
+            }
+        } else {
+            new_loop_origin = 0;
+            for (int i = 0; i < maximumHeights.Length; i++) {
+                if (topPosition > maximumHeights[i]) break;
+                new_loop_origin = i;
+            }
+        }
+        for (int i = origin; i < endingNode; i++) {
+            if (i == new_loop) {
+                if (loopInfos[i] && isValid && new_loop_origin >= origin) {
+                    if (loopInfos[i].howManyInside + 1 > inner_loops) inner_loops = loopInfos[i].howManyInside + 1;
+                }
+            } else {
+                if (loopInfos[i] && loopInfos[i].origin >= origin) {
+                    if (loopInfos[i].howManyInside + 1 > inner_loops) inner_loops = loopInfos[i].howManyInside + 1;
+                }
+            }
+        }
+        return inner_loops;
+    }
+
+    private int countParentLoops(int endingNode, int new_loop, int origin = -1) {
+        int parent_loops = 0;
+        int new_loop_origin = 0;
+        if (origin == -1) {
+            origin = 0;
+            for (int i = 0; i < maximumHeights.Length; i++) {
+                if (topPosition > maximumHeights[i]) break;
+                origin = i;
+            }
+        } else {
+            new_loop_origin = 0;
+            for (int i = 0; i < maximumHeights.Length; i++) {
+                if (topPosition > maximumHeights[i]) break;
+                new_loop_origin = i;
+            }
+        }
+        for (int i = endingNode + 1; i < instructionSlots.Length; i++) {
+            if (i == new_loop) {
+                if (loopInfos[i] && isValid && new_loop_origin == origin) {
+                    parent_loops++;
+                }
+            } else {
+                if (loopInfos[i] && loopInfos[i].origin == origin) {
+                    parent_loops++;
+                }
+            }
+        }
+        return parent_loops;
+    }
+
     public void onStartDrag(int endingNode) {
         if (!Interpreter.isInterpreting) {
             if (loops[endingNode]) {
@@ -71,10 +144,11 @@ public class LoopCreation : MonoBehaviour {
                                         Quaternion.identity,
                                         instructionSlots[endingNode]
                                         );
+            loopInfos[endingNode] = loops[endingNode].GetComponent<LoopInfo>();
             arrowTransform = Utils.findChild(loops[endingNode], "Arrow").GetComponent<RectTransform>();
             curveTransform = Utils.findChild(loops[endingNode], "TopCurve").GetComponent<RectTransform>();
             verticalStretchTransform = Utils.findChild(loops[endingNode], "VerticalStretch").GetComponent<RectTransform>();
-            verticalStretchInitialHeight = verticalStretchTransform.rect.height;
+            topStretchTransform = Utils.findChild(loops[endingNode], "TopStretch").GetComponent<RectTransform>();
             bottomPosition = Utils.findChild(loops[endingNode], "Base").GetComponent<RectTransform>().position.y;
 
             topPosition = arrowTransform.GetComponent<RectTransform>().position.y;
@@ -120,6 +194,18 @@ public class LoopCreation : MonoBehaviour {
             }
 
             applyPositions();
+            resetAllCounts();
+            for (int i = 0; i < loopInfos.Length; i++) {
+                if (i == endingNode) {
+                    loopInfos[endingNode].howManyAbove = countParentLoops(endingNode, endingNode);
+                    loopInfos[endingNode].howManyInside = countInnerLoops(endingNode, endingNode);
+                } else {
+                    if (loopInfos[i]) {
+                        loopInfos[i].howManyAbove = countParentLoops(i, endingNode, loopInfos[i].origin);
+                        loopInfos[i].howManyInside = countInnerLoops(i, endingNode, loopInfos[i].origin);
+                    }
+                }
+            }
         }
     }
 
@@ -127,7 +213,6 @@ public class LoopCreation : MonoBehaviour {
         if (!isValid) {
             Destroy(loops[endingNode]);
         } else {
-            loopInfos[endingNode] = loops[endingNode].GetComponent<LoopInfo>();
             loopInfoBeingModified = loopInfos[endingNode];
             loopInfoBeingModified.origin = 0;
             float willSnapTo = maximumHeights[0];
@@ -138,7 +223,15 @@ public class LoopCreation : MonoBehaviour {
             }
             topPosition = willSnapTo;
             applyPositions();
+            loopInfos[endingNode].initialCurveY = arrowTransform.localPosition.y;
             loopSizeMenu.SetActive(true);
+        }
+        resetAllCounts();
+        for (int i = 0; i < loopInfos.Length; i++) {
+            if (loopInfos[i]) {
+                loopInfos[i].howManyAbove = countParentLoops(i, endingNode, loopInfos[i].origin);
+                loopInfos[i].howManyInside = countInnerLoops(i, endingNode, loopInfos[i].origin);
+            }
         }
     }
 
