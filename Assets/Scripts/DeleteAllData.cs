@@ -13,6 +13,7 @@ public class DeleteAllData : MonoBehaviour {
 
     public void UnlockAll() {
         SaveManager.SetFinishedMap("6-3");
+        SaveManager.SetFinishedTutorial(6);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
