@@ -53,6 +53,8 @@ public class PuzzleManager : MonoBehaviour {
     public int[] catPosition, dogPosition;
     [HideInInspector]
     public GameObject catReference, dogReference;
+    [HideInInspector]
+    public Animator catAnim, dogAnim;
 
     public PuzzleObject[,] kindMatrix;
     public GameObject[,] objMatrix;
@@ -218,20 +220,24 @@ public class PuzzleManager : MonoBehaviour {
                 }
             }
 
-            if (stageInfo.hasCat)
+            if (stageInfo.hasCat) {
                 // Instantiates the cat
                 catReference = instantiatePlayerObject(
                     prefabDict[PuzzleObject.CAT],
                     catPosition[0],
                     catPosition[1]
                 );
-            if (stageInfo.hasDog)
+                catAnim = catReference.GetComponent<Animator>();
+            }
+            if (stageInfo.hasDog) {
                 // Instantiates the dog
                 dogReference = instantiatePlayerObject(
                     prefabDict[PuzzleObject.DOG],
                     dogPosition[0],
                     dogPosition[1]
                 );
+                dogAnim = dogReference.GetComponent<Animator>();
+            }
         }
     }
 

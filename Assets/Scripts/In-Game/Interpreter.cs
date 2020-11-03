@@ -89,6 +89,7 @@ public class Interpreter : MonoBehaviour {
             Debug.Log("Can't move cat");
             missionFailed = true;
             missionResult = MissionResult.Condition.CAT_WALK_FAIL;
+            StartCoroutine(moveCatFailTransition(direction));
             // Can't move cat
         } else {
             var obstacle = puzzleManager.kindMatrix[pos[0], pos[1]];
@@ -117,6 +118,7 @@ public class Interpreter : MonoBehaviour {
                 Debug.Log("Cat is blocked");
                 missionFailed = true;
                 missionResult = MissionResult.Condition.CAT_WALK_FAIL;
+                StartCoroutine(moveCatFailTransition(direction));
             }
         }
     }
@@ -129,6 +131,7 @@ public class Interpreter : MonoBehaviour {
             Debug.Log("Can't move dog");
             missionFailed = true;
             missionResult = MissionResult.Condition.DOG_WALK_FAIL;
+            StartCoroutine(moveDogFailTransition(direction));
             // Can't move dog
         } else {
             var obstacle = puzzleManager.kindMatrix[pos[0], pos[1]];
@@ -190,6 +193,7 @@ public class Interpreter : MonoBehaviour {
                 Debug.Log("Dog is blocked");
                 missionFailed = true;
                 missionResult = MissionResult.Condition.DOG_WALK_FAIL;
+                StartCoroutine(moveDogFailTransition(direction));
             }
         }
     }
@@ -708,6 +712,55 @@ public class Interpreter : MonoBehaviour {
         yield break;
     }
 
+    IEnumerator moveCatFailTransition(char direction) {
+        var oldPos = puzzleManager.catReference.transform.position;
+        switch (direction) {
+            case 'U':
+                for (var i = 0; i < 5; i++) {
+                    puzzleManager.catReference.transform.position = new Vector3(
+                        oldPos.x,
+                        oldPos.y + (i + 1) / 10f * puzzleManager.cellDistance,
+                        oldPos.z
+                    );
+                    yield return new WaitForSeconds(secondsPerMove / 10f);
+                }
+                break;
+            case 'L':
+                for (var i = 0; i < 5; i++) {
+                    puzzleManager.catReference.transform.position = new Vector3(
+                        oldPos.x - (i + 1) / 10f * puzzleManager.cellDistance,
+                        oldPos.y,
+                        oldPos.z
+                    );
+                    yield return new WaitForSeconds(secondsPerMove / 10);
+                }
+                break;
+            case 'R':
+                for (var i = 0; i < 5; i++) {
+                    puzzleManager.catReference.transform.position = new Vector3(
+                        oldPos.x + (i + 1) / 10f * puzzleManager.cellDistance,
+                        oldPos.y,
+                        oldPos.z
+                    );
+                    yield return new WaitForSeconds(secondsPerMove / 10);
+                }
+                break;
+            case 'D':
+                for (var i = 0; i < 5; i++) {
+                    puzzleManager.catReference.transform.position = new Vector3(
+                        oldPos.x,
+                        oldPos.y - (i + 1) / 10f * puzzleManager.cellDistance,
+                        oldPos.z
+                    );
+                    yield return new WaitForSeconds(secondsPerMove / 10);
+                }
+                break;
+
+        }
+        puzzleManager.catAnim.SetBool("IsDizzy", true);
+        yield break;
+    }
+
     IEnumerator moveDogTransition(char direction) {
         var oldPos = puzzleManager.dogReference.transform.position;
         switch (direction) {
@@ -753,6 +806,55 @@ public class Interpreter : MonoBehaviour {
                 break;
 
         }
+        yield break;
+    }
+
+    IEnumerator moveDogFailTransition(char direction) {
+        var oldPos = puzzleManager.dogReference.transform.position;
+        switch (direction) {
+            case 'U':
+                for (var i = 0; i < 5; i++) {
+                    puzzleManager.dogReference.transform.position = new Vector3(
+                        oldPos.x,
+                        oldPos.y + (i + 1) / 10f * puzzleManager.cellDistance,
+                        oldPos.z
+                    );
+                    yield return new WaitForSeconds(secondsPerMove / 10f);
+                }
+                break;
+            case 'L':
+                for (var i = 0; i < 5; i++) {
+                    puzzleManager.dogReference.transform.position = new Vector3(
+                        oldPos.x - (i + 1) / 10f * puzzleManager.cellDistance,
+                        oldPos.y,
+                        oldPos.z
+                    );
+                    yield return new WaitForSeconds(secondsPerMove / 10);
+                }
+                break;
+            case 'R':
+                for (var i = 0; i < 5; i++) {
+                    puzzleManager.dogReference.transform.position = new Vector3(
+                        oldPos.x + (i + 1) / 10f * puzzleManager.cellDistance,
+                        oldPos.y,
+                        oldPos.z
+                    );
+                    yield return new WaitForSeconds(secondsPerMove / 10);
+                }
+                break;
+            case 'D':
+                for (var i = 0; i < 5; i++) {
+                    puzzleManager.dogReference.transform.position = new Vector3(
+                        oldPos.x,
+                        oldPos.y - (i + 1) / 10f * puzzleManager.cellDistance,
+                        oldPos.z
+                    );
+                    yield return new WaitForSeconds(secondsPerMove / 10);
+                }
+                break;
+
+        }
+        puzzleManager.dogAnim.SetBool("IsDizzy", true);
         yield break;
     }
 

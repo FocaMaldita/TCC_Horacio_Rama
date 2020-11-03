@@ -4760,6 +4760,8 @@ MonoBehaviour:
   dogPosition: 
   catReference: {fileID: 0}
   dogReference: {fileID: 0}
+  catAnim: {fileID: 0}
+  dogAnim: {fileID: 0}
   catList: {fileID: 1022342270}
   dogList: {fileID: 449919684}
   moveButton: {fileID: 2079900515}
