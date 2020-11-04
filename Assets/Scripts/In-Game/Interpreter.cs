@@ -382,7 +382,12 @@ public class Interpreter : MonoBehaviour {
         if (Utils.IsCatInCorner(puzzleManager, direction)) {
             Debug.Log("Cat can't grab");
             missionFailed = true;
-            yield break;
+            if (catIsHolding == null) {
+                missionResult = MissionResult.Condition.CAT_GRAB_FAIL;
+            } else {
+                missionResult = MissionResult.Condition.CAT_PLACE_FAIL;
+            }
+            yield return moveCatFailTransition(direction);
             // Cat can't grab
         } else {
             var oldPos = puzzleManager.catReference.transform.position;
@@ -457,6 +462,7 @@ public class Interpreter : MonoBehaviour {
                     Debug.Log("Cat can't grab this");
                     missionFailed = true;
                     missionResult = MissionResult.Condition.CAT_GRAB_FAIL;
+                    puzzleManager.catAnim.SetBool("IsDizzy", true);
                 }
             } else {
                 var canPlace = Utils.CanPlaceObject(catIsHoldingKind, puzzleManager.kindMatrix[pos[0], pos[1]]);
@@ -481,6 +487,7 @@ public class Interpreter : MonoBehaviour {
                     Debug.Log("Cat can't place here");
                     missionFailed = true;
                     missionResult = MissionResult.Condition.CAT_PLACE_FAIL;
+                    puzzleManager.catAnim.SetBool("IsDizzy", true);
                 }
             }
             switch (direction) {
@@ -536,6 +543,12 @@ public class Interpreter : MonoBehaviour {
         if (Utils.IsDogInCorner(puzzleManager, direction)) {
             Debug.Log("Dog can't grab");
             missionFailed = true;
+            if (dogIsHolding == null) {
+                missionResult = MissionResult.Condition.DOG_GRAB_FAIL;
+            } else {
+                missionResult = MissionResult.Condition.DOG_PLACE_FAIL;
+            }
+            yield return moveDogFailTransition(direction);
             // Dog can't grab
         } else {
             var oldPos = puzzleManager.dogReference.transform.position;
@@ -601,6 +614,7 @@ public class Interpreter : MonoBehaviour {
                     Debug.Log("Dog can't grab this");
                     missionFailed = true;
                     missionResult = MissionResult.Condition.DOG_GRAB_FAIL;
+                    puzzleManager.dogAnim.SetBool("IsDizzy", true);
                 }
             } else {
                 var canPlace = Utils.CanPlaceObject(dogIsHoldingKind, puzzleManager.kindMatrix[pos[0], pos[1]]);
@@ -616,6 +630,7 @@ public class Interpreter : MonoBehaviour {
                     Debug.Log("Dog can't place here");
                     missionFailed = true;
                     missionResult = MissionResult.Condition.DOG_PLACE_FAIL;
+                    puzzleManager.dogAnim.SetBool("IsDizzy", true);
                 }
             }
             switch (direction) {
