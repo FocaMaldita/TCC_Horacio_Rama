@@ -293,12 +293,16 @@ public class Interpreter : MonoBehaviour {
                 // They collided
                 Debug.Log("They collided");
                 missionResult = MissionResult.Condition.CAT_DOG_WALK_INTO_EACH_OTHER_FAIL;
+                StartCoroutine(moveCatFailTransition(catAction.ToString()[catAction.ToString().Length - 1]));
+                StartCoroutine(moveDogFailTransition(dogAction.ToString()[dogAction.ToString().Length - 1]));
                 return true;
             }
             if (cat_dest_x == dog_x && cat_dest_y == dog_y && cat_x == dog_dest_x && cat_y == dog_dest_y) {
                 // They went through each other
                 Debug.Log("They went through each other");
                 missionResult = MissionResult.Condition.CAT_DOG_WALK_INTO_EACH_OTHER_FAIL;
+                StartCoroutine(moveCatFailTransition(catAction.ToString()[catAction.ToString().Length - 1]));
+                StartCoroutine(moveDogFailTransition(dogAction.ToString()[dogAction.ToString().Length - 1]));
                 return true;
             }
         }
@@ -312,12 +316,16 @@ public class Interpreter : MonoBehaviour {
                 } else {
                     missionResult = MissionResult.Condition.DOG_PLACE_FAIL;
                 }
+                StartCoroutine(moveCatFailTransition(catAction.ToString()[catAction.ToString().Length - 1]));
+                StartCoroutine(moveDogFailTransition(dogAction.ToString()[dogAction.ToString().Length - 1]));
                 return true;
             }
             if (cat_dest_x == dog_x && cat_dest_y == dog_y) {
                 // Cat ran into dog
                 Debug.Log("Cat ran into dog");
                 missionResult = MissionResult.Condition.CAT_WALK_FAIL;
+                StartCoroutine(moveCatFailTransition(catAction.ToString()[catAction.ToString().Length - 1]));
+                StartCoroutine(moveDogFailTransition(dogAction.ToString()[dogAction.ToString().Length - 1]));
                 return true;
             }
         }
@@ -331,12 +339,16 @@ public class Interpreter : MonoBehaviour {
                 } else {
                     missionResult = MissionResult.Condition.CAT_PLACE_FAIL;
                 }
+                StartCoroutine(moveCatFailTransition(catAction.ToString()[catAction.ToString().Length - 1]));
+                StartCoroutine(moveDogFailTransition(dogAction.ToString()[dogAction.ToString().Length - 1]));
                 return true;
             }
             if (dog_dest_x == cat_x && dog_dest_y == cat_y) {
                 // Cat ran into dog
                 Debug.Log("Dog ran into cat");
                 missionResult = MissionResult.Condition.DOG_WALK_FAIL;
+                StartCoroutine(moveCatFailTransition(catAction.ToString()[catAction.ToString().Length - 1]));
+                StartCoroutine(moveDogFailTransition(dogAction.ToString()[dogAction.ToString().Length - 1]));
                 return true;
             }
         }
@@ -349,6 +361,8 @@ public class Interpreter : MonoBehaviour {
             } else {
                 missionResult = MissionResult.Condition.CAT_PLACE_FAIL;
             }
+            StartCoroutine(moveCatFailTransition(catAction.ToString()[catAction.ToString().Length - 1]));
+            StartCoroutine(moveDogFailTransition(dogAction.ToString()[dogAction.ToString().Length - 1]));
             return true;
         }
         if (cat_x == dog_dest_x && cat_y == dog_dest_y) {
@@ -359,6 +373,8 @@ public class Interpreter : MonoBehaviour {
             } else {
                 missionResult = MissionResult.Condition.DOG_PLACE_FAIL;
             }
+            StartCoroutine(moveCatFailTransition(catAction.ToString()[catAction.ToString().Length - 1]));
+            StartCoroutine(moveDogFailTransition(dogAction.ToString()[dogAction.ToString().Length - 1]));
             return true;
         }
         if (cat_dest_x == dog_dest_x && cat_dest_y == dog_dest_y) {
@@ -369,6 +385,8 @@ public class Interpreter : MonoBehaviour {
             } else {
                 missionResult = MissionResult.Condition.CAT_PLACE_FAIL;
             }
+            StartCoroutine(moveCatFailTransition(catAction.ToString()[catAction.ToString().Length - 1]));
+            StartCoroutine(moveDogFailTransition(dogAction.ToString()[dogAction.ToString().Length - 1]));
             return true;
         }
 
